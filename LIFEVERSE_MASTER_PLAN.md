@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.7\
+**Wersja:** 0.8\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -302,31 +302,30 @@ adapter umożliwiający komunikację z wybranym modelem.
 
 Technologie nie zostały jeszcze ostatecznie wybrane.
 
-### Propozycja stosu technologicznego — NIEZATWIERDZONA
+### Zatwierdzony stos technologiczny — prostota konfiguracji
 
-Po audycie repozytorium (stan na 2026-11-17) potwierdzono, że repozytorium
-zawiera wyłącznie dokumenty projektowe:
-- `LIFEVERSE_MASTER_PLAN.md`
-- `LIFEVERSE_MVP_SPEC.md`
+Właścicielka wskazała priorytet: najprostsze technologie, niewymagające
+złożonej konfiguracji, z wykorzystaniem Next.js / React. Dobór pozostałych
+elementów został powierzony asystentowi.
 
-Nie ma jeszcze kodu aplikacji, konfiguracji środowiska ani testów.
+- **Next.js (App Router) + React + TypeScript** — jeden projekt i jedna
+  aplikacja; UI oraz logika serwerowa w tym samym środowisku.
+- **SQLite + Prisma ORM** — lokalna baza danych w jednym pliku, bez
+  osobnego serwera bazy danych.
+- **CSS Modules + global CSS** — style bez dodatkowego frameworka UI.
+- **Vitest** — testy logiki w miarę powstawania modułów.
+- **npm** — instalacja i uruchamianie projektu.
+- **AI provider adapter** — późniejsza, odseparowana integracja; bez
+  lokalnego modelu AI jako wymogu uruchomienia aplikacji.
 
-Rekomendacja do rozważenia:
-- Python + FastAPI jako lokalny backend i API.
-- SQLite jako lokalna baza danych.
-- React + TypeScript + Vite jako frontend desktop-first.
-- Lokalny serwer dostępny z przeglądarki; pakowanie do aplikacji
-  desktopowej można rozważyć później, bez uzależniania MVP od Tauri/Electron.
-- Adapter AI jako osobna warstwa, bez wyboru dostawcy na tym etapie.
+Nie dodajemy na starcie Dockera, osobnego backendu FastAPI, Redux,
+biblioteki komponentów ani narzędzi do pakowania desktopowego. Aplikacja
+będzie działała lokalnie w przeglądarce; pakowanie do instalatora można
+rozważyć dopiero po ustabilizowaniu MVP.
 
-Uzasadnienie: rozwiązanie jest modułowe, popularne, możliwe do rozwijania
-etapami i nie wymaga uruchamiania lokalnego modelu AI. Przy 16 GB RAM
-należy utrzymać backend i frontend lekkie; model AI nie będzie częścią
-obowiązkowego procesu uruchomieniowego.
-
-**Status: PROPOZYCJA — wymaga akceptacji właścicielki przed utworzeniem
-szkieletu kodu.** Nie traktować powyższego stosu jako zatwierdzonej
-decyzji.
+**Status: ZATWIERDZONY KIERUNEK TECHNOLOGICZNY.** Wersje zależności i
+konfiguracja powinny być utrzymywane możliwie prosto. Wymagane Node.js
+20.9 lub nowsze.
 
 ### Dostępny sprzęt właścicielki
 
@@ -390,11 +389,11 @@ trakcie. - **BLOCKED** --- zablokowane decyzją lub zależnością. -
   1. World Bible   Wprowadzenie      Zatwierdzony      NOT STARTED
                     kanonu świata     dokument świata
 
-  2. Character     Profil postaci i  Można tworzyć i   NOT STARTED
+  2. Character     Profil postaci i  Można tworzyć i   IN PROGRESS
   model             formularz         edytować postacie
                     dodawania
 
-  3. Data          Schemat bazy,     Dane zachowują    NOT STARTED
+  3. Data          Schemat bazy,     Dane zachowują    IN PROGRESS
   architecture      zapis i eksport   spójność po
                                       restarcie
 
@@ -581,14 +580,13 @@ obrazów\
 **Autonomia NPC:** wysoka\
 **Dodawanie postaci:** formularz expanded, podzielony na sekcje; wszystkie pola poza imieniem opcjonalne\
 **Dane:** lokalne, trwałe, z możliwością backupu\
-**AI:** wybór technologii nadal otwarty; ChatGPT Free nie oznacza
-automatycznego dostępu do modelu przez lokalną aplikację\
+**AI:** dostawca/model pozostaje otwarty; adapter będzie oddzielony od reszty aplikacji\
 **Priorytet:** spójna, działająca symulacja, nie tylko atrakcyjny
 dashboard.\
-**Stan repozytorium (2026-11-17):** wyłącznie Master Plan i MVP Spec;
-brak implementacji.\
-**Następny krok:** akceptacja stosu technologicznego, potem utworzenie
-szkieletu aplikacji i modelu danych.
+**Stan repozytorium (2026-11-17):** rozpoczęto szkielet Next.js; istnieją
+podstawowe pliki aplikacji, konfiguracja TypeScript i schemat Prisma/SQLite.\
+**Następny krok:** uruchomienie projektu lokalnie, instalacja zależności,
+walidacja schematu i implementacja formularza postaci.
 
 ------------------------------------------------------------------------
 
