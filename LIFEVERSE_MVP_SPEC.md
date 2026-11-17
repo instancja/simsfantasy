@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.3 — draft po zatwierdzeniu rozbudowanego formularza postaci  
+**Wersja:** 0.4 — draft po doprecyzowaniu modelu danych  
 **Data:** 17 listopada 2026  
 **Status:** DRAFT · niezatwierdzona specyfikacja funkcjonalna  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -459,6 +459,7 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 | 0.1 | 2026-11-17 | Pierwszy draft zakresu MVP, ekranów, przepływów i kryteriów akceptacji na podstawie Master Planu. | Draft |
 | 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Draft |
 | 0.3 | 2026-11-17 | Zatwierdzono wariant formularza postaci „expanded”; dodano sekcje podstawowe, wygląd, osobowość, psychologia, historia, motywacje, mocne/słabe strony, relacje, sekrety, komunikacja i notatki. | Kierunek formularza zatwierdzony; typy danych i UX do dopracowania |
+| 0.4 | 2026-11-17 | Ujednolicono model wydarzeń i wspomnień oraz zasadę jednej stałej postaci graczki; usunięto sprzeczne założenia o wyborze grywalnej postaci dla każdej sceny. | Zgodne z decyzjami właścicielki |
 
 ---
 
