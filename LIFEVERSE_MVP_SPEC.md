@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.1 — bezpłatny lokalny runtime Ollama  
+**Wersja:** 1.2 — integracja narracyjna Ollama  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -380,13 +380,13 @@ Warstwa AI powinna:
 - zgłaszać błędy i timeouty w sposób obsługiwany przez aplikację;
 - pozwalać na wymianę dostawcy bez przebudowy całej aplikacji.
 
-Nie zakładać konkretnego dostawcy, formatu API ani lokalnego modelu przed decyzją właścicielki.
+Bieżący adapter komunikuje się z Ollama przez `http://127.0.0.1:11434/api/chat` i może zostać zastąpiony bez przebudowy logiki Story. Domyślny model to `qwen3.5:4b`; adres i model można zmienić przez `OLLAMA_BASE_URL` oraz `OLLAMA_MODEL`.
 
 ### 5.3 Tryb bez skonfigurowanego AI
 
 Aplikacja powinna uruchamiać się i pozwalać zarządzać postaciami oraz scenami nawet wtedy, gdy AI nie jest skonfigurowane. Wysłanie tury w takim stanie powinno pokazać jasny komunikat, a nie pozorować odpowiedź AI.
 
-Do testów interfejsu można używać jawnie oznaczonego trybu demonstracyjnego z przykładową odpowiedzią techniczną, ale nie może on być mylony z prawdziwą symulacją ani zapisywany jako kanoniczna treść świata.
+Jeśli Ollama jest niedostępna lub generowanie się nie powiedzie, tura gracza pozostaje zapisana, a UI udostępnia ponowienie generowania bez duplikowania tury. Model ma zwracać wyłącznie JSON z uporządkowanymi segmentami narratora i NPC. Serwer odrzuca nieznane identyfikatory postaci i niedozwolone typy mówców; Player Character nigdy nie może być autorem segmentu AI. Typowe znaczniki rozumowania `<think>...</think>` są usuwane, a prompt wymaga wyłącznie danych wyjściowych bez analizy i planowania. Do promptu nie są przekazywane pola sekretów postaci.
 
 ## 6. UX i kierunek wizualny
 
@@ -426,7 +426,7 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 6. Można otworzyć wydarzenie i zobaczyć jego kontekst oraz uczestników.
 7. Można wpisać i zapisać turę gracza; autor tury jest ustalany po stronie serwera na podstawie Player Character.
 7a. Można zakończyć wydarzenie i utworzyć powiązane wspomnienie, które zachowuje pełną historię tur.
-8. Jeśli AI jest skonfigurowane, odpowiedź AI pojawia się jako osobna tura i nie przejmuje kontroli nad postacią gracza.
+8. Jeśli Ollama jest skonfigurowana, odpowiedź AI pojawia się jako osobne, uporządkowane tury narratora i/lub NPC; serwer waliduje autorów i nie dopuszcza Player Character.
 9. Jeśli AI nie jest skonfigurowane lub zwróci błąd, aplikacja pokazuje komunikat, zachowuje turę gracza i pozwala ponowić próbę.
 10. Po restarcie aplikacji historia sceny i wszystkie zapisane tury są dostępne.
 11. Żaden element interfejsu nie tworzy niezatwierdzonego lore ani fikcyjnych danych jako faktów.
@@ -473,14 +473,14 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 3. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
 5. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
 
-### 9.1 Zaimplementowany zakres Story (fundament, bez AI)
+### 9.1 Zaimplementowany zakres Story (fundament i integracja AI w trakcie testów)
 
 - Jedno wydarzenie odpowiada jednej scenie; nie ma struktury rozdziałów ani kampanii wieloscenowej.
 - Player Character jest dołączany do wydarzenia automatycznie. Właścicielka może wybrać NPC obecnych w scenie.
 - Gracz zapisuje własne tury. Autor tury jest ustalany po stronie serwera na podstawie Player Character.
 - Zakończenie wydarzenia tworzy rekord Memory, powiązany z wydarzeniem i jego pełną historią tur.
 - Opcjonalna notatka Memory jest wpisywana ręcznie; aplikacja nie generuje podsumowania ani nie udaje odpowiedzi AI.
-- Odpowiedzi narratora i NPC zostaną dodane po wyborze i integracji dostawcy AI.
+- Adapter Ollama generuje kontynuację po turze gracza, zapisuje osobne segmenty narratora/NPC i obsługuje błąd oraz ponowienie; funkcjonalność nie jest jeszcze potwierdzona testem właścicielki.
 
 ## 11. Historia zmian
 
