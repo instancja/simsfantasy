@@ -3,14 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "LIFEVERSE",
-  description: "Prywatny świat, który żyje własnym życiem.",
+  description: "A private world that lives its own life.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pl">
+    <html lang="en">
       <body>{children}</body>
     </html>
   );

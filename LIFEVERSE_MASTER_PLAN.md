@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.8\
+**Wersja:** 0.9\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -482,10 +482,9 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 ### Technologia
 
-- [ ] Wybór stacku frontend/backend.
-- [ ] Potwierdzenie SQLite lub innej bazy.
+- [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
+- [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
 - [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
-- [ ] Akceptacja lub zmiana proponowanego stosu: FastAPI + SQLite + React/TypeScript/Vite.
 - [x] Bazowa konfiguracja sprzętowa: MSI Katana 17 B13V, Intel Core i9, RTX 4070 Laptop GPU, 16 GB RAM (bez założenia rozbudowy).
 - [ ] Sposób uruchamiania aplikacji.
 - [ ] Format kopii zapasowej i eksportu.
@@ -561,6 +560,16 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 sprzecznego     sprawdzono      propozycję stacku;
                                 punktu OPEN     zawartość       doprecyzowano jedną
                                                 repozytorium    stałą postać grywalną
+  0.7            2026-11-17     Wybór stacku    Właścicielka   Next.js/React i
+                                i szkieletu      wskazała        prosty stack; pierwszy
+                                aplikacji        Next.js/React   szkielet aplikacji
+  0.8            2026-11-17     Synchronizacja   Właścicielka   Potwierdzono stack;
+                                stacku           delegowała      Next.js, SQLite,
+                                                 dobór reszty   Prisma, TypeScript
+  0.9            2026-11-17     Ujednolicenie    Właścicielka   Cały interfejs aplikacji
+                                języka UI        wymagała        po angielsku; język
+                                                 aplikacji       pracy pozostaje polski
+                                                 angielskiej
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -568,6 +577,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
 **Produkt:** LIFEVERSE\
+**Język aplikacji:** angielski (cały interfejs, komunikaty, etykiety, treści systemowe i dokumentacja widoczna wewnątrz aplikacji); język współpracy i dokumentacji projektowej: polski. Zasada globalna dla wszystkich kolejnych modułów.\
 **Użytkowniczka:** jedna prywatna właścicielka / graczka\
 **Platforma:** lokalna aplikacja desktopowa na PC\
 **Świat:** współczesne fantasy, klimat Harry'ego Pottera w realiach
@@ -585,8 +595,8 @@ obrazów\
 dashboard.\
 **Stan repozytorium (2026-11-17):** rozpoczęto szkielet Next.js; istnieją
 podstawowe pliki aplikacji, konfiguracja TypeScript i schemat Prisma/SQLite.\
-**Następny krok:** uruchomienie projektu lokalnie, instalacja zależności,
-walidacja schematu i implementacja formularza postaci.
+**Następny krok:** implementacja formularza postaci expanded z angielskim
+interfejsem i zapisem do lokalnej bazy danych.
 
 ------------------------------------------------------------------------
 
