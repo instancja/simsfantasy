@@ -14,6 +14,7 @@ model Character {
   affiliation       String?
   isPlayerCharacter Boolean  @default(false)
   appearance        String?
+  avatarUrl         String?
   personality       String?
   psychology        String?
   history           String?

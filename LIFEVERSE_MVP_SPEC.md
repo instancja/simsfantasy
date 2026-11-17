@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.6 — implementacja modułu Characters  
+**Wersja:** 0.7 — zakładka Appearance i lokalne avatary  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -138,8 +138,13 @@ Sekcje i pola:
 - Status / rola — opcjonalne, swobodny opis.
 - Przynależność / grupa / dom — opcjonalne; nie narzucać wartości ani kategorii, dopóki nie zostaną ustalone w kanonie.
 
-**2. Wygląd**
-- Opis wyglądu — pole tekstowe, w tym cechy szczególne, sylwetka, włosy, twarz i styl ubioru, jeśli właścicielka chce je opisać.
+**2. Wygląd — osobna zakładka Appearance w formularzu**
+- Pole tekstowe na opis wyglądu: sylwetka, twarz, włosy, oczy, cechy szczególne, postura i styl ubioru.
+- Możliwość wgrania jednego zdjęcia avatara z lokalnego komputera.
+- Podgląd wybranego zdjęcia przed zapisaniem.
+- Obsługiwane formaty: JPG, PNG, WEBP i GIF; limit rozmiaru 5 MB.
+- Plik jest przechowywany lokalnie w katalogu aplikacji `public/uploads/avatars`, a ścieżka zapisywana w polu `avatarUrl` rekordu Character.
+- Istniejący avatar pozostaje zachowany podczas edycji, jeśli właścicielka nie wybierze nowego.
 
 **3. Osobowość**
 - Cechy osobowości i temperament.
@@ -376,7 +381,7 @@ Wymagania:
 - Czytelność ważniejsza niż ozdobniki.
 - Ciemna, stonowana paleta i wyraźna hierarchia typograficzna.
 - Czytelne formularze, przyciski i stany błędów.
-- Brak wymogu zdjęć i grafik.
+- Brak wymogu generowania zdjęć i grafik; opcjonalny, ręcznie wgrywany avatar postaci jest obsługiwany.
 - Interfejs nie powinien imitować ekranu smartfona.
 
 Konkretne kolory, fonty, ikony i komponenty UI pozostają decyzją projektową do późniejszego dopracowania; nie są kanonem świata.
@@ -400,6 +405,8 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 2. Można utworzyć postać z wymaganym imieniem.
 3. Utworzona postać pojawia się na liście i ma własny profil.
 4. Można edytować profil i po restarcie zobaczyć zmiany.
+4a. Można wgrać avatar postaci w obsługiwanym formacie, zobaczyć podgląd i zachować plik po ponownym uruchomieniu aplikacji.
+4b. Avatar jest widoczny na karcie postaci i w nagłówku profilu; edycja innych pól nie usuwa istniejącego avatara.
 5. Można utworzyć scenę i przypisać jej grywalną postać oraz NPC.
 6. Można otworzyć scenę i zobaczyć jej kontekst.
 7. Można wpisać i zapisać turę gracza.
@@ -459,6 +466,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 0.3 | 2026-11-17 | Zatwierdzono wariant formularza postaci „expanded”; dodano sekcje podstawowe, wygląd, osobowość, psychologia, historia, motywacje, mocne/słabe strony, relacje, sekrety, komunikacja i notatki. | Kierunek formularza zatwierdzony; typy danych i UX do dopracowania |
 | 0.4 | 2026-11-17 | Ujednolicono model wydarzeń i wspomnień oraz zasadę jednej stałej postaci graczki; usunięto sprzeczne założenia o wyborze grywalnej postaci dla każdej sceny. | Zgodne z decyzjami właścicielki |
 | 0.5 | 2026-11-17 | Uporządkowano opis stałej postaci grywalnej i modelu pojedynczego wydarzenia; audyt potwierdził, że repozytorium nie zawiera jeszcze implementacji. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |\n| 0.6 | 2026-11-17 | Zaktualizowano specyfikację po wdrożeniu modułu Characters i zatwierdzeniu Next.js/React/SQLite/Prisma; język UI określono jako angielski. | Dokumentacja zgodna z aktualnym stanem repozytorium |
+| 0.7 | 2026-11-17 | Dodano osobną zakładkę Appearance, opis wyglądu i lokalny upload avatara z podglądem; avatar jest widoczny na karcie i profilu postaci. | Nowy wymóg właścicielki |
 
 ---
 

@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.0\
+**Wersja:** 1.1\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -568,7 +568,11 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 języka UI        wymagała        po angielsku; język
                                                  aplikacji       pracy pozostaje polski
                                                  angielskiej
-  1.0            2026-11-17     Implementacja    Zatwierdzony   Moduł Characters: lista,\n                                modułu           formularz       wyszukiwanie, profil,\n                                Characters       expanded       edycja, usuwanie, zapis\n                                                 i język UI      do SQLite; interfejs EN\n  --------------------------------------------------------------------------
+  1.0            2026-11-17     Implementacja    Zatwierdzony   Moduł Characters: lista,\n                                modułu           formularz       wyszukiwanie, profil,\n                                Characters       expanded       edycja, usuwanie, zapis\n                                                 i język UI      do SQLite; interfejs EN\n  1.1            2026-11-17     Zakładka        Właścicielka   Osobna zakładka Appearance,
+                                Appearance      dodała wymóg    opis wyglądu, lokalny upload
+                                i avatar        avatara         i podgląd; zdjęcie widoczne
+                                                               na karcie i profilu
+  --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
@@ -593,7 +597,8 @@ obrazów\
 dashboard.\
 **Stan repozytorium (2026-11-17):** rozpoczęto szkielet Next.js; istnieją
 podstawowe pliki aplikacji, konfiguracja TypeScript i schemat Prisma/SQLite.\
-**Stan implementacji (2026-11-17):** moduł Characters obejmuje listę i wyszukiwanie postaci, formularz expanded (11 sekcji), profil, edycję, usuwanie z potwierdzeniem i zapis do SQLite przez Prisma. Jedna postać może być oznaczona jako Player Character; zaznaczenie jej na innej postaci przenosi oznaczenie.\n**Następny krok:** lokalna walidacja przez właścicielkę i poprawki po testach. Etap nie jest DONE przed sprawdzeniem działania.
+**Stan implementacji (2026-11-17):** moduł Characters obejmuje listę i wyszukiwanie postaci, formularz expanded (11 sekcji) z osobną zakładką Appearance, opisem wyglądu i lokalnym uploadem avatara, profil, edycję, usuwanie z potwierdzeniem i zapis do SQLite przez Prisma. Jedna postać może być oznaczona jako Player Character; zaznaczenie jej na innej postaci przenosi oznaczenie.\n**Stan rozszerzenia (2026-11-17):** dodano osobną zakładkę Appearance z opisem wyglądu i uploadem lokalnego avatara (JPG, PNG, WEBP, GIF do 5 MB); avatar jest wyświetlany na liście i profilu postaci.
+**Następny krok:** lokalne testy uploadu avatara, zachowania przy edycji i trwałości pliku po restarcie. Etap nie jest DONE przed sprawdzeniem działania.
 
 ------------------------------------------------------------------------
 
