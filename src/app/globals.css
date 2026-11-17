@@ -43,3 +43,15 @@
 
 /* Player-authored actions stay inside the Player Character's own dialogue bubble. */
 .inlineCharacterAction{font-style:italic;color:#c8b99e}
+
+/* Story generation feedback */
+.pendingSubmit{min-width:180px}
+.pendingSubmit:disabled{opacity:.72;cursor:wait}
+.aiPendingNotice{display:flex;align-items:center;gap:13px;margin:0 0 16px;padding:14px 16px;background:rgba(185,154,104,.075);border:1px solid rgba(185,154,104,.2);border-radius:4px;color:var(--text)}
+.aiPendingNotice>span:last-child{display:grid;gap:4px}
+.aiPendingNotice strong{font-size:11px;font-weight:600}
+.aiPendingNotice small{font-size:10px;line-height:1.6;color:var(--muted)}
+.loadingSpinner{display:inline-block;width:15px;height:15px;flex:0 0 15px;border:2px solid rgba(185,154,104,.25);border-top-color:var(--gold);border-radius:50%;animation:lifeverseSpin .8s linear infinite}
+.pendingSubmit .loadingSpinner{border-color:rgba(23,23,22,.25);border-top-color:#171716}
+@keyframes lifeverseSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.loadingSpinner{animation-duration:2s}}
