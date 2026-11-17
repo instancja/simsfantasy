@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.9 — ochrona integralności archiwum Story  
+**Wersja:** 1.0 — wymagania naprzemiennej narracji AI i wielu NPC  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -295,7 +295,22 @@ Zachowanie:
 
 **Ważne:** aplikacja musi zachować turę gracza nawet wtedy, gdy wywołanie AI zakończy się błędem. Powinna umożliwić ponowienie generowania bez duplikowania tury gracza.
 
-### 3.9 Autonomiczne interakcje NPC w tle
+### 3.9 Wymagana naprzemienność tur i wielogłosowa odpowiedź AI
+
+Podstawowa pętla rozgrywki:
+
+**Player Character → AI continuation (narrator + one or more relevant NPCs) → Player Character → AI continuation.**
+
+- Każda poprawnie zapisana tura gracza uruchamia generowanie kontynuacji AI, o ile dostawca jest skonfigurowany.
+- Jedna odpowiedź AI może zawierać kilka uporządkowanych segmentów: narrację, wypowiedzi i działania kilku NPC.
+- NPC mogą wchodzić w dialog i interakcje między sobą; odpowiedź nie może być ograniczona do jednej postaci reagującej bezpośrednio na gracza.
+- Możliwe jest opisywanie równoległych reakcji NPC w tej samej chwili sceny, bez sztucznego wykonywania osobnej tury gracza pomiędzy nimi.
+- Nie każdy NPC musi reagować na każdą turę. Reakcje mają wynikać z sytuacji, charakteru, motywacji, relacji i posiadanej wiedzy.
+- Każdy segment NPC musi być przypisany do właściwego Character, a segment narratora oznaczony osobno.
+- Żaden segment AI nie może dopisywać działań, dialogów, myśli, uczuć ani decyzji Player Character.
+- Awaria dostawcy nie może usuwać tury gracza; aplikacja musi umożliwić ponowienie generowania bez ponownego zapisywania tej tury.
+
+### 3.10 Autonomiczne interakcje NPC w tle
 
 Docelowe zachowanie świata zakłada, że NPC mogą wchodzić w interakcje również wtedy, gdy postać graczki nie uczestniczy w danej scenie. Ich działania powinny wynikać z osobowości, motywacji, relacji, wcześniejszych wydarzeń i informacji, które rzeczywiście posiadają.
 
@@ -309,7 +324,7 @@ Wymagania projektowe:
 
 Pełna autonomia NPC w tle nie musi być w całości częścią pierwszego MVP, ale model danych i architektura powinny jej nie blokować.
 
-### 3.10 Social, Relationships, World Bible i World State
+### 3.11 Social, Relationships, World Bible i World State
 
 W pierwszym MVP moduły mogą być widoczne w nawigacji jako przyszłe obszary, ale ich pełna funkcjonalność nie jest wymagana. Nie należy tworzyć atrap, które zapisują fikcyjne dane lub sugerują działanie niezaimplementowanej symulacji.
 
