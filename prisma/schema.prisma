@@ -38,6 +38,7 @@ model StoryEvent {
   aiStatus          String @default("IDLE")
   aiError           String?
   aiLastAttemptAt   DateTime?
+  sceneState        String?
   participants      EventParticipant[]
   turns             EventTurn[]
   memory            Memory?
