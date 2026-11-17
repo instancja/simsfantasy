@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.2 — draft po doprecyzowaniu modelu rozgrywki  
+**Wersja:** 0.3 — draft po zatwierdzeniu rozbudowanego formularza postaci  
 **Data:** 17 listopada 2026  
 **Status:** DRAFT · niezatwierdzona specyfikacja funkcjonalna  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -127,18 +127,65 @@ Zasada: nie wymagać ręcznej edycji plików ani duplikowania informacji pomięd
 
 **Cel:** umożliwić zapisanie podstawowych informacji o postaci.
 
-Pola pierwszej wersji:
+**Zatwierdzony kierunek formularza: rozbudowany, podzielony na sekcje.** Właścicielka wybrała wariant „expanded”. Formularz ma pozwalać na szczegółowe opisanie postaci, ale nie może wymagać wypełnienia wszystkich pól.
+
+Sekcje i pola:
+
+**1. Informacje podstawowe**
 - Imię — wymagane.
 - Nazwisko — opcjonalne.
-- Wiek — opcjonalny; przechowywany jako liczba lub tekst tylko po ustaleniu sposobu zapisu.
-- Status / rola — opcjonalne.
-- Wygląd — pole tekstowe.
-- Osobowość — pole tekstowe.
-- Historia — pole tekstowe.
-- Motywacje i cele — pole tekstowe.
-- Mocne i słabe strony — pole tekstowe.
-- Sekrety — pole tekstowe z wyraźnym oznaczeniem jako prywatne.
-- Dodatkowe informacje — pole tekstowe.
+- Wiek — opcjonalny; techniczny typ pola (liczba / tekst) do ustalenia podczas projektowania modelu danych.
+- Status / rola — opcjonalne, swobodny opis.
+- Przynależność / grupa / dom — opcjonalne; nie narzucać wartości ani kategorii, dopóki nie zostaną ustalone w kanonie.
+
+**2. Wygląd**
+- Opis wyglądu — pole tekstowe, w tym cechy szczególne, sylwetka, włosy, twarz i styl ubioru, jeśli właścicielka chce je opisać.
+
+**3. Osobowość**
+- Cechy osobowości i temperament.
+- Typowe zachowania i reakcje.
+- Sposób traktowania innych.
+
+**4. Psychologia**
+- Lęki i obawy.
+- Pragnienia i potrzeby.
+- Kompleksy / niepewności.
+- Wartości i przekonania.
+- Słabości i wewnętrzne konflikty.
+
+**5. Historia**
+- Przeszłość i pochodzenie.
+- Ważne wydarzenia z życia.
+- Inne informacje biograficzne.
+
+**6. Motywacje i cele**
+- Bieżące cele.
+- Ambicje i długoterminowe pragnienia.
+- Motywacje stojące za działaniami.
+
+**7. Mocne i słabe strony**
+- Atuty, umiejętności i zasoby.
+- Ograniczenia i słabości.
+
+**8. Relacje**
+- Sekcja informacyjna / skrót powiązań z modułem Relationships.
+- Relacje między konkretnymi postaciami powinny być docelowo zarządzane w osobnym module, a nie jako niezależne, niesynchronizowane opisy w profilu.
+- Możliwość zapisania ogólnej notatki o relacjach, jeśli nie zastępuje ona właściwych rekordów relacji.
+
+**9. Sekrety**
+- Informacje prywatne i tajemnice postaci.
+- Sekcja powinna być wizualnie oznaczona jako prywatna.
+- Sam fakt zapisania sekretu w profilu nie oznacza, że inne postacie go znają.
+
+**10. Komunikacja**
+- Sposób mówienia i charakterystyczne zwroty.
+- Styl wypowiedzi / pisania.
+- Nawyki komunikacyjne i sposób wyrażania emocji.
+
+**11. Dodatkowe informacje**
+- Dowolne notatki, które nie pasują do pozostałych sekcji.
+
+Pola opisowe są opcjonalne poza imieniem. Formularz ma być sekcyjny i czytelny; konkretna prezentacja (np. karty, zakładki lub rozwijane sekcje) pozostaje decyzją UX. Nie tworzyć wymuszonych list wyboru dla cech charakteru ani innych elementów, które powinny być swobodnie opisywane.
 
 Przynależność, dom, grupa, lokalizacja i inne pola zależne od kanonu nie mogą być wymagane, ponieważ ich struktura nie została jeszcze określona.
 
@@ -146,9 +193,10 @@ Akcje:
 - „Save” waliduje wymagane pole i zapisuje postać.
 - „Cancel” wraca bez zapisu.
 - Przy niezapisanych zmianach aplikacja pyta, czy je porzucić.
-- Po zapisie profil jest dostępny na liście i może zostać wybrany do sceny.
+- Po zapisie profil jest dostępny na liście i może zostać przypisany do wydarzenia.
+- Edycja istniejącej postaci zachowuje wszystkie wcześniej zapisane sekcje i treści.
 
-**OPEN:** ostateczny zestaw pól, sposób zapisu wieku i ewentualne pola wielowartościowe.
+Wybór wariantu formularza „expanded” został zatwierdzony. Szczegółowe typy danych i sposób prezentacji pól wielowartościowych zostaną ustalone w etapie Data Architecture / UX.
 
 ### 3.5 Characters — profil postaci
 
@@ -408,7 +456,8 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 | Wersja | Data | Zmiana | Status |
 |---|---|---|---|
 | 0.1 | 2026-11-17 | Pierwszy draft zakresu MVP, ekranów, przepływów i kryteriów akceptacji na podstawie Master Planu. | Draft |
-| 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Do dalszej akceptacji |
+| 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Draft |
+| 0.3 | 2026-11-17 | Zatwierdzono wariant formularza postaci „expanded”; dodano sekcje podstawowe, wygląd, osobowość, psychologia, historia, motywacje, mocne/słabe strony, relacje, sekrety, komunikacja i notatki. | Kierunek formularza zatwierdzony; typy danych i UX do dopracowania |
 
 ---
 
