@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.9\
+**Wersja:** 3.0\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -680,3 +680,18 @@ Po teście, w którym narrator opisywał ruchy Player Character i zachowania NPC
 - Autonomia NPC i wielobeatowa kontynuacja pozostają zachowane; zmiana dotyczy przypisania treści do właściwych segmentów.
 
 **Commit implementacji:** `9a1e594376a18b5f32c4980cfe5e2dbef32974c0`.
+
+
+### STORY — zakotwiczenie kontynuacji i ostrzejsza walidacja segmentów (17 listopada 2026)
+
+Test lokalny wykazał powtarzanie poprzedniej sceny, dopisywanie działań Player Character oraz przypisywanie działań innych postaci narratorowi lub niewłaściwemu NPC. Wprowadzono kolejną korektę:
+
+- Do modelu przekazywany jest osobny `previousResponseAnchor`: bezpośrednio poprzednia odpowiedź AI po ostatniej turze gracza. Prompt nakazuje kontynuować po jej ostatnim beacie, traktować opisane działania jako dokonane i nie odtwarzać rozmowy ani cofać postaci do wcześniejszych pozycji.
+- Prompt narratora został zaostrzony: narrator nie opisuje żadnych osób, sylwetek ani postaci; pozostaje przy otoczeniu.
+- Parser odrzuca z narracji zdania odnoszące się do ludzi także przez część nazw pospolitych i zaimków.
+- Parser segmentów NPC sprawdza, czy narracja w danym segmencie nie przypisuje działań Player Character ani innego uczestniczącego NPC. Dialog może nadal wspominać inne postacie.
+- Dodano filtr identycznych zdań powtórzonych bezpośrednio z poprzedniej odpowiedzi AI.
+- Walidacja pozostaje heurystyczna. Nie wykryje wszystkich parafraz ani subtelnych naruszeń semantycznych; może też odrzucić część poprawnych zdań. Nie jest gwarancją pełnej ochrony PC.
+- Nie zmieniono schematu bazy ani formatu zapisu wspólnego dymka; migracja nie jest wymagana.
+
+**Status:** zmiana na `main`; wymaga testu lokalnego. Nie oznaczać ciągłości ani granicy PC jako ukończonych przed testem właścicielki.
