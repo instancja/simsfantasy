@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.2 — integracja narracyjna Ollama  
+**Wersja:** 1.3 — wizualny układ narracji Story  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -263,6 +263,13 @@ Akcje:
 
 ### 3.8 Story — widok wydarzenia
 
+**Prezentacja treści (UI):**
+- Segmenty `NARRATOR` są wyświetlane jako osobne, wyśrodkowane bloki prozy pomiędzy dialogami. Nie używają avatara ani dymka czatu; mają dyskretną etykietę `NARRATOR` i typografię odróżniającą narrację od dialogów.
+- Segmenty `NPC` i `PLAYER` są wyświetlane jako dymki dialogowe z avatarem i imieniem postaci.
+- Tura Player Character ma subtelne wyróżnienie wizualne, ale pozostaje w tej samej chronologicznej osi sceny.
+- Kolejność wszystkich segmentów pozostaje zgodna z zapisaną kolejnością tur; narracja może pojawiać się przed dialogami, pomiędzy nimi lub po nich.
+
+
 **Cel:** prowadzenie pojedynczego wydarzenia prozą z perspektywy jednej postaci graczki. Wydarzenie po zakończeniu staje się wspomnieniem w historii świata.
 
 Elementy:
@@ -499,6 +506,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.0 | 2026-11-17 | Wybrano bezpłatny lokalny runtime Ollama i Qwen3.5 4B jako model testowy. | Decyzja właścicielki |
 | 1.1 | 2026-11-17 | Właścicielka potwierdziła, że model generuje satysfakcjonującą narrację w teście ręcznym. | Test modelu zakończony pozytywnie |
 | 1.2 | 2026-11-17 | Dodano adapter Ollama, zapis segmentów narratora/NPC, walidację autorów, obsługę błędu i ponowienia. | Integracja oczekuje na test aplikacyjny |
+| 1.3 | 2026-11-17 | Zmieniono prezentację historii sceny: narrator jako osobne bloki prozy, dialogi postaci jako dymki z avatarami i subtelnym wyróżnieniem Player Character. | Zmiana UI na podstawie testu i feedbacku właścicielki |
 
 ---
 
