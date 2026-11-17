@@ -605,3 +605,8 @@ Wdrożone zmiany techniczne:
 - Tura gracza nadal jest zapisywana przed wywołaniem AI; błąd generowania pozwala ponowić próbę bez ponownego zapisania tury.
 
 **Status:** wdrożone w repozytorium, oczekuje na `git pull`, aktualizację lokalnej bazy i test właścicielki. Nie oznaczać stabilizacji AI jako DONE przed testem.
+
+
+### Korekta walidacji narratora (po teście lokalnym)
+
+Pierwszy test zwrócił fałszywy błąd granicy Player Character, ponieważ parser odrzucał każdy segment narratora zawierający imię postaci gracza. Regułę usunięto. Narrator nadal ma opisywać wyłącznie otoczenie zgodnie z promptem; kontrola semantyczna tego wymogu pozostaje ograniczona i będzie rozwijana na podstawie testów.
