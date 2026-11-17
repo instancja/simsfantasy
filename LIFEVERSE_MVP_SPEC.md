@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.5 — walidacja granicy narratora i Player Character  
+**Wersja:** 2.6 — ciągłość sceny i walidacja segmentów  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -618,5 +618,18 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Parser filtruje wybrane jawne zdania przypisujące Player Character działanie również w segmentach NPC. Filtracja odbywa się zdanie po zdaniu, aby nie odrzucać całej odpowiedzi z powodu jednego wadliwego fragmentu.
 - Walidacja jest heurystyczna i oparta na słowach/wzorcach. Nie rozumie pełnego znaczenia tekstu, może nie wykryć wszystkich naruszeń i może odrzucić poprawne zdanie. Nie stanowi gwarancji, że AI nigdy nie opisze Player Character ani nie umieści działania NPC w narracji.
 - Nie wprowadzono migracji bazy danych. Zmiana nie powinna wpływać na zapis tur ani stan autonomii NPC.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
+
+
+### 5.12 Kontynuacja poprzedniego beatu i własność segmentów (17 listopada 2026)
+
+- Do kontekstu generowania przekazywana jest poprzednia kompletna odpowiedź AI jako `previousResponseAnchor`, oddzielnie od szerszej historii.
+- Model ma kontynuować po ostatnim wydarzeniu poprzedniej odpowiedzi; nie może odtwarzać tej samej rozmowy, ponownie wykonywać zakończonych działań ani cofać postaci do wcześniejszego położenia.
+- Narrator opisuje wyłącznie otoczenie i nie opisuje osób ani postaci.
+- Segment NPC może opisywać działania wyłącznie przypisanego do niego NPC. Wzmianki dialogowe o innych postaciach są dozwolone, ale narracja o ich działaniach powinna zostać odrzucona.
+- Parser usuwa zdania powtórzone dosłownie z bezpośrednio poprzedniej odpowiedzi oraz wybrane naruszenia granicy Player Character i własności segmentów.
+- Filtry są heurystyczne i nie wykrywają wszystkich parafraz ani zależności semantycznych. Mogą odrzucić poprawny fragment; nie stanowią gwarancji, że model nigdy nie naruszy granicy PC.
+- Zmiana nie wymaga migracji bazy danych i zachowuje pojedynczy wspólny rekord AI.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
