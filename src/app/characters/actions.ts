@@ -38,5 +38,7 @@ export async function updateCharacter(id:string,form:FormData) {
  revalidatePath("/characters");revalidatePath("/characters/"+id);redirect("/characters/"+id);
 }
 export async function deleteCharacter(id:string) {
+ const participationCount=await prisma.eventParticipant.count({where:{characterId:id}});
+ if(participationCount>0) throw new Error("This character is part of a saved story event and cannot be deleted without damaging the archive.");
  await prisma.character.delete({where:{id}});revalidatePath("/characters");redirect("/characters");
 }
