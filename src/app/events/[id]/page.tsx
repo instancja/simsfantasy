@@ -9,13 +9,12 @@ function splitPlayerTurn(content:string){
  const pattern=/\\*([^*]+)\\*/g;
  let cursor=0,match:RegExpExecArray|null;
  while((match=pattern.exec(content))!==null){
-  const before=content.slice(cursor,match.index).trim();
+  const before=content.slice(cursor,match.index);
   if(before)parts.push({kind:"dialogue",text:before});
-  const action=match[1].trim();
-  if(action)parts.push({kind:"action",text:action});
+  if(match[1])parts.push({kind:"action",text:match[1]});
   cursor=pattern.lastIndex;
  }
- const rest=content.slice(cursor).trim();
+ const rest=content.slice(cursor);
  if(rest)parts.push({kind:"dialogue",text:rest});
  return parts.length?parts:[{kind:"dialogue" as const,text:content}];
 }
@@ -38,10 +37,10 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
    const displayName=character?[character.name,character.surname].filter(Boolean).join(" "):t.speakerName;
    if(isPlayer){
     const parts=splitPlayerTurn(t.content);
-    return <div className="playerTurnGroup" key={t.id}>{parts.map((part,index)=>part.kind==="action"
-     ?<article className="narrationBlock playerActionBlock" key={index}><div className="narrationLabel"><span>✧</span> ACTION</div><p>{part.text}</p></article>
-     :<article className="dialogueTurn playerDialogue" key={index}><div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div><div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>YOUR CHARACTER</span></div><div className="dialogueBubble"><p>{part.text}</p></div></div></article>
-    )}<time className="playerTurnTime">{t.createdAt.toLocaleString("en-US")}</time></div>;
+    return <article className="dialogueTurn playerDialogue" key={t.id}>
+     <div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>YOUR CHARACTER</span></div><div className="dialogueBubble"><p>{parts.map((part,index)=>part.kind==="action"?<em className="inlineCharacterAction" key={index}>{part.text}</em>:<span key={index}>{part.text}</span>)}</p></div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+    </article>;
    }
    return <article className="dialogueTurn" key={t.id}>
     <div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div>
