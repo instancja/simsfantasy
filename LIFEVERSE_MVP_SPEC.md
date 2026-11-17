@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.2 — etykieta narratora  
+**Wersja:** 2.3 — poprawa pamięci kontekstowej AI  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -571,3 +571,13 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - „AI” może pozostać małym oznaczeniem technicznym wskazującym, że treść została wygenerowana.
 - Nazwa akademii ani nazwa świata nie może zastępować etykiety „Narrator”.
 - Wcześniejsze zapisy z inną nazwą są wyświetlane pod etykietą „Narrator”; nie wymaga to migracji danych.
+
+
+### 5.9 Rozwijanie pamięci rozmowy przed generowaniem
+
+- Każda wspólna odpowiedź AI pozostaje jednym rekordem historii, ale jej wewnętrzne segmenty Narratora i NPC są odtwarzane jako osobne wpisy kontekstowe dla modelu.
+- Kolejność segmentów musi zostać zachowana, aby model rozumiał, kto wykonał działanie, kto wypowiedział daną kwestię i co opisał narrator.
+- Nie wolno przekazywać surowego JSON-u wspólnego dymku jako pojedynczej wypowiedzi Narratora, jeśli można odczytać jego strukturę.
+- Indywidualna wiedza NPC z `sceneState.npcKnowledge` jest jawnie dołączana wyłącznie do kontekstu odpowiedniej postaci. Nie jest współdzielona automatycznie.
+- W przypadku starszych rekordów NARRATOR/NPC zachowuje się dotychczasowy kontekst; rekordy AI o niepoprawnej strukturze pozostają bezpiecznie obsługiwane jako zwykła treść.
+- Zmiana nie wymaga migracji bazy danych.
