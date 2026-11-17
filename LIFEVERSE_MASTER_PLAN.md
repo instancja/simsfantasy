@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.8\
+**Wersja:** 2.9\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -667,3 +667,16 @@ Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pen
 ### Korekta tolerancji parsera segmentów AI (17 listopada 2026)
 
 Test lokalny ujawnił, że walidacja mogła odrzucić wszystkie segmenty i przerwać kontynuację. Parser zmieniono tak, aby pomijał wyłącznie wadliwe fragmenty, rozpoznawał NPC po identyfikatorze lub nazwie, a przy jednym NPC dopuszczał jednoznaczne przypisanie. Fragmenty narratora zawierające imię Player Character są filtrowane zdanie po zdaniu zamiast powodować błąd całej generacji. Jeśli nic nie przejdzie walidacji, komunikat zawiera liczbę odrzuconych fragmentów według kategorii. Zmiana wymaga ponownego testu lokalnego; nie potwierdza jeszcze poprawności wszystkich wariantów JSON zwracanych przez model.
+
+
+### STORY — rozdzielenie narratora od działań postaci (17 listopada 2026)
+
+Po teście, w którym narrator opisywał ruchy Player Character i zachowania NPC, doprecyzowano prompt i walidację segmentów:
+- Narrator ma opisywać wyłącznie nieożywione otoczenie; nie powinien używać imion ani zaimków odnoszących się do postaci.
+- Działania, gesty, mimika, ruch i dialog NPC należą do segmentu przypisanego dokładnie tej postaci.
+- Parser odrzuca zdania narratora zawierające znane imiona postaci, wybrane konstrukcje zaimkowe opisujące działania oraz wybrane zaimki dzierżawcze odnoszące się do cech/postawy postaci.
+- Segmenty NPC są filtrowane zdanie po zdaniu pod kątem wybranych jawnych konstrukcji przypisujących działania lub cechy Player Character; pozostałe bezpieczne zdania mogą zostać zachowane.
+- Jest to walidacja heurystyczna oparta na wzorcach językowych, nie pełna analiza semantyczna. Może pomijać część naruszeń i odrzucać niektóre poprawne zdania. Wymaga testów na odpowiedziach lokalnego modelu; nie oznaczać ochrony PC jako w pełni rozwiązanej.
+- Autonomia NPC i wielobeatowa kontynuacja pozostają zachowane; zmiana dotyczy przypisania treści do właściwych segmentów.
+
+**Commit implementacji:** `9a1e594376a18b5f32c4980cfe5e2dbef32974c0`.
