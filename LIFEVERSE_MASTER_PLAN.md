@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.1\
+**Wersja:** 2.2\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -561,7 +561,8 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 | Wersja | Data | Zmiana | Decyzja / źródło | Szczegóły |
 |---|---|---|---|---|
 | 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | Wersja pośrednia: NPC w dymkach tylko mówią, narrator opisuje ich działania; graczka używa *...* dla akcji. Zastąpiona decyzją 2.0. |
-| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |\n| 2.1 | 2026-11-17 | Bezwzględna granica kontroli Player Character | Zgłoszenie właścicielki: AI dopisywało reakcje i wypowiedzi postaci gracza | Profil Player Character usunięty z listy postaci przekazywanej jako NPC; ostatnia tura przekazywana osobno jako niezmienny wkład gracza; prompt jednoznacznie ogranicza AI do środowiska i NPC, zabrania dialogów, działań, myśli i reakcji Player Character oraz nakazuje kończyć scenę w miejscu wymagającym decyzji gracza. |
+| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |\n| 2.1 | 2026-11-17 | Bezwzględna granica kontroli Player Character | Zgłoszenie właścicielki: AI dopisywało reakcje i wypowiedzi postaci gracza | Profil Player Character usunięty z listy postaci przekazywanej jako NPC; ostatnia tura przekazywana osobno jako niezmienny wkład gracza; prompt ogranicza AI do środowiska i NPC. |
+| 2.2 | 2026-11-17 | Stabilizacja ciągłości Story | Test właścicielki ujawnił halucynowane relacje, zdolności i działania Player Character | Dodano trwały stan sceny (fakty, otwarte wątki, wiedza per NPC), przekazywanie ostatnich 10 tur wraz z pamięcią, mocniejsze reguły źródeł prawdy, niższą temperaturę i walidację segmentów; stan pamięci jest zachowywany między generacjami. Wymaga testu lokalnego; walidacja heurystyczna nie gwarantuje wykrycia wszystkich naruszeń. |
 
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
@@ -573,7 +574,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 **Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
 **Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
 **Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
-**AI:** bezpłatny lokalny runtime Ollama; Qwen3.5 4B (`qwen3.5:4b`) zainstalowany i ręcznie przetestowany przez właścicielkę — jakość przykładowej narracji została zaakceptowana. Aplikacja ma lokalny adapter Ollama, wielogłosowe segmenty narrator/NPC, walidację dozwolonych mówców, stan błędu i ponawianie. Integracja aplikacyjna wymaga testu właścicielki; nie oznaczać jej jako DONE przed tym testem. Brak płatnego API i wymaganych subskrypcji.
+**AI:** bezpłatny lokalny runtime Ollama; Qwen3.5 4B (`qwen3.5:4b`) zainstalowany i ręcznie przetestowany przez właścicielkę. Adapter ma wielogłosowe segmenty, trwały stan sceny (fakty, wątki, wiedza per NPC), skróconą historię ostatnich tur, obniżoną temperaturę i podstawową walidację granicy Player Character. Integracja i jakość ciągłości wymagają testu właścicielki; walidacja heurystyczna nie wykryje każdego błędu. Brak płatnego API.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
@@ -582,9 +583,25 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 - Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
 - Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test nowej prezentacji: działania i dialogi NPC w ich własnych dymkach, narrator wyłącznie jako opis otoczenia; działania graczki i jej dialog razem w jej dymku.
+**Najbliższy krok:** test lokalny stabilizacji STORY: sprawdzić, czy NPC pamiętają wyłącznie to, co wiedzą, nie wymyślają wcześniejszych spotkań ani zdolności, nie powtarzają tur i nie przejmują Player Character. Po teście dopracować prompt i walidację na podstawie konkretnych błędów.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
 
 **Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji. Model rozgrywki oraz kierunek formularza postaci (expanded) zostały doprecyzowane zgodnie z decyzjami właścicielki.
+
+
+## 12B. Stabilizacja silnika STORY — wersja 2.2
+
+Zgłoszony problem: model dopisywał wspólną przeszłość przy pierwszym spotkaniu, przypisywał NPC niepotwierdzoną wiedzę i zdolności, wprowadzał niezatwierdzone elementy świata oraz umieszczał działania Player Character w segmentach NPC.
+
+Wdrożone zmiany techniczne:
+- `StoryEvent.sceneState` przechowuje skondensowaną pamięć sceny w JSON: summary, establishedFacts, openThreads oraz npcKnowledge indeksowane identyfikatorem NPC.
+- Każda poprawna kontynuacja aktualizuje pamięć, a serwer scala fakty i wiedzę z poprzednim stanem, aby ograniczyć ich przypadkową utratę.
+- Do modelu przekazywanych jest maksymalnie 10 ostatnich tur oraz trwały stan sceny; pełna historia nadal pozostaje zachowana w bazie i widoku wydarzenia.
+- Prompt wyraźniej rozdziela fakty, podejrzenia i niewiedzę, zabrania wymyślania wspólnej przeszłości oraz przenoszenia wiedzy między NPC.
+- Temperatura została obniżona z 0.8 do 0.55.
+- Parser odrzuca narrację zawierającą imię Player Character oraz część jawnych konstrukcji przypisujących jej działanie. Jest to kontrola heurystyczna, nie pełna analiza semantyczna.
+- Tura gracza nadal jest zapisywana przed wywołaniem AI; błąd generowania pozwala ponowić próbę bez ponownego zapisania tury.
+
+**Status:** wdrożone w repozytorium, oczekuje na `git pull`, aktualizację lokalnej bazy i test właścicielki. Nie oznaczać stabilizacji AI jako DONE przed testem.
