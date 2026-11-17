@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.4 — poprawka wymiarów avatarów dialogowych  
+**Wersja:** 1.5 — rozdzielenie dialogu i akcji postaci  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -264,10 +264,11 @@ Akcje:
 ### 3.8 Story — widok wydarzenia
 
 **Prezentacja treści (UI):**
-- Segmenty `NARRATOR` są wyświetlane jako osobne, wyśrodkowane bloki prozy pomiędzy dialogami. Nie używają avatara ani dymka czatu; mają dyskretną etykietę `NARRATOR` i typografię odróżniającą narrację od dialogów.
-- Segmenty `NPC` i `PLAYER` są wyświetlane jako dymki dialogowe z avatarem i imieniem postaci.
-- Tura Player Character ma subtelne wyróżnienie wizualne, ale pozostaje w tej samej chronologicznej osi sceny.
-- Kolejność wszystkich segmentów pozostaje zgodna z zapisaną kolejnością tur; narracja może pojawiać się przed dialogami, pomiędzy nimi lub po nich.
+- Segmenty `NARRATOR` są wyświetlane jako osobne bloki prozy pomiędzy dialogami; nie używają avatara ani dymka.
+- Segmenty `NPC` zawierają wyłącznie wypowiadane słowa danej postaci i są wyświetlane w dymku z avatarem i imieniem. Ruchy, gesty, mimika i zachowania NPC należą wyłącznie do narratora.
+- Tura `PLAYER` jest renderowana według konwencji tekstowej: fragmenty ujęte w pojedyncze gwiazdki (`*...*`) są akcjami postaci i wyświetlają się jako bloki narracji; tekst poza gwiazdkami jest dialogiem postaci w dymku z avatarem.
+- W jednej turze gracza można mieszać fragmenty akcji i dialogu; kolejność jest zachowana. Tekst bez gwiazdek jest traktowany jako dialog, a tekst pomiędzy gwiazdkami jako działanie.
+- Tura Player Character ma subtelne wyróżnienie wizualne. Wszystkie elementy pozostają w chronologicznej osi sceny.
 
 
 **Cel:** prowadzenie pojedynczego wydarzenia prozą z perspektywy jednej postaci graczki. Wydarzenie po zakończeniu staje się wspomnieniem w historii świata.
@@ -277,7 +278,7 @@ Elementy:
 - Kontekst: miejsce, czas i uczestnicy (tylko jeśli określone).
 - Chronologiczna historia tur.
 - Wyraźne rozróżnienie tur gracza i odpowiedzi narracyjnej.
-- Pole tekstowe na działanie, wypowiedź, gest lub myśli postaci gracza.
+- Pole tekstowe na turę gracza z prostą konwencją: `*działanie postaci*` oraz zwykły tekst jako jej dialog. Można mieszać oba rodzaje treści w jednej turze.
 - Przycisk wysłania tury.
 - Stan przetwarzania i komunikaty błędów.
 - Dostęp do profili uczestników bez utraty bieżącej sceny.
@@ -293,7 +294,9 @@ Przepływ tury:
 Zachowanie:
 - Nie oferować wymuszonych wyborów A/B/C.
 - Nie dopisywać wypowiedzi, działań, decyzji, myśli, uczuć ani intencji postaci gracza poza treścią zadeklarowaną przez gracza.
-- AI może opisywać otoczenie, NPC, ich dialogi i konsekwencje działań.
+- AI może opisywać otoczenie, ruchy, gesty, mimikę i zachowania NPC oraz konsekwencje działań.
+- Dymki NPC zawierają wyłącznie wypowiadane słowa postaci; narrator nie umieszcza dialogów NPC we własnych blokach, a segmenty NPC nie zawierają opisów działań ani gestów.
+- Działania Player Character oznaczone przez gracza gwiazdkami są prezentowane jako narracja; zwykły tekst gracza jest prezentowany jako dialog. AI nie dopisuje ani nie rozszerza działań Player Character.
 - NPC mogą odmówić, skłamać, zignorować lub działać wbrew oczekiwaniom gracza.
 - Nie przeskakiwać czasu bez uzasadnienia.
 - Nie kończyć sztucznie sceny po jednej krótkiej odpowiedzi.
@@ -508,6 +511,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.2 | 2026-11-17 | Dodano adapter Ollama, zapis segmentów narratora/NPC, walidację autorów, obsługę błędu i ponowienia. | Integracja oczekuje na test aplikacyjny |
 | 1.3 | 2026-11-17 | Zmieniono prezentację historii sceny: narrator jako osobne bloki prozy, dialogi postaci jako dymki z avatarami i subtelnym wyróżnieniem Player Character. | Zmiana UI na podstawie testu i feedbacku właścicielki |
 | 1.4 | 2026-11-17 | Naprawiono wyświetlanie avatarów w dialogach: stały rozmiar koła, przycinanie obrazu i mniejszy rozmiar na urządzeniach mobilnych. | Poprawka po teście właścicielki |
+| 1.5 | 2026-11-17 | Rozdzielono dialog i akcję: NPC mówią wyłącznie w dymkach, narrator opisuje ich zachowania; `*...*` w turze gracza oznacza akcję, tekst poza gwiazdkami — dialog. | Feedback i decyzja właścicielki |
 
 ---
 
