@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.8\
+**Wersja:** 1.9\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -561,6 +561,12 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 
 ------------------------------------------------------------------------
 
+## 12A. Change Log — ostatnie aktualizacje
+
+| Wersja | Data | Zmiana | Decyzja / źródło | Szczegóły |
+|---|---|---|---|---|
+| 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | NPC: dymki zawierają wyłącznie wypowiadane słowa; narrator opisuje ruchy i zachowania NPC. Tura gracza: tekst w *...* jest akcją prezentowaną jako narracja, zwykły tekst jest dialogiem w dymku. |
+
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
 **Produkt:** LIFEVERSE  
@@ -580,7 +586,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 - Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
 - Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test wizualnego przebiegu Story (narracja jako osobne bloki, dialogi NPC i postaci gracza w dymkach z avatarami) oraz dalsza walidacja jakości kontynuacji Ollama.
+**Najbliższy krok:** test nowej konwencji tur gracza (*działanie* / zwykły tekst jako dialog) i ścisłego rozdzielenia narracji działań NPC od ich dialogów.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
