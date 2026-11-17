@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.7 — wyłączna kontrola gracza nad Player Character  
+**Wersja:** 1.8 — pamięć sceny i stabilizacja ciągłości AI  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -397,6 +397,21 @@ Aplikacja powinna uruchamiać się i pozwalać zarządzać postaciami oraz scena
 
 Jeśli Ollama jest niedostępna lub generowanie się nie powiedzie, tura gracza pozostaje zapisana, a UI udostępnia ponowienie generowania bez duplikowania tury. Model ma zwracać wyłącznie JSON z uporządkowanymi segmentami narratora i NPC. Serwer odrzuca nieznane identyfikatory postaci i niedozwolone typy mówców; Player Character nigdy nie może być autorem segmentu AI. Typowe znaczniki rozumowania `<think>...</think>` są usuwane, a prompt wymaga wyłącznie danych wyjściowych bez analizy i planowania. Do promptu nie są przekazywane pola sekretów postaci.
 
+
+### 5.4 Pamięć sceny i ciągłość kontekstu (wdrożone, test lokalny wymagany)
+
+Każde aktywne wydarzenie może przechowywać skondensowany stan sceny w polu `StoryEvent.sceneState`. Stan jest aktualizowany po poprawnej odpowiedzi AI i zawiera:
+- `summary` — krótkie, rzeczowe podsumowanie bieżącej sytuacji;
+- `establishedFacts` — fakty potwierdzone przez kontekst otwarcia lub zapisane tury;
+- `openThreads` — nierozstrzygnięte pytania i trwające interakcje;
+- `npcKnowledge` — informacje, które zna konkretny NPC, przypisane do jego identyfikatora.
+
+Przy generowaniu model otrzymuje stan pamięci oraz maksymalnie 10 ostatnich tur. Pełny zapis wydarzenia pozostaje zachowany w bazie. Serwer scala listy faktów, wątków i wiedzy z poprzednim stanem, aby ograniczyć przypadkową utratę informacji. Pamięć jest wskazówką opartą na historii, a nie niezależnym źródłem kanonu: model nie powinien zamieniać podejrzeń, kłamstw ani własnych dopowiedzeń w fakty.
+
+Prompt rozróżnia wiedzę indywidualną NPC i zabrania automatycznego współdzielenia informacji między postaciami. Nie przekazuje pola sekretów z profilu. Temperatura generowania została zmniejszona do 0.55. Parser odrzuca nieprawidłowych mówców/identyfikatory, narrator nie może używać imienia Player Character, a dodatkowa kontrola wyłapuje część oczywistych zdań przypisujących jej działanie. Ta ostatnia kontrola jest heurystyczna i nie stanowi gwarancji wykrycia wszystkich naruszeń semantycznych.
+
+**Ważne ograniczenie:** Qwen3.5 4B nadal może halucynować. Trwała pamięć i prompt mają poprawić ciągłość, ale skuteczność wymaga testów na rzeczywistych scenach. Nie oznaczać funkcji jako ukończonej przed testem właścicielki.
+
 ## 6. UX i kierunek wizualny
 
 Wymagania:
@@ -440,6 +455,7 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 10. Po restarcie aplikacji historia sceny i wszystkie zapisane tury są dostępne.
 11. Żaden element interfejsu nie tworzy niezatwierdzonego lore ani fikcyjnych danych jako faktów.
 12. Moduły poza zakresem są jednoznacznie oznaczone jako niedostępne / planowane.
+13. Stan sceny jest zapisywany między turami, a wiedza NPC pozostaje rozdzielona; testy potwierdzają brak wymyślania wcześniejszych spotkań i przejmowania Player Character.
 
 ## 9. Kolejność implementacji
 
@@ -512,6 +528,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.4 | 2026-11-17 | Naprawiono wyświetlanie avatarów w dialogach: stały rozmiar koła, przycinanie obrazu i mniejszy rozmiar na urządzeniach mobilnych. | Poprawka po teście właścicielki |
 | 1.5 | 2026-11-17 | Rozdzielono dialog i akcję: NPC mówią wyłącznie w dymkach, narrator opisuje ich zachowania; `*...*` w turze gracza oznacza akcję, tekst poza gwiazdkami — dialog. | Wersja pośrednia, zastąpiona przez 1.6 |
 | 1.6 | 2026-11-17 | Połączono działania i dialogi w dymkach postaci. NPC mają w swoich dymkach dialog i opis własnych działań; narrator opisuje wyłącznie otoczenie. Akcje gracza oznaczone `*...*` są kursywą w jej dymku. | Korekta właścicielki po teście |\n| 1.7 | 2026-11-17 | Wzmocniono granicę kontroli postaci: AI generuje wyłącznie środowisko i NPC, nie tworzy wypowiedzi, działań, myśli ani reakcji Player Character. Ostatnia tura gracza jest przekazywana oddzielnie jako niezmienny wkład; profil gracza nie jest przekazywany w zestawie profili NPC. | Problem zgłoszony podczas testu |
+| 1.8 | 2026-11-17 | Dodano trwały stan sceny i indywidualną pamięć NPC; model otrzymuje stan sceny i ostatnie 10 tur, prompt mocniej rozróżnia fakty od domysłów, temperatura spada do 0.55, a parser otrzymuje dodatkowe heurystyczne zabezpieczenia granicy Player Character. | Stabilizacja po zgłoszeniu halucynacji i błędów ciągłości; oczekuje na test lokalny |
 
 ---
 
