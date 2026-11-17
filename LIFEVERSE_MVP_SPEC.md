@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.3 — wizualny układ narracji Story  
+**Wersja:** 1.4 — poprawka wymiarów avatarów dialogowych  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -507,6 +507,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.1 | 2026-11-17 | Właścicielka potwierdziła, że model generuje satysfakcjonującą narrację w teście ręcznym. | Test modelu zakończony pozytywnie |
 | 1.2 | 2026-11-17 | Dodano adapter Ollama, zapis segmentów narratora/NPC, walidację autorów, obsługę błędu i ponowienia. | Integracja oczekuje na test aplikacyjny |
 | 1.3 | 2026-11-17 | Zmieniono prezentację historii sceny: narrator jako osobne bloki prozy, dialogi postaci jako dymki z avatarami i subtelnym wyróżnieniem Player Character. | Zmiana UI na podstawie testu i feedbacku właścicielki |
+| 1.4 | 2026-11-17 | Naprawiono wyświetlanie avatarów w dialogach: stały rozmiar koła, przycinanie obrazu i mniejszy rozmiar na urządzeniach mobilnych. | Poprawka po teście właścicielki |
 
 ---
 
