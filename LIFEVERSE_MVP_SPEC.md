@@ -368,7 +368,7 @@ Nie wolno przekazywać każdej postaci całej bazy świata jako jej wiedzy. Szcz
 
 ### 5.1 Status
 
-**BLOCKED / OPEN:** dostawca i model AI nie zostały wybrane. ChatGPT Free nie jest automatycznie API dla lokalnej aplikacji.
+**IN PROGRESS:** wybrano bezpłatny lokalny runtime Ollama i model Qwen3.5 4B (`qwen3.5:4b`). Właścicielka potwierdziła poprawne działanie modelu w ręcznym teście narracyjnym. Adapter aplikacyjny został dodany, ale wymaga testu lokalnego. ChatGPT Free nie jest automatycznie API dla lokalnej aplikacji.
 
 ### 5.2 Wymagania dla adaptera
 
@@ -464,13 +464,13 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 - Obsługa kopii zapasowej / eksportu w zakresie ustalonym dla pierwszego wydania.
 - Poprawki UX i wydajności.
 
-Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js (App Router), React, TypeScript, SQLite i Prisma. Dostawca AI pozostaje otwarty.
+Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js (App Router), React, TypeScript, SQLite i Prisma. Dostawca AI: lokalny Ollama z modelem Qwen3.5 4B.
 
 ## 10. Otwarte decyzje do zatwierdzenia
 
 1. Czy miejsce i czas wydarzenia mają pozostać dowolnymi polami tekstowymi w MVP?
 2. Jak szczegółowo i jak często symulować interakcje NPC w tle?
-3. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
+3. [x] Dostawca i model: bezpłatny lokalny Ollama + Qwen3.5 4B; test aplikacyjny pozostaje do wykonania.
 5. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
 
 ### 9.1 Zaimplementowany zakres Story (fundament i integracja AI w trakcie testów)
@@ -494,6 +494,11 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 0.7 | 2026-11-17 | Dodano osobną zakładkę Appearance, opis wyglądu i lokalny upload avatara z podglądem; avatar jest widoczny na karcie i profilu postaci. | Nowy wymóg właścicielki |
 | 0.8 | 2026-11-17 | Dodano fundament Story: wydarzenia, uczestników, tury gracza i finalizację wydarzenia jako wspomnienia. | Kontynuacja implementacji MVP |
 | 0.9 | 2026-11-17 | Zablokowano usuwanie postaci powiązanych z zapisanymi wydarzeniami, aby chronić integralność archiwum. | Ochrona danych historycznych |
+
+
+| 1.0 | 2026-11-17 | Wybrano bezpłatny lokalny runtime Ollama i Qwen3.5 4B jako model testowy. | Decyzja właścicielki |
+| 1.1 | 2026-11-17 | Właścicielka potwierdziła, że model generuje satysfakcjonującą narrację w teście ręcznym. | Test modelu zakończony pozytywnie |
+| 1.2 | 2026-11-17 | Dodano adapter Ollama, zapis segmentów narratora/NPC, walidację autorów, obsługę błędu i ponowienia. | Integracja oczekuje na test aplikacyjny |
 
 ---
 
