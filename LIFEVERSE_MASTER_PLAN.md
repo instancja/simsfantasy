@@ -346,8 +346,8 @@ komputerze, - zewnętrzne API modelu, - ręczny przepływ pracy z ChatGPT
 jest dostępna.
 
 Nie wolno zakładać, że lokalna aplikacja będzie mogła automatycznie
-używać limitów wiadomości ChatGPT Free. Wybór rozwiązania AI jest
-**OPEN** i wymaga świadomej decyzji właścicielki.
+używać limitów wiadomości ChatGPT Free. Właścicielka wybrała bezpłatny
+lokalny runtime Ollama; pierwszym modelem jest Qwen3.5 4B (`qwen3.5:4b`).
 
 ### Lokalność
 
