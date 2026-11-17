@@ -24,12 +24,12 @@ function parse(raw:string,allowed:Set<string>):Segment[]{
 }
 
 export async function generateOllamaSegments(input:{
- title:string;premise:string|null;location:string|null;timeLabel:string|null;playerName:string;
+ title:string;premise:string|null;location:string|null;timeLabel:string|null;playerName:string;playerCharacterId:string;
  participants:CharacterContext[];turns:TurnContext[];
 }):Promise<Segment[]>{
  const base=(process.env.OLLAMA_BASE_URL||"http://127.0.0.1:11434").replace(/\/$/,"");
  const model=process.env.OLLAMA_MODEL||"qwen3.5:4b";
- const npcs=input.participants.filter(p=>p.name!==input.playerName);
+ const npcs=input.participants.filter(p=>p.id!==input.playerCharacterId);
  const allowed=new Set(npcs.map(p=>p.id));
  const scene={title:input.title,openingContext:input.premise,location:input.location,time:input.timeLabel,
   playerCharacter:input.playerName,
