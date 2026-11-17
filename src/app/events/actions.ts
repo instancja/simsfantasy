@@ -30,7 +30,7 @@ function mergeSceneState(previous:string|null,next:{summary:string;establishedFa
   knowledge[id]=merge(old.npcKnowledge?.[id],next.npcKnowledge[id]??[],12);
  }
  const npcState:Record<string,{currentActivity:string;immediateGoal:string;location:string;unfinishedBusiness:string[]}>= {...(old.npcState??{})};
- for(const [id,state] of Object.entries(next.npcState)){npcState[id]={currentActivity:state.currentActivity||npcState[id]?.currentActivity||"",immediateGoal:state.immediateGoal||npcState[id]?.immediateGoal||"",location:state.location||npcState[id]?.location||"",unfinishedBusiness:merge(npcState[id]?.unfinishedBusiness,state.unfinishedBusiness,6)};}
+ for(const [id,state] of Object.entries(next.npcState)){npcState[id]={currentActivity:state.currentActivity||npcState[id]?.currentActivity||"",immediateGoal:state.immediateGoal||npcState[id]?.immediateGoal||"",location:state.location||npcState[id]?.location||"",unfinishedBusiness:state.unfinishedBusiness.slice(-6)};}
  return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:next.openThreads.slice(-10),npcKnowledge:knowledge,npcState};
 }
 
