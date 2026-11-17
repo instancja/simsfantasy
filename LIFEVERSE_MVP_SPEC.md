@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.8 — pamięć sceny i stabilizacja ciągłości AI  
+**Wersja:** 1.9 — loading feedback dla kontynuacji AI  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -281,6 +281,7 @@ Elementy:
 - Pole tekstowe na turę gracza z prostą konwencją: `*działanie postaci*` oraz zwykły tekst jako jej dialog. Oba rodzaje treści są wyświetlane razem w jednym dymku postaci; działania kursywą, bez widocznych gwiazdek.
 - Przycisk wysłania tury.
 - Stan przetwarzania i komunikaty błędów.
+- Podczas generowania AI przycisk wysyłania/ponawiania pokazuje loading spinner i zmienioną etykietę, blokuje kolejne kliknięcia, a formularz wyświetla komunikat o trwającym generowaniu.
 - Dostęp do profili uczestników bez utraty bieżącej sceny.
 
 Przepływ tury:
@@ -533,3 +534,13 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 ---
 
 **Zasada zatwierdzania:** ta specyfikacja jest projektem roboczym. Propozycje nie stają się wymaganiami, dopóki właścicielka ich wyraźnie nie zaakceptuje.
+
+
+### 5.5 Informacja o trwającym generowaniu
+
+W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
+- przycisk submit pokazuje animowany wskaźnik i komunikat w czasie teraźniejszym;
+- przycisk jest nieaktywny, aby ograniczyć przypadkowe wielokrotne wysłanie;
+- obok formularza wyświetla się komunikat „AI is thinking…” z informacją, że lokalne generowanie może potrwać co najmniej kilkadziesiąt sekund;
+- stan jest oparty o pending formularza React i obejmuje czas całej akcji serwerowej;
+- animacja respektuje ustawienie systemowe ograniczenia ruchu.
