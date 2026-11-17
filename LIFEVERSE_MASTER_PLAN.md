@@ -533,6 +533,10 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 Appearance      dodała wymóg    opis wyglądu, lokalny upload
                                 i avatar        avatara         i podgląd; zdjęcie widoczne
                                                                na karcie i profilu
+  1.2            2026-11-17     Story MVP       Kontynuacja     Modele wydarzeń, uczestników,
+                                foundation      projektu        tur i wspomnień; lista Story,
+                                                               zapis tur gracza i finalizacja
+                                                               wydarzenia do Memory
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
