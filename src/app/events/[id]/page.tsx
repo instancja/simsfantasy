@@ -20,6 +20,19 @@ function splitPlayerTurn(content:string){
  return parts.length?parts:[{kind:"dialogue" as const,text:content}];
 }
 
+function renderQuotedDialogue(content:string){
+ const parts:React.ReactNode[]=[];
+ const pattern=/(“[^”]*”|\u0022[^\u0022]*\u0022)/g;
+ let cursor=0,match:RegExpExecArray|null,index=0;
+ while((match=pattern.exec(content))!==null){
+  if(match.index>cursor)parts.push(content.slice(cursor,match.index));
+  parts.push(<span className="aiSpokenDialogue" key={index++}>{match[0]}</span>);
+  cursor=pattern.lastIndex;
+ }
+ if(cursor<content.length)parts.push(content.slice(cursor));
+ return parts.length?parts:content;
+}
+
 function readAiSegments(content:string):{speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}[]{
  try{const value=JSON.parse(content) as {segments?:unknown};if(!Array.isArray(value.segments))return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];return value.segments.filter((item):item is {speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}=>!!item&&typeof item==="object"&&((item as {speakerType?:unknown}).speakerType==="NARRATOR"||(item as {speakerType?:unknown}).speakerType==="NPC")&&typeof (item as {content?:unknown}).content==="string").map(item=>({speakerType:item.speakerType,speakerName:typeof item.speakerName==="string"?item.speakerName:item.speakerType==="NARRATOR"?"":"NPC",content:item.content}));}catch{return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];}
 }
@@ -40,7 +53,7 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     const segments=readAiSegments(t.content);
     return <article className="dialogueTurn aiDialogue" key={t.id}>
      <div className="dialogueAvatar aiDialogueAvatar">✧</div>
-     <div className="dialogueContent"><div className="dialogueMeta"><strong>{t.speakerName||"Aethelgard Academy"}</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{segment.content}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{segment.content}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>{t.speakerName||"Aethelgard Academy"}</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
     </article>;
    }
    if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{t.createdAt.toLocaleString("en-US")}</time></article>;
