@@ -19,29 +19,29 @@ async function generateAiContinuation(eventId:string){
  const lock=await prisma.storyEvent.updateMany({where:{id:eventId,status:"ACTIVE",aiStatus:{not:"GENERATING"}},data:{aiStatus:"GENERATING",aiError:null,aiLastAttemptAt:new Date()}});
  if(!lock.count)return;
  try{
-  const event=await prisma.storyEvent.findUnique({where:{id:eventId},include:{participants:{include:{character:true}},turns:{orderBy:{sequence:"desc"},take:18}}});
+  const event=await prisma.storyEvent.findUnique({where:{id:eventId},include:{participants:{include:{character:true}},turns:{orderBy:{sequence:"desc"},take:10}}});
   if(!event||event.status!=="ACTIVE")throw new Error("This event is no longer active.");
   const latest=event.turns[0];
   if(!latest||latest.speakerType!=="PLAYER"){await prisma.storyEvent.update({where:{id:eventId},data:{aiStatus:"IDLE",aiError:null}});return;}
   const player=event.participants.find(p=>p.role==="PLAYER");
   if(!player)throw new Error("The Player Character is missing from this event.");
-  const segments=await generateOllamaSegments({
+  const generation=await generateOllamaSegments({
    title:event.title,premise:event.premise,location:event.location,timeLabel:event.timeLabel,
    playerName:[player.character.name,player.character.surname].filter(Boolean).join(" "),playerCharacterId:player.characterId,
    participants:event.participants.map(p=>({id:p.character.id,name:p.character.name,surname:p.character.surname,appearance:p.character.appearance,personality:p.character.personality,psychology:p.character.psychology,history:p.character.history,motivations:p.character.motivations,strengths:p.character.strengths,communication:p.character.communication})),
-   turns:[...event.turns].reverse().map(t=>({speakerType:t.speakerType,speakerName:t.speakerName,content:t.content}))
+   turns:[...event.turns].reverse().map(t=>({speakerType:t.speakerType,speakerName:t.speakerName,content:t.content})),sceneState:event.sceneState
   });
   await prisma.$transaction(async tx=>{
    const fresh=await tx.storyEvent.findUnique({where:{id:eventId},include:{turns:{orderBy:{sequence:"desc"},take:1}}});
    if(!fresh||fresh.status!=="ACTIVE"||fresh.turns[0]?.id!==latest.id)throw new Error("The scene changed while AI was generating. Please retry.");
    let sequence=await tx.eventTurn.count({where:{eventId}});
-   for(const segment of segments){
+   for(const segment of generation.segments){
     const character=segment.speakerType==="NPC"&&segment.characterId?event.participants.find(p=>p.characterId===segment.characterId)?.character:null;
     if(segment.speakerType==="NPC"&&!character)continue;
     sequence++;
     await tx.eventTurn.create({data:{eventId,sequence,speakerType:segment.speakerType,characterId:character?.id??null,speakerName:character?[character.name,character.surname].filter(Boolean).join(" "):"Narrator",content:segment.content}});
    }
-   await tx.storyEvent.update({where:{id:eventId},data:{aiStatus:"IDLE",aiError:null}});
+   await tx.storyEvent.update({where:{id:eventId},data:{sceneState:JSON.stringify(generation.sceneState),aiStatus:"IDLE",aiError:null}});
   });
  }catch(error){
   const message=error instanceof Error?error.message:"Unexpected error while generating the scene.";
