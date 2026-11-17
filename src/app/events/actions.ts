@@ -46,13 +46,13 @@ async function generateAiContinuation(eventId:string){
   await prisma.$transaction(async tx=>{
    const fresh=await tx.storyEvent.findUnique({where:{id:eventId},include:{turns:{orderBy:{sequence:"desc"},take:1}}});
    if(!fresh||fresh.status!=="ACTIVE"||fresh.turns[0]?.id!==latest.id)throw new Error("The scene changed while AI was generating. Please retry.");
-   let sequence=await tx.eventTurn.count({where:{eventId}});
-   for(const segment of generation.segments){
+   const sequence=await tx.eventTurn.count({where:{eventId}})+1;
+   const segments=generation.segments.flatMap(segment=>{
     const character=segment.speakerType==="NPC"&&segment.characterId?event.participants.find(p=>p.characterId===segment.characterId)?.character:null;
-    if(segment.speakerType==="NPC"&&!character)continue;
-    sequence++;
-    await tx.eventTurn.create({data:{eventId,sequence,speakerType:segment.speakerType,characterId:character?.id??null,speakerName:character?[character.name,character.surname].filter(Boolean).join(" "):"Narrator",content:segment.content}});
-   }
+    if(segment.speakerType==="NPC"&&!character)return [];
+    return [{speakerType:segment.speakerType,characterId:character?.id??null,speakerName:character?[character.name,character.surname].filter(Boolean).join(" "):"Narrator",content:segment.content}];
+   });
+   await tx.eventTurn.create({data:{eventId,sequence,speakerType:"AI",characterId:null,speakerName:"Aethelgard Academy",content:JSON.stringify({segments})}});
    await tx.storyEvent.update({where:{id:eventId},data:{sceneState:JSON.stringify(mergeSceneState(event.sceneState,generation.sceneState)),aiStatus:"IDLE",aiError:null}});
   });
  }catch(error){
