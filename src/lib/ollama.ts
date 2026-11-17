@@ -56,7 +56,8 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   if(!characterId&&rawName)characterId=byName.get(rawName);
   if(!characterId&&(kind==="NPC"||kind==="CHARACTER")&&npcs.size===1)characterId=[...npcs.keys()][0];
   if(!characterId){if(kind==="NPC"||kind==="CHARACTER"||rawName)skippedNpc++;else skippedUnknown++;continue;}
-  const otherNpcPatterns=[...npcAliasesById.entries()].filter(([id])=>id!==characterId).map(([,pattern])=>pattern);\n  const safeNpcText=c.split(/(?<=[.!?])\s+/).filter(sentence=>{const prose=removeQuotedDialogue(sentence);return !playerAsActor.test(prose)&&!playerPossessive.test(prose)&&!playerActionInNpcProse(sentence)&&!otherNpcPatterns.some(pattern=>pattern.test(prose));}).join(" ").trim();
+  const otherNpcPatterns=[...npcAliasesById.entries()].filter(([id])=>id!==characterId).map(([,pattern])=>pattern);
+  const safeNpcText=c.split(/(?<=[.!?])\s+/).filter(sentence=>{const prose=removeQuotedDialogue(sentence);return !playerAsActor.test(prose)&&!playerPossessive.test(prose)&&!playerActionInNpcProse(sentence)&&!otherNpcPatterns.some(pattern=>pattern.test(prose));}).join(" ").trim();
   if(!safeNpcText){skippedNpc++;continue;}
   result.push({speakerType:"NPC",characterId,content:safeNpcText});
  }
