@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.1 — poprawa czytelności Story  
+**Wersja:** 2.2 — etykieta narratora  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -563,3 +563,11 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - Narracja środowiskowa nie używa domyślnie kursywy jako jedynego wyróżnika.
 - Fragmenty dialogowe ujęte w cudzysłowy proste (`"..."`) lub typograficzne (`“...”`) otrzymują odrębny, ciepły kolor akcentowy.
 - Wyróżnienie nie zmienia treści ani nie usuwa cudzysłowów.
+
+
+### 5.8 Etykieta wspólnej odpowiedzi AI
+
+- Wspólny dymek narracji i segmentów NPC jest podpisany „Narrator”.
+- „AI” może pozostać małym oznaczeniem technicznym wskazującym, że treść została wygenerowana.
+- Nazwa akademii ani nazwa świata nie może zastępować etykiety „Narrator”.
+- Wcześniejsze zapisy z inną nazwą są wyświetlane pod etykietą „Narrator”; nie wymaga to migracji danych.
