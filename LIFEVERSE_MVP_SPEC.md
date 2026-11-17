@@ -604,3 +604,7 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - Serwer scala ciągłość NPC z poprzednim stanem, aby brak pojedynczego pola w odpowiedzi modelu nie usuwał automatycznie poprzedniego wpisu.
 - Jest to pamięć aktywności w ramach bieżącego wydarzenia; nie implementuje jeszcze autonomicznego procesu w tle dla całego świata.
 - Status: wdrożenie na `main`, test lokalny wymagany. Walidacja Player Character pozostaje heurystyczna.
+
+### Korekta parsera segmentów po błędzie „no valid narrator or NPC segments” (17 listopada 2026)
+
+Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego segmentu. Rozpoznaje warianty pól mówcy i identyfikatora, próbuje dopasować NPC po nazwie, a przy jednym uczestniczącym NPC może przypisać segment jednoznacznie. W narracji odrzucane są tylko zdania zawierające imię Player Character; w segmentach NPC odrzucany jest wyłącznie podejrzany fragment. Jeśli żaden segment nie przejdzie, komunikat diagnostyczny podaje liczbę odrzuceń według kategorii. Zmiana nie usuwa zasady ochrony Player Character, ale wymaga testu lokalnego.
