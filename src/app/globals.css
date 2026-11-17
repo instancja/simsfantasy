@@ -35,3 +35,8 @@
 .playerDialogue .dialogueBubble{background:rgba(185,154,104,.09);border-color:rgba(185,154,104,.22)}
 .playerDialogue .dialogueMeta strong{color:var(--gold)}
 @media(max-width:600px){.dialogueTurn{gap:9px}.dialogueAvatar{width:35px;height:35px;flex-basis:35px}.narrationBlock{padding-left:8px;padding-right:8px}}
+
+/* Keep dialogue portraits constrained even when global image rules are applied. */
+.dialogueAvatar{width:42px!important;height:42px!important;min-width:42px;min-height:42px;max-width:42px;max-height:42px;aspect-ratio:1/1;flex:0 0 42px;overflow:hidden;border-radius:50%;position:relative}
+.dialogueAvatar img{display:block!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center;border-radius:50%;flex:none}
+@media(max-width:600px){.dialogueAvatar{width:35px!important;height:35px!important;min-width:35px;min-height:35px;max-width:35px;max-height:35px;flex-basis:35px}.dialogueAvatar img{width:100%!important;height:100%!important}}
