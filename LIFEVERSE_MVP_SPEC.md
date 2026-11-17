@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.0 — wymagania naprzemiennej narracji AI i wielu NPC  
+**Wersja:** 1.1 — bezpłatny lokalny runtime Ollama  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
