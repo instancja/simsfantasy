@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.3\
+**Wersja:** 2.4\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -133,7 +133,7 @@ Jedna historia odpowiada jednemu wydarzeniu / jednej scenie. Po zakończeniu wyd
 
 Właścicielka opisuje działania, wypowiedzi, gesty i myśli swojej głównej postaci; w polu tury może oznaczać działania pojedynczymi gwiazdkami (`*...*`), a zwykły tekst traktowany jest jako dialog. Oba rodzaje treści pozostają razem w dymku jej postaci.
 
-AI: - rozwija sytuację w pełną prozę; - odgrywa wszystkie postacie poza główną postacią gracza; - łączy dialogi, działania, gesty i reakcje każdego NPC w jego własnym segmencie/dymku z avatarem; - używa narratora wyłącznie do opisu otoczenia i atmosfery, nie działań ani dialogów postaci; - zachowuje ciągłość scen i charakterów; - pozostawia graczowi przestrzeń na kolejną turę.
+AI: - rozwija sytuację w pełną prozę; - odgrywa wszystkie postacie poza główną postacią gracza; - łączy dialogi, działania, gesty i reakcje każdego NPC w jego własnym segmencie/dymku z avatarem; - łączy narrację środowiskową i wypowiedzi wszystkich reagujących NPC w jednym dymku wspólnej odpowiedzi AI; imiona NPC są oznaczane wewnątrz tego dymku; narrator opisuje wyłącznie otoczenie i atmosferę; - zachowuje ciągłość scen i charakterów; - pozostawia graczowi przestrzeń na kolejną turę.
 
 #### Nienaruszalne zasady kontroli postaci
 
@@ -615,3 +615,13 @@ Pierwszy test zwrócił fałszywy błąd granicy Player Character, ponieważ par
 ### UX Story — informacja o trwającym generowaniu (2.3)
 
 Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pending dla wysyłania tury i ponawiania odpowiedzi. Przycisk zmienia etykietę, pokazuje animowany wskaźnik i jest blokowany przed ponownym kliknięciem; formularz wyświetla komunikat o generowaniu oraz orientacyjną informację, że odpowiedź może potrwać 30 sekund lub dłużej. Status korzysta z natywnego stanu formularza React, więc obejmuje cały czas wykonywania server action. Uwzględniono preferencję ograniczenia animacji systemowej.
+
+
+### STORY — jedna odpowiedź AI w jednym dymku (17 listopada 2026)
+
+- Jedna tura Player Character uruchamia jedną kontynuację AI, zapisywaną jako jeden rekord EventTurn typu AI.
+- Wewnątrz wspólnego dymku przeplatają się segmenty narratora (opis środowiska) i dowolnej liczby NPC (działania oraz dialogi z widocznym imieniem postaci).
+- NPC nie otrzymują osobnych, sztucznie wydzielonych tur/dymków; zachowana zostaje kolejność segmentów wygenerowana przez model.
+- Historia pozostaje czytelna dla modelu: zapis strukturalny jest rozwijany do opisanych segmentów przy budowaniu kontekstu kolejnej generacji.
+- Wcześniejsze rekordy NARRATOR/NPC nie są migrowane ani usuwane; nowy układ dotyczy nowych kontynuacji.
+- Status: wdrożone w kodzie, oczekuje na test lokalny.
