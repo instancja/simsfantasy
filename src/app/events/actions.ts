@@ -27,7 +27,7 @@ async function generateAiContinuation(eventId:string){
   if(!player)throw new Error("The Player Character is missing from this event.");
   const segments=await generateOllamaSegments({
    title:event.title,premise:event.premise,location:event.location,timeLabel:event.timeLabel,
-   playerName:[player.character.name,player.character.surname].filter(Boolean).join(" "),
+   playerName:[player.character.name,player.character.surname].filter(Boolean).join(" "),playerCharacterId:player.characterId,
    participants:event.participants.map(p=>({id:p.character.id,name:p.character.name,surname:p.character.surname,appearance:p.character.appearance,personality:p.character.personality,psychology:p.character.psychology,history:p.character.history,motivations:p.character.motivations,strengths:p.character.strengths,communication:p.character.communication})),
    turns:[...event.turns].reverse().map(t=>({speakerType:t.speakerType,speakerName:t.speakerName,content:t.content}))
   });
