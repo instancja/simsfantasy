@@ -663,3 +663,7 @@ Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pen
 - To pierwszy krok symulacji w ramach aktywnego wydarzenia, a nie ciągła symulacja NPC poza wydarzeniem ani automatyczna aktywność całego świata.
 - Granica Player Character pozostaje nadrzędna. Kontrola parsera jest heurystyczna i wymaga testów; nie daje gwarancji pełnej ochrony semantycznej.
 - Status: implementacja na `main`, oczekuje na test lokalny właścicielki.
+
+### Korekta tolerancji parsera segmentów AI (17 listopada 2026)
+
+Test lokalny ujawnił, że walidacja mogła odrzucić wszystkie segmenty i przerwać kontynuację. Parser zmieniono tak, aby pomijał wyłącznie wadliwe fragmenty, rozpoznawał NPC po identyfikatorze lub nazwie, a przy jednym NPC dopuszczał jednoznaczne przypisanie. Fragmenty narratora zawierające imię Player Character są filtrowane zdanie po zdaniu zamiast powodować błąd całej generacji. Jeśli nic nie przejdzie walidacji, komunikat zawiera liczbę odrzuconych fragmentów według kategorii. Zmiana wymaga ponownego testu lokalnego; nie potwierdza jeszcze poprawności wszystkich wariantów JSON zwracanych przez model.
