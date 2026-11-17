@@ -55,3 +55,13 @@
 .pendingSubmit .loadingSpinner{border-color:rgba(23,23,22,.25);border-top-color:#171716}
 @keyframes lifeverseSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.loadingSpinner{animation-duration:2s}}
+
+
+/* A single AI continuation bubble contains environmental narration and all NPC contributions. */
+.aiDialogue{max-width:900px}
+.aiDialogueAvatar{background:rgba(185,154,104,.12);color:var(--gold);font-size:20px}
+.aiDialogueBubble{display:block;width:fit-content;max-width:100%;}
+.aiDialogueBubble .aiNarration{font:italic 13px/1.9 "Playfair Display",serif;color:#c8c2b6;white-space:pre-wrap;margin:0 0 15px}
+.aiDialogueBubble .aiCharacterSegment{font-size:12px;line-height:1.85;white-space:pre-wrap;color:#d8d3c9;margin:0 0 14px}
+.aiDialogueBubble .aiCharacterSegment:last-child,.aiDialogueBubble .aiNarration:last-child{margin-bottom:0}
+.aiDialogueBubble .aiCharacterSegment strong{font-weight:700;color:#e8e4dc}
