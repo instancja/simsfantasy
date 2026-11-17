@@ -296,6 +296,15 @@ adapter umożliwiający komunikację z wybranym modelem.
 
 Technologie nie zostały jeszcze ostatecznie wybrane.
 
+### Dostępny sprzęt właścicielki
+
+- Laptop: MSI Katana 17 B13V.
+- Procesor: Intel Core i9 (dokładny wariant nieustalony).
+- GPU: NVIDIA GeForce RTX 4070 Laptop GPU.
+- RAM: 16 GB — przyjmujemy tę wartość jako bazowe i obowiązujące ograniczenie sprzętowe na obecnym etapie; nie zakładamy rozbudowy pamięci.
+
+Architektura i dobór narzędzi muszą uwzględniać 16 GB RAM oraz 8 GB VRAM typowe dla RTX 4070 Laptop GPU. Konkretne modele lokalnego AI wymagają testów wydajności; aplikacja nie może być uzależniona od jednego modelu ani dostawcy.
+
 ### Ważne rozróżnienie: ChatGPT Free a lokalna aplikacja
 
 ChatGPT Free nie zapewnia automatycznie lokalnej aplikacji dostępu do
@@ -496,6 +505,10 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 zebranie       koncepcja
                                 wymagań z
                                 rozmowy
+  0.2            2026-11-17     Zapisanie     Właścicielka   Bazowe ograniczenie
+                                konfiguracji   potwierdziła    sprzętowe: 16 GB RAM;
+                                sprzętowej     pozostanie      bez założenia
+                                               przy 16 GB      rozbudowy
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
