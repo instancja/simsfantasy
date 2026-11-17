@@ -438,7 +438,7 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 - [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
 - [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
 - [x] Silnik AI: bezpłatny lokalny runtime Ollama; bez płatnego API i subskrypcji.
-- [ ] Zainstalować Ollama i pobrać `qwen3.5:4b`; sprawdzić wydajność i jakość narracji na sprzęcie właścicielki.
+- [x] Zainstalować Ollama, pobrać `qwen3.5:4b` i potwierdzić, że model generuje satysfakcjonujący tekst w teście ręcznym. Integracja aplikacyjna pozostaje do testu lokalnego.
 - [x] Wymagany rytm Story: tura gracza → kontynuacja AI obejmująca adekwatne reakcje wielu NPC i narratora → kolejna tura gracza.
 - [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.
 - [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
@@ -565,15 +565,16 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 **Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
 **Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
 **Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
-**AI:** wybrano bezpłatny lokalny runtime Ollama; pierwszym modelem do testów jest Qwen3.5 4B (tag `qwen3.5:4b`), wybrany ze względu na ograniczenia 16 GB RAM i RTX 4070 Laptop. Model nie jest jeszcze zainstalowany ani przetestowany; wariant 9B może być później porównany, jeśli pozwoli na to pamięć GPU/RAM. Brak płatnego API i brak wymaganych subskrypcji.  obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC. Wymagany przebieg: po turze gracza AI kontynuuje scenę, w razie potrzeby przez kilka NPC i narratora w jednej odpowiedzi.
+**AI:** bezpłatny lokalny runtime Ollama; Qwen3.5 4B (`qwen3.5:4b`) zainstalowany i ręcznie przetestowany przez właścicielkę — jakość przykładowej narracji została zaakceptowana. Aplikacja ma lokalny adapter Ollama, wielogłosowe segmenty narrator/NPC, walidację dozwolonych mówców, stan błędu i ponawianie. Integracja aplikacyjna wymaga testu właścicielki; nie oznaczać jej jako DONE przed tym testem. Brak płatnego API i wymaganych subskrypcji.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
 - Story foundation: dodawanie pojedynczego wydarzenia, automatyczne dołączanie Player Character, wybór NPC, zapis tur gracza, lista aktywnych wydarzeń i archiwum wspomnień. Postacie powiązane z wydarzeniami są chronione przed usunięciem, aby zachować integralność archiwum.
 - Zakończenie wydarzenia tworzy rekord Memory i zachowuje powiązane wydarzenie oraz pełną historię tur.
-- Odpowiedzi AI narratora/NPC, autonomia w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
+- Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
+- Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test lokalny tworzenia wydarzenia, dodawania tur, zakończenia i odczytu wspomnienia po odświeżeniu / restarcie.
+**Najbliższy krok:** test integracji Ollama w istniejącej scenie: migracja schematu, tura gracza, automatyczna odpowiedź narratora/NPC, zapis i retry po błędzie.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
