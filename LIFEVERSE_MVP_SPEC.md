@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.8 — fundament Story: wydarzenia, tury i wspomnienia  
+**Wersja:** 0.9 — ochrona integralności archiwum Story  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -337,7 +337,7 @@ To lista robocza, a nie zatwierdzony schemat bazy danych. Dokładny model relacy
 - Zapis tury gracza następuje przed wywołaniem AI.
 - Błąd generowania nie usuwa wcześniejszej historii.
 - Edycja profilu postaci nie może przypadkowo usuwać tur scen.
-- Usuwanie postaci powiązanej z historią wymaga obsłużenia zależności; preferowane jest zablokowanie usunięcia lub archiwizacja zamiast kaskadowego kasowania treści.
+- Usuwanie postaci powiązanej z wydarzeniem jest blokowane, aby nie naruszyć uczestnictwa i archiwum zapisanej sceny.
 
 ### 4.3 Prywatność i wiedza postaci
 
@@ -478,6 +478,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 0.5 | 2026-11-17 | Uporządkowano opis stałej postaci grywalnej i modelu pojedynczego wydarzenia; audyt potwierdził, że repozytorium nie zawiera jeszcze implementacji. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |\n| 0.6 | 2026-11-17 | Zaktualizowano specyfikację po wdrożeniu modułu Characters i zatwierdzeniu Next.js/React/SQLite/Prisma; język UI określono jako angielski. | Dokumentacja zgodna z aktualnym stanem repozytorium |
 | 0.7 | 2026-11-17 | Dodano osobną zakładkę Appearance, opis wyglądu i lokalny upload avatara z podglądem; avatar jest widoczny na karcie i profilu postaci. | Nowy wymóg właścicielki |
 | 0.8 | 2026-11-17 | Dodano fundament Story: wydarzenia, uczestników, tury gracza i finalizację wydarzenia jako wspomnienia. | Kontynuacja implementacji MVP |
+| 0.9 | 2026-11-17 | Zablokowano usuwanie postaci powiązanych z zapisanymi wydarzeniami, aby chronić integralność archiwum. | Ochrona danych historycznych |
 
 ---
 
