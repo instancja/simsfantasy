@@ -530,6 +530,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.5 | 2026-11-17 | Rozdzielono dialog i akcję: NPC mówią wyłącznie w dymkach, narrator opisuje ich zachowania; `*...*` w turze gracza oznacza akcję, tekst poza gwiazdkami — dialog. | Wersja pośrednia, zastąpiona przez 1.6 |
 | 1.6 | 2026-11-17 | Połączono działania i dialogi w dymkach postaci. NPC mają w swoich dymkach dialog i opis własnych działań; narrator opisuje wyłącznie otoczenie. Akcje gracza oznaczone `*...*` są kursywą w jej dymku. | Korekta właścicielki po teście |\n| 1.7 | 2026-11-17 | Wzmocniono granicę kontroli postaci: AI generuje wyłącznie środowisko i NPC, nie tworzy wypowiedzi, działań, myśli ani reakcji Player Character. Ostatnia tura gracza jest przekazywana oddzielnie jako niezmienny wkład; profil gracza nie jest przekazywany w zestawie profili NPC. | Problem zgłoszony podczas testu |
 | 1.8 | 2026-11-17 | Dodano trwały stan sceny i indywidualną pamięć NPC; model otrzymuje stan sceny i ostatnie 10 tur, prompt mocniej rozróżnia fakty od domysłów, temperatura spada do 0.55, a parser otrzymuje dodatkowe heurystyczne zabezpieczenia granicy Player Character. | Stabilizacja po zgłoszeniu halucynacji i błędów ciągłości; oczekuje na test lokalny |
+| 1.9 | 2026-11-17 | Dodano widoczny stan pending podczas wysyłania tury i ponawiania odpowiedzi AI: animowany spinner, zmienioną etykietę i blokadę ponownego kliknięcia. | Poprawka UX po zgłoszeniu długiego czasu generowania lokalnego modelu |
 
 ---
 
