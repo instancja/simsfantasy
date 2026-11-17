@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.5\
+**Wersja:** 1.6\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -539,6 +539,12 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 foundation      projektu        tur i wspomnień; lista Story,
                                                                zapis tur gracza i finalizacja
                                                                wydarzenia do Memory
+  1.6            2026-11-17     Integracja      Właścicielka   Ręczny test Qwen3.5 4B
+                                lokalnego AI     potwierdziła    pozytywny; dodano adapter
+                                                jakość modelu   Ollama, walidację segmentów,
+                                                               zapis tur NPC/narratora,
+                                                               status błędu i retry; czeka
+                                                               na test aplikacyjny
   1.5            2026-11-17     Wybór          Brak opłat      Ustalono bezpłatny lokalny
                                 lokalnego AI    za API           runtime Ollama i Qwen3.5 4B
                                                                jako pierwszy model do testów
