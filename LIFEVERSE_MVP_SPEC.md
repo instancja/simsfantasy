@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.4 — autonomiczna kontynuacja świata  
+**Wersja:** 2.5 — walidacja granicy narratora i Player Character  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -608,3 +608,15 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 ### Korekta parsera segmentów po błędzie „no valid narrator or NPC segments” (17 listopada 2026)
 
 Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego segmentu. Rozpoznaje warianty pól mówcy i identyfikatora, próbuje dopasować NPC po nazwie, a przy jednym uczestniczącym NPC może przypisać segment jednoznacznie. W narracji odrzucane są tylko zdania zawierające imię Player Character; w segmentach NPC odrzucany jest wyłącznie podejrzany fragment. Jeśli żaden segment nie przejdzie, komunikat diagnostyczny podaje liczbę odrzuceń według kategorii. Zmiana nie usuwa zasady ochrony Player Character, ale wymaga testu lokalnego.
+
+
+### 5.11 Granica narratora, NPC i Player Character — korekta po teście (17 listopada 2026)
+
+- Narrator opisuje wyłącznie nieożywione otoczenie: miejsce, pogodę, światło, dźwięki tła, architekturę i przedmioty. Nie opisuje postaci ani ich działań.
+- Każde działanie, gest, mimika, ruch i dialog NPC powinny znajdować się w segmencie przypisanym tej konkretnej postaci.
+- Parser filtruje zdania narratora zawierające imiona uczestników oraz część konstrukcji zaimkowych opisujących działania postaci.
+- Parser filtruje wybrane jawne zdania przypisujące Player Character działanie również w segmentach NPC. Filtracja odbywa się zdanie po zdaniu, aby nie odrzucać całej odpowiedzi z powodu jednego wadliwego fragmentu.
+- Walidacja jest heurystyczna i oparta na słowach/wzorcach. Nie rozumie pełnego znaczenia tekstu, może nie wykryć wszystkich naruszeń i może odrzucić poprawne zdanie. Nie stanowi gwarancji, że AI nigdy nie opisze Player Character ani nie umieści działania NPC w narracji.
+- Nie wprowadzono migracji bazy danych. Zmiana nie powinna wpływać na zapis tur ani stan autonomii NPC.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
