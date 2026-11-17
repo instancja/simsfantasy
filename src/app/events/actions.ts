@@ -52,7 +52,7 @@ async function generateAiContinuation(eventId:string){
     if(segment.speakerType==="NPC"&&!character)return [];
     return [{speakerType:segment.speakerType,characterId:character?.id??null,speakerName:character?[character.name,character.surname].filter(Boolean).join(" "):"Narrator",content:segment.content}];
    });
-   await tx.eventTurn.create({data:{eventId,sequence,speakerType:"AI",characterId:null,speakerName:"Aethelgard Academy",content:JSON.stringify({segments})}});
+   await tx.eventTurn.create({data:{eventId,sequence,speakerType:"AI",characterId:null,speakerName:"Narrator",content:JSON.stringify({segments})}});
    await tx.storyEvent.update({where:{id:eventId},data:{sceneState:JSON.stringify(mergeSceneState(event.sceneState,generation.sceneState)),aiStatus:"IDLE",aiError:null}});
   });
  }catch(error){
