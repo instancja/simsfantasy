@@ -1,8 +1,8 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.3\
+**Wersja:** 0.4\
 **Data utworzenia:** 17 listopada 2026\
-**Status projektu:** Koncepcja zatwierdzona częściowo · draft specyfikacji MVP przygotowany do akceptacji\
+**Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki MVP doprecyzowany; formularz postaci do akceptacji\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
 
 > Ten dokument opisuje uzgodniony dotychczas koncept prywatnej aplikacji
@@ -129,6 +129,10 @@ ale połączoną z tym samym światem i bazą danych.
 
 **Wybrany tryb: B --- współtworzenie turowe.**
 
+Właścicielka odgrywa jedną, stałą postać. Nie przełącza się między postaciami. Pozostałe postacie są NPC i mogą wchodzić w interakcje między sobą również poza bezpośrednim udziałem postaci graczki, zgodnie z osobowościami, motywacjami, relacjami i posiadaną wiedzą.
+
+Jedna historia odpowiada jednemu wydarzeniu / jednej scenie. Po zakończeniu wydarzenie zostaje zachowane jako wspomnienie, które może mieć znaczenie dla późniejszych zachowań, relacji i wiedzy postaci.
+
 Właścicielka: - opisuje działania, wypowiedzi, gesty i myśli swojej
 głównej postaci; - pisze wyłącznie z perspektywy postaci, którą
 odgrywa; - nie musi pisać dialogów ani reakcji pozostałych postaci.
@@ -209,7 +213,10 @@ NPC, - konsekwencje, - aktualizacje relacji, - wydarzenia, - spójność
 pomiędzy Story i Social.
 
 Świat nie powinien istnieć wyłącznie wokół głównej postaci. NPC mają
-własne cele, relacje, konflikty i inicjatywę.
+własne cele, relacje, konflikty i inicjatywę. NPC mogą wchodzić w interakcje
+między sobą w tle, bez konieczności obecności postaci graczki. Istotne
+wydarzenia powinny być zachowywane jako wspomnienia. Sposób i częstotliwość
+symulacji tych interakcji pozostają do zaprojektowania.
 
 Autonomia postaci została określona jako **wysoka**.
 
@@ -513,6 +520,11 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 specyfikacji   wersji          ekrany, przepływy
                                 MVP            przygotowana    i kryteria akceptacji;
                                                do akceptacji   brak implementacji
+  0.4            2026-11-17     Doprecyzowanie  Właścicielka   Jedna postać graczki;
+                                modelu          określiła       jedna historia = jedno
+                                rozgrywki       strukturę       wydarzenie zapisywane
+                                                rozgrywki       jako wspomnienie; NPC
+                                                                mogą działać w tle
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -528,8 +540,7 @@ współczesnych, Dark Academia / Gothic / Old Money\
 Bible, World Engine\
 **Social:** tekstowa sieć inspirowana X; bez Trends i bez wymogu
 obrazów\
-**Story:** turowa proza; gracz kontroluje wyłącznie swoją główną postać;
-AI kontroluje NPC i świat\
+**Story:** pojedyncze wydarzenie/scena zapisywane po zakończeniu jako wspomnienie; właścicielka odgrywa jedną stałą postać; NPC mogą autonomicznie wchodzić w interakcje w tle\
 **Autonomia NPC:** wysoka\
 **Dodawanie postaci:** ma być łatwe, przez interfejs i formularz\
 **Dane:** lokalne, trwałe, z możliwością backupu\
@@ -542,4 +553,4 @@ dashboard.
 
 # Koniec dokumentu
 
-**Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji, ekran po ekranie i akcja po akcji. Dokument oczekuje na akceptację właścicielki.
+**Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji. Model rozgrywki doprecyzowany zgodnie z decyzjami właścicielki; formularz postaci pozostaje do akceptacji.
