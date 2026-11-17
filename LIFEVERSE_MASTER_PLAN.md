@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.6\
+**Wersja:** 1.7\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -580,7 +580,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 - Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
 - Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test integracji Ollama w istniejącej scenie: migracja schematu, tura gracza, automatyczna odpowiedź narratora/NPC, zapis i retry po błędzie.
+**Najbliższy krok:** test wizualnego przebiegu Story (narracja jako osobne bloki, dialogi NPC i postaci gracza w dymkach z avatarami) oraz dalsza walidacja jakości kontynuacji Ollama.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
