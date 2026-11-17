@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.6\
+**Wersja:** 2.7\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -640,4 +640,13 @@ Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pen
 - Wspólny dymek odpowiedzi AI jest podpisany jako „Narrator”, a nie nazwą akademii/świata.
 - Oznaczenie „AI” pozostaje jedynie informacją o źródle generowania, nie nazwą autora.
 - Nowe rekordy AI zapisują `speakerName: "Narrator"`; widok wymusza etykietę „Narrator” także dla wcześniejszych rekordów zapisanych pod starą nazwą.
+- Status: wdrożone w kodzie, oczekuje na test lokalny.
+
+
+### STORY — rozwijanie wspólnych odpowiedzi AI w pamięci kontekstowej (17 listopada 2026)
+
+- Wspólna odpowiedź AI pozostaje jednym rekordem i jednym dymkiem w historii, ale przed kolejnym wywołaniem modelu jest rozwijana do wewnętrznych segmentów Narratora i poszczególnych NPC.
+- Model nie otrzymuje już surowego JSON-u całego poprzedniego dymku jako jednej wypowiedzi „Narrator”; widzi ponownie kolejność narracji i wypowiedzi konkretnych postaci.
+- Indywidualne fakty z `sceneState.npcKnowledge` są dołączane do odpowiedniego profilu NPC jako `knownFacts`. Prompt wyraźnie zabrania przenoszenia tych informacji między postaciami.
+- Zmiana nie modyfikuje istniejących rekordów ani schematu bazy danych.
 - Status: wdrożone w kodzie, oczekuje na test lokalny.
