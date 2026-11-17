@@ -53,7 +53,7 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     const segments=readAiSegments(t.content);
     return <article className="dialogueTurn aiDialogue" key={t.id}>
      <div className="dialogueAvatar aiDialogueAvatar">✧</div>
-     <div className="dialogueContent"><div className="dialogueMeta"><strong>{t.speakerName||"Aethelgard Academy"}</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>Narrator</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
     </article>;
    }
    if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{t.createdAt.toLocaleString("en-US")}</time></article>;
