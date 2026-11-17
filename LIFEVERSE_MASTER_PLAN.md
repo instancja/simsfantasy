@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.4\
+**Wersja:** 2.5\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -624,4 +624,12 @@ Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pen
 - NPC nie otrzymują osobnych, sztucznie wydzielonych tur/dymków; zachowana zostaje kolejność segmentów wygenerowana przez model.
 - Historia pozostaje czytelna dla modelu: zapis strukturalny jest rozwijany do opisanych segmentów przy budowaniu kontekstu kolejnej generacji.
 - Wcześniejsze rekordy NARRATOR/NPC nie są migrowane ani usuwane; nowy układ dotyczy nowych kontynuacji.
+- Status: wdrożone w kodzie, oczekuje na test lokalny.
+
+
+### STORY — czytelność typografii i wyróżnienie dialogów (17 listopada 2026)
+
+- Zwiększono rozmiar tekstu narracji i segmentów NPC oraz zastosowano czytelniejszy krój bez kursywy dla narracji środowiskowej.
+- Tekst wypowiadany przez postacie, ujęty w proste cudzysłowy (`"..."`) lub typograficzne (`“...”`), jest wyróżniany osobnym kolorem.
+- Wyróżnienie dialogu dotyczy treści w cudzysłowie zarówno w narracji, jak i w segmentach NPC; pozostały tekst zachowuje neutralny kolor.
 - Status: wdrożone w kodzie, oczekuje na test lokalny.
