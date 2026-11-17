@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.5\
+**Wersja:** 0.6\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -302,6 +302,32 @@ adapter umożliwiający komunikację z wybranym modelem.
 
 Technologie nie zostały jeszcze ostatecznie wybrane.
 
+### Propozycja stosu technologicznego — NIEZATWIERDZONA
+
+Po audycie repozytorium (stan na 2026-11-17) potwierdzono, że repozytorium
+zawiera wyłącznie dokumenty projektowe:
+- `LIFEVERSE_MASTER_PLAN.md`
+- `LIFEVERSE_MVP_SPEC.md`
+
+Nie ma jeszcze kodu aplikacji, konfiguracji środowiska ani testów.
+
+Rekomendacja do rozważenia:
+- Python + FastAPI jako lokalny backend i API.
+- SQLite jako lokalna baza danych.
+- React + TypeScript + Vite jako frontend desktop-first.
+- Lokalny serwer dostępny z przeglądarki; pakowanie do aplikacji
+  desktopowej można rozważyć później, bez uzależniania MVP od Tauri/Electron.
+- Adapter AI jako osobna warstwa, bez wyboru dostawcy na tym etapie.
+
+Uzasadnienie: rozwiązanie jest modułowe, popularne, możliwe do rozwijania
+etapami i nie wymaga uruchamiania lokalnego modelu AI. Przy 16 GB RAM
+należy utrzymać backend i frontend lekkie; model AI nie będzie częścią
+obowiązkowego procesu uruchomieniowego.
+
+**Status: PROPOZYCJA — wymaga akceptacji właścicielki przed utworzeniem
+szkieletu kodu.** Nie traktować powyższego stosu jako zatwierdzonej
+decyzji.
+
 ### Dostępny sprzęt właścicielki
 
 - Laptop: MSI Katana 17 B13V.
@@ -449,8 +475,7 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 ### STORY
 
-- [ ] Czy sceny będą organizowane w rozdziały i historie?
-- [ ] Czy gracz może w dowolnej chwili rozpocząć nową scenę?
+- [ ] Czy graczka może w dowolnej chwili rozpocząć nowe wydarzenie/scenę?
 - [ ] Jak szczegółowy ma być zapis tur?
 - [ ] Jak rozwiązywać przeskoki czasowe?
 - [ ] Czy AI może proponować rozpoczęcie nowej sceny, bez wymuszania
@@ -461,7 +486,8 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 - [ ] Wybór stacku frontend/backend.
 - [ ] Potwierdzenie SQLite lub innej bazy.
 - [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
-- [ ] Specyfikacja sprzętu PC.
+- [ ] Akceptacja lub zmiana proponowanego stosu: FastAPI + SQLite + React/TypeScript/Vite.
+- [x] Bazowa konfiguracja sprzętowa: MSI Katana 17 B13V, Intel Core i9, RTX 4070 Laptop GPU, 16 GB RAM (bez założenia rozbudowy).
 - [ ] Sposób uruchamiania aplikacji.
 - [ ] Format kopii zapasowej i eksportu.
 
@@ -530,6 +556,12 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 formularza      wariant         podzielony na sekcje;
                                 postaci         expanded        szczegóły UX i typy
                                                                 danych pozostają OPEN
+  0.6            2026-11-17     Audyt           Odczytano       Potwierdzono brak
+                                repozytorium;   bieżące pliki   kodu aplikacji;
+                                korekta         main i          dodano niezobowiązującą
+                                sprzecznego     sprawdzono      propozycję stacku;
+                                punktu OPEN     zawartość       doprecyzowano jedną
+                                                repozytorium    stałą postać grywalną
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -552,7 +584,11 @@ obrazów\
 **AI:** wybór technologii nadal otwarty; ChatGPT Free nie oznacza
 automatycznego dostępu do modelu przez lokalną aplikację\
 **Priorytet:** spójna, działająca symulacja, nie tylko atrakcyjny
-dashboard.
+dashboard.\
+**Stan repozytorium (2026-11-17):** wyłącznie Master Plan i MVP Spec;
+brak implementacji.\
+**Następny krok:** akceptacja stosu technologicznego, potem utworzenie
+szkieletu aplikacji i modelu danych.
 
 ------------------------------------------------------------------------
 
