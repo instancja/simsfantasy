@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.1 — draft do akceptacji  
+**Wersja:** 0.2 — draft po doprecyzowaniu modelu rozgrywki  
 **Data:** 17 listopada 2026  
 **Status:** DRAFT · niezatwierdzona specyfikacja funkcjonalna  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -11,7 +11,7 @@
 
 ## 1. Cel MVP
 
-MVP ma udowodnić, że LIFEVERSE potrafi przechowywać postacie i prowadzić ciągłą, turową scenę fabularną bez utraty kontroli graczki nad jej postacią.
+MVP ma udowodnić, że LIFEVERSE potrafi przechowywać postacie, prowadzić wydarzenie z perspektywy jednej grywalnej postaci oraz zachowywać wydarzenia jako wspomnienia. Pozostałe postacie mają istnieć jako autonomiczne osoby, które mogą wchodzić ze sobą w interakcje zgodnie z charakterami, relacjami i posiadaną wiedzą, także poza bezpośrednim udziałem postaci graczki.
 
 Pierwszy pionowy wycinek obejmuje:
 
@@ -33,10 +33,12 @@ MVP nie ma jeszcze symulować pełnego, autonomicznego życia całego świata. N
 - Dashboard i nawigacja do podstawowych modułów.
 - Baza postaci z formularzem dodawania i edycji.
 - Podstawowe profile postaci.
-- Lista historii/scen.
+- Lista wydarzeń / wspomnień.
 - Widok sceny z kontekstem, historią tur i polem na turę gracza.
 - Trwały zapis danych i możliwość wznowienia pracy.
-- Rozdzielenie postaci gracza od postaci kontrolowanych przez AI.
+- Jedna stała postać graczki; pozostałe postacie są NPC.
+- Podstawowy zapis wydarzenia jako wspomnienia.
+- Fundament danych pod autonomiczne interakcje NPC w tle; zakres automatyzacji i częstotliwość symulacji pozostają do zaprojektowania.
 - Warstwa integracji AI zaprojektowana jako wymienny adapter.
 - Czytelne komunikaty o błędach i stanie integracji AI.
 
@@ -168,23 +170,24 @@ Akcje:
 
 Profil nie może prezentować nieuzupełnionych danych jako faktów.
 
-### 3.6 Story — lista historii i scen
+### 3.6 Story — lista wydarzeń i wspomnień
 
-**Cel:** przeglądanie rozpoczętych i nowych rozgrywek.
+**Cel:** przeglądanie wydarzeń fabularnych. Jedna historia odpowiada jednemu wydarzeniu/scenie; po zakończeniu wydarzenie zostaje zachowane jako wspomnienie. Nie projektujemy na tym etapie wieloscenowej kampanii.
 
 Elementy:
 - Lista historii/scen.
 - Tytuł roboczy.
 - Ostatnia aktywność.
 - Uczestnicy, jeśli zostali określeni.
-- Stan: aktywna lub zakończona, o ile status zostanie wdrożony.
+- Stan wydarzenia: w toku lub zakończone, jeśli status zostanie wdrożony.
+- Wspomnienia pozostają dostępne jako zapis przeszłych wydarzeń.
 
 Akcje:
 - „New Story” / „New Scene” uruchamia kreator.
 - Kliknięcie pozycji otwiera zapisany kontekst i historię tur.
 - Wznowienie sceny nie może resetować wcześniejszej treści.
 
-**OPEN:** czy historia zawiera wiele scen i rozdziałów już w MVP, czy pierwsza wersja traktuje jedną rozgrywkę jako pojedynczą scenę. Minimalna propozycja: pojedyncza scena z możliwością późniejszego rozszerzenia.
+Decyzja właścicielki: jedna historia = jedno wydarzenie / jedna scena. Po zakończeniu wydarzenie zostaje zapisane jako wspomnienie. Nie ma potrzeby budowania struktury rozdziałów i wielu scen w ramach jednej historii w MVP.
 
 ### 3.7 Story — tworzenie sceny
 
@@ -205,9 +208,9 @@ Akcje:
 
 **OPEN:** czy w pierwszym MVP graczka wybiera wyłącznie jedną grywalną postać na całą historię, czy może mieć kilka niezależnych historii z różnymi postaciami. Wymóg źródłowy potwierdza jedną kontrolowaną postać w danej rozgrywce, ale nie rozstrzyga liczby równoległych historii.
 
-### 3.8 Story — widok rozgrywki
+### 3.8 Story — widok wydarzenia
 
-**Cel:** prowadzenie turowej historii prozą.
+**Cel:** prowadzenie pojedynczego wydarzenia prozą z perspektywy jednej postaci graczki. Wydarzenie po zakończeniu staje się wspomnieniem w historii świata.
 
 Elementy:
 - Tytuł sceny.
@@ -239,7 +242,21 @@ Zachowanie:
 
 **Ważne:** aplikacja musi zachować turę gracza nawet wtedy, gdy wywołanie AI zakończy się błędem. Powinna umożliwić ponowienie generowania bez duplikowania tury gracza.
 
-### 3.9 Social, Relationships, World Bible i World State
+### 3.9 Autonomiczne interakcje NPC w tle
+
+Docelowe zachowanie świata zakłada, że NPC mogą wchodzić w interakcje również wtedy, gdy postać graczki nie uczestniczy w danej scenie. Ich działania powinny wynikać z osobowości, motywacji, relacji, wcześniejszych wydarzeń i informacji, które rzeczywiście posiadają.
+
+Wymagania projektowe:
+- NPC nie są wyłącznie postaciami reagującymi na gracza.
+- NPC mogą inicjować i prowadzić interakcje między sobą.
+- Wyniki istotnych interakcji mogą stawać się wydarzeniami i wspomnieniami.
+- Postacie nie mogą znać informacji, do których nie miały wiarygodnego dostępu.
+- Symulacja nie może dowolnie zmieniać charakteru ani relacji postaci.
+- Częstotliwość, harmonogram i techniczny sposób symulowania zdarzeń w tle pozostają do zaprojektowania z uwzględnieniem wydajności.
+
+Pełna autonomia NPC w tle nie musi być w całości częścią pierwszego MVP, ale model danych i architektura powinny jej nie blokować.
+
+### 3.10 Social, Relationships, World Bible i World State
 
 W pierwszym MVP moduły mogą być widoczne w nawigacji jako przyszłe obszary, ale ich pełna funkcjonalność nie jest wymagana. Nie należy tworzyć atrap, które zapisują fikcyjne dane lub sugerują działanie niezaimplementowanej symulacji.
 
@@ -357,12 +374,12 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 - Profil postaci.
 - Trwały zapis.
 
-### MVP-2 — sceny i tury
-- Model Story / Scene / SceneParticipant / SceneTurn.
-- Lista scen.
-- Kreator sceny.
-- Widok rozgrywki i zapis tur.
-- Wznowienie sceny.
+### MVP-2 — wydarzenia i wspomnienia
+- Model Event / EventParticipant / EventTurn.
+- Lista wydarzeń i wspomnień.
+- Kreator pojedynczego wydarzenia.
+- Widok wydarzenia i zapis tur.
+- Zakończenie wydarzenia i zachowanie go jako wspomnienia.
 
 ### MVP-3 — integracja narracyjna
 - Interfejs adaptera AI.
@@ -379,19 +396,19 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 
 ## 10. Otwarte decyzje do zatwierdzenia
 
-1. Czy w MVP jedna historia może zawierać wiele scen, czy na początek historia = jedna scena?
-2. Czy użytkowniczka może prowadzić kilka równoległych historii z różnymi grywalnymi postaciami?
-3. Czy pola formularza postaci zaproponowane w sekcji 3.4 są wystarczające na pierwszą wersję?
-4. Czy miejsce i czas sceny mają pozostać dowolnymi polami tekstowymi w MVP?
-5. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
-6. Jaki stack i sposób uruchamiania aplikacji wybrać?
-7. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
+1. Czy pola formularza postaci zaproponowane w sekcji 3.4 są wystarczające na pierwszą wersję?
+2. Czy miejsce i czas wydarzenia mają pozostać dowolnymi polami tekstowymi w MVP?
+3. Jak szczegółowo i jak często symulować interakcje NPC w tle?
+4. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
+5. Jaki stack i sposób uruchamiania aplikacji wybrać?
+6. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
 
 ## 11. Historia zmian
 
 | Wersja | Data | Zmiana | Status |
 |---|---|---|---|
-| 0.1 | 2026-11-17 | Pierwszy draft zakresu MVP, ekranów, przepływów i kryteriów akceptacji na podstawie Master Planu. | Do akceptacji |
+| 0.1 | 2026-11-17 | Pierwszy draft zakresu MVP, ekranów, przepływów i kryteriów akceptacji na podstawie Master Planu. | Draft |
+| 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Do dalszej akceptacji |
 
 ---
 
