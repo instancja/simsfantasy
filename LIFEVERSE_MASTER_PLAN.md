@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.1\
+**Wersja:** 0.3\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · draft specyfikacji MVP przygotowany do akceptacji\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
