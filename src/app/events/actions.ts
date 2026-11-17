@@ -21,15 +21,17 @@ function expandAiTurnForContext(turn:{speakerType:string;speakerName:string;cont
  }catch{return [turn];}
 }
 
-function mergeSceneState(previous:string|null,next:{summary:string;establishedFacts:string[];openThreads:string[];npcKnowledge:Record<string,string[]>}){
- let old:{summary?:string;establishedFacts?:string[];openThreads?:string[];npcKnowledge?:Record<string,string[]>}={};
+function mergeSceneState(previous:string|null,next:{summary:string;establishedFacts:string[];openThreads:string[];npcKnowledge:Record<string,string[]>;npcState:Record<string,{currentActivity:string;immediateGoal:string;location:string;unfinishedBusiness:string[]}>}){
+ let old:{summary?:string;establishedFacts?:string[];openThreads?:string[];npcKnowledge?:Record<string,string[]>;npcState?:Record<string,{currentActivity?:string;immediateGoal?:string;location?:string;unfinishedBusiness?:string[]}>}={};
  if(previous){try{old=JSON.parse(previous);}catch{old={};}}
  const merge=(a:string[]|undefined,b:string[],limit:number)=>[...new Set([...(a??[]),...b])].slice(-limit);
  const knowledge:Record<string,string[]>={};
  for(const id of new Set([...Object.keys(old.npcKnowledge??{}),...Object.keys(next.npcKnowledge)])){
   knowledge[id]=merge(old.npcKnowledge?.[id],next.npcKnowledge[id]??[],12);
  }
- return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:next.openThreads.slice(-10),npcKnowledge:knowledge};
+ const npcState:Record<string,{currentActivity:string;immediateGoal:string;location:string;unfinishedBusiness:string[]}>= {...(old.npcState??{})};
+ for(const [id,state] of Object.entries(next.npcState)){npcState[id]={currentActivity:state.currentActivity||npcState[id]?.currentActivity||"",immediateGoal:state.immediateGoal||npcState[id]?.immediateGoal||"",location:state.location||npcState[id]?.location||"",unfinishedBusiness:merge(npcState[id]?.unfinishedBusiness,state.unfinishedBusiness,6)};}
+ return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:next.openThreads.slice(-10),npcKnowledge:knowledge,npcState};
 }
 
 
