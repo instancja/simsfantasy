@@ -1,40 +1,22 @@
 # LIFEVERSE
 
-Prywatna, lokalna aplikacja symulacyjno-fabularna.
+A private, local-first narrative and social simulation app.
 
-## Wymagania
-
-- Node.js 20.9 lub nowszy
+## Requirements
+- Node.js 20.9 or newer
 - npm
 
-## Uruchomienie lokalne
+## Run locally
+1. Copy `.env.example` to `.env`.
+2. Install dependencies: `npm install`.
+3. Generate Prisma client and sync the local database:
+   `npm run db:generate` then `npm run db:push`.
+4. Start the app: `npm run dev`.
+5. Open http://localhost:3000.
 
-1. Skopiuj `.env.example` do `.env`.
-2. Zainstaluj zależności:
-
-   ```bash
-   npm install
-   ```
-
-3. Wygeneruj klienta bazy danych i utwórz lokalną bazę:
-
-   ```bash
-   npm run db:generate
-   npm run db:push
-   ```
-
-4. Uruchom aplikację:
-
-   ```bash
-   npm run dev
-   ```
-
-5. Otwórz http://localhost:3000.
-
-## Technologie
-
+## Technology
 - Next.js + React + TypeScript
 - SQLite + Prisma
-- CSS Modules / global CSS
+- English-language application UI
 
-Dane aplikacji są lokalne. Plik bazy danych nie jest wersjonowany w Git.
+All character and world data is stored locally in SQLite. The database file is excluded from Git.

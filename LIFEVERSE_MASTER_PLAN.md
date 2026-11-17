@@ -87,9 +87,7 @@ przyjęcia wszystkich elementów kanonu tej serii.
 - Interfejs ma być wygodny na dużym ekranie.
 - Priorytetem jest działająca aplikacja, a nie statyczny mockup.
 
-**Preferowany kierunek techniczny:** lokalna aplikacja webowa z lokalnym
-magazynem danych. SQLite jest wstępną propozycją bazy danych, ale wybór
-technologii wymaga potwierdzenia w etapie technicznym.
+**Zatwierdzony kierunek techniczny:** lokalna aplikacja webowa oparta na Next.js (App Router), React i TypeScript. Dane są przechowywane lokalnie w SQLite przez Prisma ORM.
 
 ### Prywatność i dane
 
@@ -484,7 +482,7 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 - [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
 - [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
-- [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
+- [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.\n- [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.\n- [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
 - [x] Bazowa konfiguracja sprzętowa: MSI Katana 17 B13V, Intel Core i9, RTX 4070 Laptop GPU, 16 GB RAM (bez założenia rozbudowy).
 - [ ] Sposób uruchamiania aplikacji.
 - [ ] Format kopii zapasowej i eksportu.
@@ -570,7 +568,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 języka UI        wymagała        po angielsku; język
                                                  aplikacji       pracy pozostaje polski
                                                  angielskiej
-  --------------------------------------------------------------------------
+  1.0            2026-11-17     Implementacja    Zatwierdzony   Moduł Characters: lista,\n                                modułu           formularz       wyszukiwanie, profil,\n                                Characters       expanded       edycja, usuwanie, zapis\n                                                 i język UI      do SQLite; interfejs EN\n  --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
@@ -595,8 +593,7 @@ obrazów\
 dashboard.\
 **Stan repozytorium (2026-11-17):** rozpoczęto szkielet Next.js; istnieją
 podstawowe pliki aplikacji, konfiguracja TypeScript i schemat Prisma/SQLite.\
-**Następny krok:** implementacja formularza postaci expanded z angielskim
-interfejsem i zapisem do lokalnej bazy danych.
+**Stan implementacji (2026-11-17):** moduł Characters obejmuje listę i wyszukiwanie postaci, formularz expanded (11 sekcji), profil, edycję, usuwanie z potwierdzeniem i zapis do SQLite przez Prisma. Jedna postać może być oznaczona jako Player Character; zaznaczenie jej na innej postaci przenosi oznaczenie.\n**Następny krok:** lokalna walidacja przez właścicielkę i poprawki po testach. Etap nie jest DONE przed sprawdzeniem działania.
 
 ------------------------------------------------------------------------
 

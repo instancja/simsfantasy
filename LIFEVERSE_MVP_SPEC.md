@@ -1,8 +1,8 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.5 — doprecyzowanie zgodności modelu postaci i wydarzeń  
+**Wersja:** 0.6 — implementacja modułu Characters  
 **Data:** 17 listopada 2026  
-**Status:** DRAFT · niezatwierdzona specyfikacja funkcjonalna  
+**Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
 
 > Dokument przekłada zatwierdzoną koncepcję LIFEVERSE na wymagania pierwszej działającej wersji. Elementy oznaczone jako **OPEN** wymagają decyzji właścicielki. **PROPOZYCJA** oznacza rozwiązanie robocze, a nie zatwierdzony wymóg. Dokument nie ustanawia kanonu świata ani biografii postaci.
@@ -441,7 +441,7 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 - Obsługa kopii zapasowej / eksportu w zakresie ustalonym dla pierwszego wydania.
 - Poprawki UX i wydajności.
 
-Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dostawcy AI pozostaje otwarty.
+Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js (App Router), React, TypeScript, SQLite i Prisma. Dostawca AI pozostaje otwarty.
 
 ## 10. Otwarte decyzje do zatwierdzenia
 
@@ -460,7 +460,7 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 | 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Draft |
 | 0.3 | 2026-11-17 | Zatwierdzono wariant formularza postaci „expanded”; dodano sekcje podstawowe, wygląd, osobowość, psychologia, historia, motywacje, mocne/słabe strony, relacje, sekrety, komunikacja i notatki. | Kierunek formularza zatwierdzony; typy danych i UX do dopracowania |
 | 0.4 | 2026-11-17 | Ujednolicono model wydarzeń i wspomnień oraz zasadę jednej stałej postaci graczki; usunięto sprzeczne założenia o wyborze grywalnej postaci dla każdej sceny. | Zgodne z decyzjami właścicielki |
-| 0.5 | 2026-11-17 | Uporządkowano opis stałej postaci grywalnej i modelu pojedynczego wydarzenia; audyt potwierdził, że repozytorium nie zawiera jeszcze implementacji. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |
+| 0.5 | 2026-11-17 | Uporządkowano opis stałej postaci grywalnej i modelu pojedynczego wydarzenia; audyt potwierdził, że repozytorium nie zawiera jeszcze implementacji. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |\n| 0.6 | 2026-11-17 | Zaktualizowano specyfikację po wdrożeniu modułu Characters i zatwierdzeniu Next.js/React/SQLite/Prisma; język UI określono jako angielski. | Dokumentacja zgodna z aktualnym stanem repozytorium |
 
 ---
 

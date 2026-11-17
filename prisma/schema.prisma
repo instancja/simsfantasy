@@ -1,29 +1,27 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-
 model Character {
-  id          String   @id @default(cuid())
-  name        String
-  surname     String?
-  age         String?
-  status      String?
-  affiliation String?
-  appearance  String?
-  personality String?
-  psychology  String?
-  history     String?
-  motivations String?
-  strengths   String?
-  relationships String?
-  secrets     String?
-  communication String?
-  notes       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String   @id @default(cuid())
+  name              String
+  surname           String?
+  age               String?
+  status            String?
+  affiliation       String?
+  isPlayerCharacter Boolean  @default(false)
+  appearance        String?
+  personality       String?
+  psychology        String?
+  history           String?
+  motivations       String?
+  strengths         String?
+  secrets           String?
+  communication    String?
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
