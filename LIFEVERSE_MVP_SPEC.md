@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.3 — poprawa pamięci kontekstowej AI  
+**Wersja:** 2.4 — autonomiczna kontynuacja świata  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -11,7 +11,7 @@
 
 ## 1. Cel MVP
 
-MVP ma udowodnić, że LIFEVERSE potrafi przechowywać postacie, prowadzić wydarzenie z perspektywy jednej grywalnej postaci oraz zachowywać wydarzenia jako wspomnienia. Pozostałe postacie mają istnieć jako autonomiczne osoby, które mogą wchodzić ze sobą w interakcje zgodnie z charakterami, relacjami i posiadaną wiedzą, także poza bezpośrednim udziałem postaci graczki.
+MVP ma udowodnić, że LIFEVERSE potrafi przechowywać postacie, prowadzić rozwijającą się sesję fabularną z perspektywy jednej grywalnej postaci oraz zachowywać wydarzenia jako wspomnienia. Pozostałe postacie mają istnieć jako autonomiczne osoby, które inicjują działania, podtrzymują własne zajęcia i wchodzą ze sobą w interakcje zgodnie z charakterami, relacjami, bieżącymi celami i posiadaną wiedzą — nie tylko w odpowiedzi na ostatnią turę graczki.
 
 Pierwszy pionowy wycinek obejmuje:
 
@@ -23,7 +23,7 @@ Pierwszy pionowy wycinek obejmuje:
 6. Otrzymanie odpowiedzi narracyjnej obejmującej otoczenie i NPC — po skonfigurowaniu dostawcy AI.
 7. Zapis tur i wznowienie sceny po ponownym uruchomieniu aplikacji.
 
-MVP nie ma jeszcze symulować pełnego, autonomicznego życia całego świata. Najpierw musi niezawodnie zapisywać i odtwarzać podstawową rozgrywkę.
+MVP nie symuluje jeszcze ciągle całego świata w tle ani postaci nieuczestniczących w aktywnym wydarzeniu. W ramach aktywnej sesji AI ma jednak prowadzić rozwijającą się historię, a nie zamrożoną scenę lub serię krótkich reakcji na Player Character.
 
 ## 2. Zakres
 
@@ -38,7 +38,8 @@ MVP nie ma jeszcze symulować pełnego, autonomicznego życia całego świata. N
 - Trwały zapis danych i możliwość wznowienia pracy.
 - Jedna stała postać graczki; pozostałe postacie są NPC.
 - Podstawowy zapis wydarzenia jako wspomnienia.
-- Fundament danych pod autonomiczne interakcje NPC w tle; zakres automatyzacji i częstotliwość symulacji pozostają do zaprojektowania.
+- Autonomiczne zachowanie NPC w ramach aktywnego wydarzenia: własne aktywności, cele, inicjowanie rozmów i działań, interakcje NPC–NPC oraz kilka logicznych beatów w jednej kontynuacji AI.
+- Ciągłość bieżącej aktywności i niedokończonych spraw NPC pomiędzy turami.
 - Warstwa integracji AI zaprojektowana jako wymienny adapter.
 - Czytelne komunikaty o błędach i stanie integracji AI.
 
@@ -49,7 +50,7 @@ Poniższe elementy pozostają częścią docelowej wizji, ale nie są warunkiem 
 - Pełny feed Social i automatyczna aktywność NPC.
 - Likes, reposts, quote posts, following i profile społecznościowe.
 - DMs, czaty grupowe i powiadomienia.
-- Zaawansowana symulacja autonomicznego życia wszystkich NPC.
+- Ciągła symulacja autonomicznego życia wszystkich NPC poza aktywną sesją Story, w tym automatyczne upływanie czasu i zdarzenia w tle niezależne od otwartej sesji.
 - Automatyczne, numeryczne przeliczanie relacji.
 - Pełna World Bible z edytorem wszystkich kategorii lore.
 - Zaawansowana oś czasu świata i automatyczne przeskoki czasu.
@@ -413,6 +414,16 @@ Prompt rozróżnia wiedzę indywidualną NPC i zabrania automatycznego współdz
 
 **Ważne ograniczenie:** Qwen3.5 4B nadal może halucynować. Trwała pamięć i prompt mają poprawić ciągłość, ale skuteczność wymaga testów na rzeczywistych scenach. Nie oznaczać funkcji jako ukończonej przed testem właścicielki.
 
+### 5.10 Autonomiczny świat i ciągłość NPC (pierwszy etap — wymaga testu lokalnego)
+
+Docelowy wzorzec narracyjny to ongoing fictional world. AI pełni rolę narratora i silnika symulacji: nie czeka, aż Player Character zainicjuje każdą rozmowę lub zdarzenie. W ramach jednej kontynuacji może rozwinąć kilka logicznych beatów, np. rozmowę NPC–NPC, przerwanie, zmianę zajęcia, wejście lub wyjście postaci albo wiarygodną konsekwencję wydarzenia równoległego. Nie należy sztucznie dodawać dramatycznych zdarzeń ani wymuszać reakcji wszystkich NPC.
+
+Jedno StoryEvent pozostaje pojedynczą sesją zapisywaną jako Memory, ale sesja nie jest ograniczona do statycznej sceny w jednym pomieszczeniu. Zmiany miejsca i zdarzenia poza bezpośrednim kadrem są dopuszczalne, jeśli wynikają z ustalonego kontekstu i postacie mogą wiarygodnie dowiedzieć się o ich przebiegu. Nie wolno dopisywać niezatwierdzonego lore ani teleportować postaci.
+
+`sceneState` rozszerza się o `npcState`, indeksowany identyfikatorem NPC i zawierający: `currentActivity`, `immediateGoal`, `location` oraz `unfinishedBusiness`. Dane są ograniczane i walidowane względem uczestników bieżącego wydarzenia. Mają pomagać modelowi kontynuować zajęcia i zamiary, a nie ustanawiać nowe fakty o świecie bez podstawy w historii.
+
+**Ograniczenie etapu:** stan obejmuje tylko NPC przypisanych do aktywnego wydarzenia. Nie jest to jeszcze symulacja postaci nieobecnych ani autonomiczny proces działający między turami. Qwen3.5 4B może nie zawsze utrzymać wielowątkową narrację lub poprawny JSON; jakość wymaga testów lokalnych.
+
 ## 6. UX i kierunek wizualny
 
 Wymagania:
@@ -531,6 +542,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.6 | 2026-11-17 | Połączono działania i dialogi w dymkach postaci. NPC mają w swoich dymkach dialog i opis własnych działań; narrator opisuje wyłącznie otoczenie. Akcje gracza oznaczone `*...*` są kursywą w jej dymku. | Korekta właścicielki po teście |\n| 1.7 | 2026-11-17 | Wzmocniono granicę kontroli postaci: AI generuje wyłącznie środowisko i NPC, nie tworzy wypowiedzi, działań, myśli ani reakcji Player Character. Ostatnia tura gracza jest przekazywana oddzielnie jako niezmienny wkład; profil gracza nie jest przekazywany w zestawie profili NPC. | Problem zgłoszony podczas testu |
 | 1.8 | 2026-11-17 | Dodano trwały stan sceny i indywidualną pamięć NPC; model otrzymuje stan sceny i ostatnie 10 tur, prompt mocniej rozróżnia fakty od domysłów, temperatura spada do 0.55, a parser otrzymuje dodatkowe heurystyczne zabezpieczenia granicy Player Character. | Stabilizacja po zgłoszeniu halucynacji i błędów ciągłości; oczekuje na test lokalny |
 | 1.9 | 2026-11-17 | Dodano widoczny stan pending podczas wysyłania tury i ponawiania odpowiedzi AI: animowany spinner, zmienioną etykietę i blokadę ponownego kliknięcia. | Poprawka UX po zgłoszeniu długiego czasu generowania lokalnego modelu |
+| 2.0 | 2026-11-17 | Zmieniono model Story z reaktywnej sceny na rozwijającą się sesję z autonomicznymi beatami NPC. | Właścicielka wyjaśniła oczekiwany wzorzec narracji na podstawie Character.AI; bez kopiowania lore ani naruszania granicy Player Character |
 
 ---
 
@@ -581,3 +593,13 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - Indywidualna wiedza NPC z `sceneState.npcKnowledge` jest jawnie dołączana wyłącznie do kontekstu odpowiedniej postaci. Nie jest współdzielona automatycznie.
 - W przypadku starszych rekordów NARRATOR/NPC zachowuje się dotychczasowy kontekst; rekordy AI o niepoprawnej strukturze pozostają bezpiecznie obsługiwane jako zwykła treść.
 - Zmiana nie wymaga migracji bazy danych.
+
+
+## 12. Autonomiczny świat — zakres pierwszej implementacji
+
+- Prompt opisuje LIFEVERSE jako ongoing fictional world, a nie chat reagujący wyłącznie na ostatnią wiadomość.
+- NPC otrzymują stan bieżącej aktywności, bezpośredniego celu, lokalizacji i niedokończonych spraw z poprzednich kontynuacji.
+- Model zwraca `npcState` obok faktów, wątków i indywidualnej wiedzy. Serwer ogranicza długość pól i akceptuje tylko identyfikatory NPC należących do wydarzenia.
+- Serwer scala ciągłość NPC z poprzednim stanem, aby brak pojedynczego pola w odpowiedzi modelu nie usuwał automatycznie poprzedniego wpisu.
+- Jest to pamięć aktywności w ramach bieżącego wydarzenia; nie implementuje jeszcze autonomicznego procesu w tle dla całego świata.
+- Status: wdrożenie na `main`, test lokalny wymagany. Walidacja Player Character pozostaje heurystyczna.
