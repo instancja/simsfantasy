@@ -2,8 +2,7 @@
 
 **Wersja:** 0.1\
 **Data utworzenia:** 17 listopada 2026\
-**Status projektu:** Koncepcja zatwierdzona częściowo · przed etapem
-specyfikacji technicznej\
+**Status projektu:** Koncepcja zatwierdzona częściowo · draft specyfikacji MVP przygotowany do akceptacji\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
 
 > Ten dokument opisuje uzgodniony dotychczas koncept prywatnej aplikacji
@@ -351,9 +350,9 @@ trakcie. - **BLOCKED** --- zablokowane decyzją lub zależnością. -
   Etap              Zakres            Kryterium         Status
                                       ukończenia
   ----------------- ----------------- ----------------- -----------------
-  0. Product       Zatwierdzenie     Kompletna         IN PROGRESS
-  specification     wymagań i         specyfikacja MVP
-                    ograniczeń
+  0. Product       Zatwierdzenie     Specyfikacja     IN PROGRESS
+  specification     wymagań i         MVP przygotowana
+                    ograniczeń        i zaakceptowana
 
   1. World Bible   Wprowadzenie      Zatwierdzony      NOT STARTED
                     kanonu świata     dokument świata
@@ -509,6 +508,11 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 konfiguracji   potwierdziła    sprzętowe: 16 GB RAM;
                                 sprzętowej     pozostanie      bez założenia
                                                przy 16 GB      rozbudowy
+  0.3            2026-11-17     Przygotowanie  Specyfikacja    Draft MVP
+                                draftu         pierwszej       obejmujący zakres,
+                                specyfikacji   wersji          ekrany, przepływy
+                                MVP            przygotowana    i kryteria akceptacji;
+                                               do akceptacji   brak implementacji
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -538,6 +542,4 @@ dashboard.
 
 # Koniec dokumentu
 
-**Następny dokument do przygotowania po Master Planie:**
-`LIFEVERSE_MVP_SPEC.md` --- szczegółowa specyfikacja pierwszej
-działającej wersji, ekran po ekranie i akcja po akcji.
+**Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji, ekran po ekranie i akcja po akcji. Dokument oczekuje na akceptację właścicielki.
