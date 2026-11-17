@@ -29,9 +29,10 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string):Generation{
  let skippedNarrator=0,skippedNpc=0,skippedUnknown=0;
  for(const item of (value as {segments:unknown[]}).segments){
   if(!item||typeof item!=="object")continue;
-  const s=item as {speakerType?:unknown;type?:unknown;speaker?:unknown;characterId?:unknown;character_id?:unknown;speakerName?:unknown;characterName?:unknown;name?:unknown;content?:unknown};
-  if(typeof s.content!=="string"||!s.content.trim())continue;
-  const c=clean(s.content).slice(0,7000);if(!c)continue;
+  const s=item as {speakerType?:unknown;type?:unknown;speaker?:unknown;characterId?:unknown;character_id?:unknown;speakerName?:unknown;characterName?:unknown;name?:unknown;content?:unknown;text?:unknown;message?:unknown};
+  const rawContent=s.content??s.text??s.message;
+  if(typeof rawContent!=="string"||!rawContent.trim())continue;
+  const c=clean(rawContent).slice(0,7000);if(!c)continue;
   const kind=String(s.speakerType??s.type??s.speaker??"").trim().toUpperCase();
   if(kind==="NARRATOR"||kind==="NARRATION"){
    const safeText=c.split(/(?<=[.!?])\s+/).filter(sentence=>!new RegExp("\\b"+escaped+"\\b","i").test(sentence)).join(" ").trim();
