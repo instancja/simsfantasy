@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.7\
+**Wersja:** 2.8\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -129,7 +129,7 @@ ale połączoną z tym samym światem i bazą danych.
 
 Właścicielka odgrywa jedną, stałą postać. Nie przełącza się między postaciami. Pozostałe postacie są NPC i mogą wchodzić w interakcje między sobą również poza bezpośrednim udziałem postaci graczki, zgodnie z osobowościami, motywacjami, relacjami i posiadaną wiedzą.
 
-Jedna historia odpowiada jednemu wydarzeniu / jednej scenie. Po zakończeniu wydarzenie zostaje zachowane jako wspomnienie, które może mieć znaczenie dla późniejszych zachowań, relacji i wiedzy postaci.
+Jedna historia odpowiada jednemu wydarzeniu / jednej sesji fabularnej. Po zakończeniu wydarzenie zostaje zachowane jako wspomnienie. Sesja nie jest zamrożona w jednym pomieszczeniu: sytuacja może ewoluować, postacie mogą przemieszczać się między ustalonymi lokalizacjami, a wiarygodne zdarzenia równoległe mogą wpływać na przebieg. Nie jest to kampania z narzuconą strukturą rozdziałów.
 
 Właścicielka opisuje działania, wypowiedzi, gesty i myśli swojej głównej postaci; w polu tury może oznaczać działania pojedynczymi gwiazdkami (`*...*`), a zwykły tekst traktowany jest jako dialog. Oba rodzaje treści pozostają razem w dymku jej postaci.
 
@@ -211,7 +211,7 @@ między sobą w tle, bez konieczności obecności postaci graczki. Istotne
 wydarzenia powinny być zachowywane jako wspomnienia. Sposób i częstotliwość
 symulacji tych interakcji pozostają do zaprojektowania.
 
-Autonomia postaci została określona jako **wysoka**.
+Autonomia postaci została określona jako **wysoka**. Wymaganym wzorcem jest ongoing fictional world: AI pełni rolę narratora i silnika symulacji, a nie wyłącznie generatora reakcji na ostatnią wiadomość gracza. Player Character pozostaje całkowicie pod kontrolą użytkowniczki.
 
 Nie oznacza to jednak konieczności ciągłego generowania zdarzeń.
 Aktywność świata powinna być kontrolowana przez mechanikę symulacji i
@@ -381,7 +381,7 @@ Statusy: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **DONE** (sprawdzone lok
 | 7. Relationships | Model relacji i konsekwencje | Zmiany wynikają z wydarzeń | NOT STARTED |
 | 8. Shared world state | Integracja Story i Social | Wydarzenia mogą aktualizować obie warstwy | NOT STARTED |
 | 9. Notifications | Powiadomienia wynikające z aktywności | Powiadomienia są spójne ze zdarzeniami | NOT STARTED |
-| 10. AI integration | Lokalny adapter Ollama, model Qwen, narracja wielogłosowa | AI korzysta z właściwego kontekstu i zapisuje osobne tury NPC/narratora | IN PROGRESS |
+| 10. AI integration | Lokalny adapter Ollama, model Qwen, autonomiczna narracja wielowątkowa | AI rozwija świat przez wiele beatów, utrzymuje aktywności NPC i respektuje granicę Player Character | IN PROGRESS |
 | 11. UI polish | Dopracowanie Dark Academia UI | Interfejs jest czytelny i spójny | NOT STARTED |
 | 12. Testing | Testy ciągłości, danych i rozgrywki | Zaliczone scenariusze testowe | NOT STARTED |
 | 13. Backup & release | Kopie zapasowe i lokalne uruchamianie | Można odtworzyć projekt po awarii | NOT STARTED |
@@ -583,7 +583,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 - Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
 - Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test lokalny stabilizacji STORY: sprawdzić, czy NPC pamiętają wyłącznie to, co wiedzą, nie wymyślają wcześniejszych spotkań ani zdolności, nie powtarzają tur i nie przejmują Player Character. Po teście dopracować prompt i walidację na podstawie konkretnych błędów.
+**Najbliższy krok:** test lokalny autonomicznej kontynuacji: sprawdzić, czy NPC inicjują i podtrzymują interakcje między sobą, realizują własne bieżące cele, rozwijają wydarzenie przez kilka beatów, zachowują indywidualną wiedzę i nie przejmują Player Character. Pierwszy etap ciągłości NPC nie oznacza jeszcze pełnej symulacji świata poza aktywnym wydarzeniem.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
@@ -650,3 +650,14 @@ Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pen
 - Indywidualne fakty z `sceneState.npcKnowledge` są dołączane do odpowiedniego profilu NPC jako `knownFacts`. Prompt wyraźnie zabrania przenoszenia tych informacji między postaciami.
 - Zmiana nie modyfikuje istniejących rekordów ani schematu bazy danych.
 - Status: wdrożone w kodzie, oczekuje na test lokalny.
+
+
+### STORY — autonomiczny, rozwijający się świat (17 listopada 2026)
+
+- Wzorzec docelowy: ongoing fictional world; AI nie ogranicza się do reakcji na ostatnią turę Player Character.
+- Wydarzenie jest pojedynczą sesją zapisywaną jako Memory, ale nie musi pozostać w jednym pomieszczeniu ani w statycznym układzie postaci.
+- NPC mogą inicjować rozmowy i działania między sobą, kontynuować własne zajęcia, zmieniać plany i rozwijać kilka logicznych beatów w jednej odpowiedzi AI.
+- `sceneState` obejmuje `npcState`: bieżącą aktywność, bezpośredni cel, lokalizację i niedokończone sprawy każdego NPC uczestniczącego w wydarzeniu. Stan jest walidowany względem identyfikatorów uczestników i zachowywany między turami.
+- To pierwszy krok symulacji w ramach aktywnego wydarzenia, a nie ciągła symulacja NPC poza wydarzeniem ani automatyczna aktywność całego świata.
+- Granica Player Character pozostaje nadrzędna. Kontrola parsera jest heurystyczna i wymaga testów; nie daje gwarancji pełnej ochrony semantycznej.
+- Status: implementacja na `main`, oczekuje na test lokalny właścicielki.
