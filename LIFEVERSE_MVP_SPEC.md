@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.9 — loading feedback dla kontynuacji AI  
+**Wersja:** 2.0 — wspólny dymek odpowiedzi AI  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -545,3 +545,13 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - obok formularza wyświetla się komunikat „AI is thinking…” z informacją, że lokalne generowanie może potrwać co najmniej kilkadziesiąt sekund;
 - stan jest oparty o pending formularza React i obejmuje czas całej akcji serwerowej;
 - animacja respektuje ustawienie systemowe ograniczenia ruchu.
+
+
+### 5.6 Jedna odpowiedź AI — wspólny dymek narratora i NPC
+
+- Po każdej turze gracza zapisywany jest jeden rekord AI, a nie osobne rekordy dla każdego segmentu narratora/NPC.
+- W jednym dymku AI mogą występować naprzemiennie opisy otoczenia, działania i dialogi różnych NPC.
+- Imię NPC jest wyświetlane przy jego fragmencie; narracja środowiskowa jest wyróżniona kursywą.
+- Kolejność fragmentów odpowiada kolejności wygenerowanej przez model. NPC mogą rozmawiać ze sobą w ramach tej samej odpowiedzi.
+- Poprzednie rekordy narratora i NPC pozostają kompatybilne i wyświetlają się w dotychczasowym układzie.
+- Zapis strukturalny wspólnej odpowiedzi jest rozwijany do czytelnego kontekstu przed kolejnym wywołaniem modelu.
