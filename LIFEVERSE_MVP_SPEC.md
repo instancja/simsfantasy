@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 0.7 — zakładka Appearance i lokalne avatary  
+**Wersja:** 0.8 — fundament Story: wydarzenia, tury i wspomnienia  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -395,7 +395,7 @@ Konkretne kolory, fonty, ikony i komponenty UI pozostają decyzją projektową d
 - Operacje zapisu nie mogą blokować interfejsu na czas generowania odpowiedzi.
 - Błędy integracji AI nie mogą uszkadzać lokalnych danych.
 
-Nie ustalono jeszcze konkretnego stacku, bazy ani systemu pakowania aplikacji.
+Zatwierdzony stack: Next.js (App Router), React, TypeScript, SQLite i Prisma. Aplikacja jest uruchamiana lokalnie przez npm / Next.js. Sposób spakowania jej jako samodzielnej aplikacji desktopowej pozostaje OPEN.
 
 ## 8. Kryteria akceptacji MVP
 
@@ -407,9 +407,10 @@ MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze p
 4. Można edytować profil i po restarcie zobaczyć zmiany.
 4a. Można wgrać avatar postaci w obsługiwanym formacie, zobaczyć podgląd i zachować plik po ponownym uruchomieniu aplikacji.
 4b. Avatar jest widoczny na karcie postaci i w nagłówku profilu; edycja innych pól nie usuwa istniejącego avatara.
-5. Można utworzyć scenę i przypisać jej grywalną postać oraz NPC.
-6. Można otworzyć scenę i zobaczyć jej kontekst.
-7. Można wpisać i zapisać turę gracza.
+5. Można utworzyć pojedyncze wydarzenie i przypisać do niego stałą postać gracza oraz wybrane NPC.
+6. Można otworzyć wydarzenie i zobaczyć jego kontekst oraz uczestników.
+7. Można wpisać i zapisać turę gracza; autor tury jest ustalany po stronie serwera na podstawie Player Character.
+7a. Można zakończyć wydarzenie i utworzyć powiązane wspomnienie, które zachowuje pełną historię tur.
 8. Jeśli AI jest skonfigurowane, odpowiedź AI pojawia się jako osobna tura i nie przejmuje kontroli nad postacią gracza.
 9. Jeśli AI nie jest skonfigurowane lub zwróci błąd, aplikacja pokazuje komunikat, zachowuje turę gracza i pozwala ponowić próbę.
 10. Po restarcie aplikacji historia sceny i wszystkie zapisane tury są dostępne.
@@ -457,6 +458,15 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 3. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
 5. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
 
+### 9.1 Zaimplementowany zakres Story (fundament, bez AI)
+
+- Jedno wydarzenie odpowiada jednej scenie; nie ma struktury rozdziałów ani kampanii wieloscenowej.
+- Player Character jest dołączany do wydarzenia automatycznie. Właścicielka może wybrać NPC obecnych w scenie.
+- Gracz zapisuje własne tury. Autor tury jest ustalany po stronie serwera na podstawie Player Character.
+- Zakończenie wydarzenia tworzy rekord Memory, powiązany z wydarzeniem i jego pełną historią tur.
+- Opcjonalna notatka Memory jest wpisywana ręcznie; aplikacja nie generuje podsumowania ani nie udaje odpowiedzi AI.
+- Odpowiedzi narratora i NPC zostaną dodane po wyborze i integracji dostawcy AI.
+
 ## 11. Historia zmian
 
 | Wersja | Data | Zmiana | Status |
@@ -467,6 +477,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 0.4 | 2026-11-17 | Ujednolicono model wydarzeń i wspomnień oraz zasadę jednej stałej postaci graczki; usunięto sprzeczne założenia o wyborze grywalnej postaci dla każdej sceny. | Zgodne z decyzjami właścicielki |
 | 0.5 | 2026-11-17 | Uporządkowano opis stałej postaci grywalnej i modelu pojedynczego wydarzenia; audyt potwierdził, że repozytorium nie zawiera jeszcze implementacji. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |\n| 0.6 | 2026-11-17 | Zaktualizowano specyfikację po wdrożeniu modułu Characters i zatwierdzeniu Next.js/React/SQLite/Prisma; język UI określono jako angielski. | Dokumentacja zgodna z aktualnym stanem repozytorium |
 | 0.7 | 2026-11-17 | Dodano osobną zakładkę Appearance, opis wyglądu i lokalny upload avatara z podglądem; avatar jest widoczny na karcie i profilu postaci. | Nowy wymóg właścicielki |
+| 0.8 | 2026-11-17 | Dodano fundament Story: wydarzenia, uczestników, tury gracza i finalizację wydarzenia jako wspomnienia. | Kontynuacja implementacji MVP |
 
 ---
 
