@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.2\
+**Wersja:** 1.3\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -537,6 +537,9 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 foundation      projektu        tur i wspomnień; lista Story,
                                                                zapis tur gracza i finalizacja
                                                                wydarzenia do Memory
+  1.3            2026-11-17     Ochrona        Integralność   Blokada usunięcia postaci
+                                historii        danych          uczestniczących w zapisanych
+                                                               wydarzeniach
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -555,7 +558,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
-- Story foundation: dodawanie pojedynczego wydarzenia, automatyczne dołączanie Player Character, wybór NPC, zapis tur gracza, lista aktywnych wydarzeń i archiwum wspomnień.
+- Story foundation: dodawanie pojedynczego wydarzenia, automatyczne dołączanie Player Character, wybór NPC, zapis tur gracza, lista aktywnych wydarzeń i archiwum wspomnień. Postacie powiązane z wydarzeniami są chronione przed usunięciem, aby zachować integralność archiwum.
 - Zakończenie wydarzenia tworzy rekord Memory i zachowuje powiązane wydarzenie oraz pełną historię tur.
 - Odpowiedzi AI narratora/NPC, autonomia w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
