@@ -13,7 +13,7 @@ function mergeSceneState(previous:string|null,next:{summary:string;establishedFa
  for(const id of new Set([...Object.keys(old.npcKnowledge??{}),...Object.keys(next.npcKnowledge)])){
   knowledge[id]=merge(old.npcKnowledge?.[id],next.npcKnowledge[id]??[],12);
  }
- return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:merge(old.openThreads,next.openThreads,10),npcKnowledge:knowledge};
+ return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:next.openThreads.slice(-10),npcKnowledge:knowledge};
 }
 
 
