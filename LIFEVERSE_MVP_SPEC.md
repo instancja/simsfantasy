@@ -448,9 +448,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 1. Czy miejsce i czas wydarzenia mają pozostać dowolnymi polami tekstowymi w MVP?
 2. Jak szczegółowo i jak często symulować interakcje NPC w tle?
 3. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
-4. Jaki stack i sposób uruchamiania aplikacji wybrać?
 5. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
-6. Szczegóły UX formularza expanded: karty, zakładki czy sekcje rozwijane.
 
 ## 11. Historia zmian
 
