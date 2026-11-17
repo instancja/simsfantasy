@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.0\
+**Wersja:** 2.1\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -561,7 +561,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 | Wersja | Data | Zmiana | Decyzja / źródło | Szczegóły |
 |---|---|---|---|---|
 | 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | Wersja pośrednia: NPC w dymkach tylko mówią, narrator opisuje ich działania; graczka używa *...* dla akcji. Zastąpiona decyzją 2.0. |
-| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |
+| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |\n| 2.1 | 2026-11-17 | Bezwzględna granica kontroli Player Character | Zgłoszenie właścicielki: AI dopisywało reakcje i wypowiedzi postaci gracza | Profil Player Character usunięty z listy postaci przekazywanej jako NPC; ostatnia tura przekazywana osobno jako niezmienny wkład gracza; prompt jednoznacznie ogranicza AI do środowiska i NPC, zabrania dialogów, działań, myśli i reakcji Player Character oraz nakazuje kończyć scenę w miejscu wymagającym decyzji gracza. |
 
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
