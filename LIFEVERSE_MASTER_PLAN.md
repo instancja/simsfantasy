@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.4\
+**Wersja:** 1.5\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -386,7 +386,7 @@ Statusy: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **DONE** (sprawdzone lok
 | 7. Relationships | Model relacji i konsekwencje | Zmiany wynikają z wydarzeń | NOT STARTED |
 | 8. Shared world state | Integracja Story i Social | Wydarzenia mogą aktualizować obie warstwy | NOT STARTED |
 | 9. Notifications | Powiadomienia wynikające z aktywności | Powiadomienia są spójne ze zdarzeniami | NOT STARTED |
-| 10. AI integration | Wymienny adapter narracyjny i wybór dostawcy | AI korzysta z właściwego kontekstu i zapisuje osobne tury NPC/narratora | BLOCKED — wybór dostawcy/modelu |
+| 10. AI integration | Lokalny adapter Ollama, model Qwen, narracja wielogłosowa | AI korzysta z właściwego kontekstu i zapisuje osobne tury NPC/narratora | IN PROGRESS |
 | 11. UI polish | Dopracowanie Dark Academia UI | Interfejs jest czytelny i spójny | NOT STARTED |
 | 12. Testing | Testy ciągłości, danych i rozgrywki | Zaliczone scenariusze testowe | NOT STARTED |
 | 13. Backup & release | Kopie zapasowe i lokalne uruchamianie | Można odtworzyć projekt po awarii | NOT STARTED |
@@ -437,7 +437,8 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 - [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
 - [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
-- [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
+- [x] Silnik AI: bezpłatny lokalny runtime Ollama; bez płatnego API i subskrypcji.
+- [ ] Zainstalować Ollama i pobrać `qwen3.5:4b`; sprawdzić wydajność i jakość narracji na sprzęcie właścicielki.
 - [x] Wymagany rytm Story: tura gracza → kontynuacja AI obejmująca adekwatne reakcje wielu NPC i narratora → kolejna tura gracza.
 - [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.
 - [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
@@ -538,6 +539,9 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 foundation      projektu        tur i wspomnień; lista Story,
                                                                zapis tur gracza i finalizacja
                                                                wydarzenia do Memory
+  1.5            2026-11-17     Wybór          Brak opłat      Ustalono bezpłatny lokalny
+                                lokalnego AI    za API           runtime Ollama i Qwen3.5 4B
+                                                               jako pierwszy model do testów
   1.4            2026-11-17     Doprecyzowanie  Właścicielka   Po każdej turze gracza AI
                                 pętli Story     zgłosiła brak   ma kontynuować scenę; jedna
                                                 odpowiedzi AI    odpowiedź może zawierać
@@ -561,7 +565,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 **Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
 **Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
 **Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
-**AI:** dostawca/model pozostaje OPEN; obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC. Wymagany przebieg: po turze gracza AI kontynuuje scenę, w razie potrzeby przez kilka NPC i narratora w jednej odpowiedzi.
+**AI:** wybrano bezpłatny lokalny runtime Ollama; pierwszym modelem do testów jest Qwen3.5 4B (tag `qwen3.5:4b`), wybrany ze względu na ograniczenia 16 GB RAM i RTX 4070 Laptop. Model nie jest jeszcze zainstalowany ani przetestowany; wariant 9B może być później porównany, jeśli pozwoli na to pamięć GPU/RAM. Brak płatnego API i brak wymaganych subskrypcji.  obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC. Wymagany przebieg: po turze gracza AI kontynuuje scenę, w razie potrzeby przez kilka NPC i narratora w jednej odpowiedzi.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
