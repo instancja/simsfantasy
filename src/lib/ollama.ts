@@ -25,7 +25,7 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string):Generation{
  const escaped=firstName.replace(/[.*+?^\x24{}()|[\]\\]/g,"\\$&");
  const playerAsActor=new RegExp("\\b"+escaped+"\\s+(?:(?:keeps|kept|continued|continues|started|starts|began|begins|remains|stood|stands|sat|sits|stayed|stays|walked|walks|moved|moves|turned|turns|looked|looks|felt|feels|thought|thinks|reached|reaches|raised|raises|lowered|lowers|smiled|smiles|nodded|nods|said|says|replied|replies|answered|answers|asked|asks|whispered|whispers|shouted|shouts|murmured|murmurs|laughed|laughs|shrugged|shrugs|touched|touches|offered|offers|gestured|gestures|browsed|browses|scanned|scans)\\b|(?:is|was)\\s+(?:still\\s+)?(?:walking|browsing|scanning|looking|standing|sitting|moving|turning|reaching|smiling|nodding|whispering|laughing|shrugging|touching))","i");
  const playerPossessive=new RegExp("\\b"+escaped+"(?:’|')s\\s+(?:eyes|gaze|hands|expression|face|voice|attention|steps|movements|thoughts|feelings)\\b","i");
- const byName=new Map([...npcs.entries()].map(([id,name])=>[name.trim().toLocaleLowerCase(),id]));
+ const byName=new Map<string,string>();const ambiguousNames=new Set<string>();for(const [id,name] of npcs){const aliases=[name.trim(),name.trim().split(/\\s+/)[0],name.trim().split(/\\s+/).slice(-1)[0]].filter(Boolean).map(x=>x.toLocaleLowerCase());for(const alias of aliases){if(byName.has(alias)&&byName.get(alias)!==id){byName.delete(alias);ambiguousNames.add(alias);}else if(!ambiguousNames.has(alias))byName.set(alias,id);}}
  let skippedNarrator=0,skippedNpc=0,skippedUnknown=0;
  for(const item of (value as {segments:unknown[]}).segments){
   if(!item||typeof item!=="object")continue;
