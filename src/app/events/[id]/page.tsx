@@ -20,6 +20,10 @@ function splitPlayerTurn(content:string){
  return parts.length?parts:[{kind:"dialogue" as const,text:content}];
 }
 
+function readAiSegments(content:string):{speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}[]{
+ try{const value=JSON.parse(content) as {segments?:unknown};if(!Array.isArray(value.segments))return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];return value.segments.filter((item):item is {speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}=>!!item&&typeof item==="object"&&((item as {speakerType?:unknown}).speakerType==="NARRATOR"||(item as {speakerType?:unknown}).speakerType==="NPC")&&typeof (item as {content?:unknown}).content==="string").map(item=>({speakerType:item.speakerType,speakerName:typeof item.speakerName==="string"?item.speakerName:item.speakerType==="NARRATOR"?"":"NPC",content:item.content}));}catch{return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];}
+}
+
 export default async function EventDetail({params}:{params:Promise<{id:string}>}){
  const {id}=await params;
  const event=await prisma.storyEvent.findUnique({where:{id},include:{participants:{include:{character:true}},turns:{include:{character:true},orderBy:{sequence:"asc"}},memory:true}});
@@ -32,6 +36,13 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
   <section className="formSection storyParticipants"><div className="formSectionHeading"><span>✧</span><div><h2>Participants</h2><p>Characters present in this event.</p></div></div><div className="participantRow">{event.participants.map(p=><div className="participantPill" key={p.id}>{p.character.avatarUrl?<img src={p.character.avatarUrl} alt=""/>:<i>{p.character.name[0]?.toUpperCase()}</i>}<span>{p.character.name} {p.character.surname??""}{p.role==="PLAYER"&&<small>PLAYER CHARACTER</small>}</span></div>)}</div></section>
   <div className="sectionHeading"><div><p className="eyebrow">EVENT RECORD</p><h2>Story</h2></div><span className="muted small">{event.turns.length} SAVED {event.turns.length===1?"TURN":"TURNS"}</span></div>
   <div className="turnTimeline">{event.turns.length?event.turns.map(t=>{
+   if(t.speakerType==="AI"){
+    const segments=readAiSegments(t.content);
+    return <article className="dialogueTurn aiDialogue" key={t.id}>
+     <div className="dialogueAvatar aiDialogueAvatar">✧</div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>{t.speakerName||"Aethelgard Academy"}</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{segment.content}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{segment.content}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+    </article>;
+   }
    if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{t.createdAt.toLocaleString("en-US")}</time></article>;
    const character=t.character??event.participants.find(p=>p.characterId===t.characterId)?.character;
    const isPlayer=t.speakerType==="PLAYER";
