@@ -561,8 +561,10 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 | Wersja | Data | Zmiana | Decyzja / źródło | Szczegóły |
 |---|---|---|---|---|
 | 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | Wersja pośrednia: NPC w dymkach tylko mówią, narrator opisuje ich działania; graczka używa *...* dla akcji. Zastąpiona decyzją 2.0. |
-| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |\n| 2.1 | 2026-11-17 | Bezwzględna granica kontroli Player Character | Zgłoszenie właścicielki: AI dopisywało reakcje i wypowiedzi postaci gracza | Profil Player Character usunięty z listy postaci przekazywanej jako NPC; ostatnia tura przekazywana osobno jako niezmienny wkład gracza; prompt ogranicza AI do środowiska i NPC. |
+| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |
+| 2.1 | 2026-11-17 | Bezwzględna granica kontroli Player Character | Zgłoszenie właścicielki: AI dopisywało reakcje i wypowiedzi postaci gracza | Profil Player Character usunięty z listy postaci przekazywanej jako NPC; ostatnia tura przekazywana osobno jako niezmienny wkład gracza; prompt ogranicza AI do środowiska i NPC. |
 | 2.2 | 2026-11-17 | Stabilizacja ciągłości Story | Test właścicielki ujawnił halucynowane relacje, zdolności i działania Player Character | Dodano trwały stan sceny (fakty, otwarte wątki, wiedza per NPC), przekazywanie ostatnich 10 tur wraz z pamięcią, mocniejsze reguły źródeł prawdy, niższą temperaturę i walidację segmentów; stan pamięci jest zachowywany między generacjami. Wymaga testu lokalnego; walidacja heurystyczna nie gwarantuje wykrycia wszystkich naruszeń. |
+| 2.3 | 2026-11-17 | Autonomiczna kontynuacja świata | Właścicielka wyjaśniła oczekiwany wzorzec narracji na przykładzie Character.AI | Story ma działać jako ongoing fictional world. Dodano wielobeatową inicjatywę NPC oraz trwałe pola aktywności, celu, lokalizacji i niedokończonych spraw NPC w ramach aktywnego wydarzenia. Nie skopiowano lore z materiału referencyjnego. Wymaga testu lokalnego. |
 
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
@@ -571,10 +573,10 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 **Właścicielka / graczka:** jedna prywatna użytkowniczka, sterująca jedną stałą postacią.  
 **Platforma:** lokalna aplikacja webowa na PC, Next.js App Router, React, TypeScript, SQLite i Prisma.  
 **Świat:** współczesne fantasy; estetyka Dark Academia / Gothic / Old Money. Kanon świata pozostaje do określenia przez właścicielkę.  
-**Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
+**Story:** pojedyncza sesja fabularna zapisywana jako wspomnienie; może rozwijać się przez kilka beatów, zmiany miejsca i interakcje NPC. NPC otrzymują stan aktywności i celów w obrębie wydarzenia. Pełna symulacja świata poza aktywną sesją pozostaje przyszłym etapem. AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
 **Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
 **Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
-**AI:** bezpłatny lokalny runtime Ollama; Qwen3.5 4B (`qwen3.5:4b`) zainstalowany i ręcznie przetestowany przez właścicielkę. Adapter ma wielogłosowe segmenty, trwały stan sceny (fakty, wątki, wiedza per NPC), skróconą historię ostatnich tur, obniżoną temperaturę i podstawową walidację granicy Player Character. Integracja i jakość ciągłości wymagają testu właścicielki; walidacja heurystyczna nie wykryje każdego błędu. Brak płatnego API.
+**AI:** bezpłatny lokalny runtime Ollama; Qwen3.5 4B (`qwen3.5:4b`) zainstalowany i ręcznie przetestowany przez właścicielkę. Adapter ma wspólny dymek wielogłosowy, trwały stan sceny (fakty, wątki, wiedza per NPC i bieżąca ciągłość NPC), prompt autonomicznego świata, skróconą historię ostatnich tur i heurystyczną walidację granicy Player Character. Integracja i jakość ciągłości wymagają testu właścicielki; walidacja heurystyczna nie wykryje każdego błędu. Brak płatnego API.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
