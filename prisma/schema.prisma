@@ -25,4 +25,50 @@ model Character {
   notes             String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  eventParticipations EventParticipant[]
+  authoredTurns EventTurn[]
+}
+model StoryEvent {
+ id String @id @default(cuid())
+ title String
+ premise String?
+ location String?
+ timeLabel String?
+ status String @default("ACTIVE")
+ participants EventParticipant[]
+ turns EventTurn[]
+ memory Memory?
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ completedAt DateTime?
+}
+model EventParticipant {
+ id String @id @default(cuid())
+ eventId String
+ characterId String
+ role String @default("PARTICIPANT")
+ event StoryEvent @relation(fields:[eventId],references:[id],onDelete:Cascade)
+ character Character @relation(fields:[characterId],references:[id],onDelete:Restrict)
+ @@unique([eventId,characterId])
+}
+model EventTurn {
+ id String @id @default(cuid())
+ eventId String
+ sequence Int
+ speakerType String @default("PLAYER")
+ characterId String?
+ speakerName String
+ content String
+ event StoryEvent @relation(fields:[eventId],references:[id],onDelete:Cascade)
+ character Character? @relation(fields:[characterId],references:[id],onDelete:SetNull)
+ createdAt DateTime @default(now())
+ @@unique([eventId,sequence])
+}
+model Memory {
+ id String @id @default(cuid())
+ eventId String @unique
+ title String
+ summary String?
+ event StoryEvent @relation(fields:[eventId],references:[id],onDelete:Cascade)
+ createdAt DateTime @default(now())
 }
