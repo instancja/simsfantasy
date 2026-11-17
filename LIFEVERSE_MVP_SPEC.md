@@ -406,7 +406,7 @@ Każde aktywne wydarzenie może przechowywać skondensowany stan sceny w polu `S
 - `openThreads` — nierozstrzygnięte pytania i trwające interakcje;
 - `npcKnowledge` — informacje, które zna konkretny NPC, przypisane do jego identyfikatora.
 
-Przy generowaniu model otrzymuje stan pamięci oraz maksymalnie 10 ostatnich tur. Pełny zapis wydarzenia pozostaje zachowany w bazie. Serwer scala listy faktów, wątków i wiedzy z poprzednim stanem, aby ograniczyć przypadkową utratę informacji. Pamięć jest wskazówką opartą na historii, a nie niezależnym źródłem kanonu: model nie powinien zamieniać podejrzeń, kłamstw ani własnych dopowiedzeń w fakty.
+Przy generowaniu model otrzymuje stan pamięci oraz maksymalnie 10 ostatnich tur. Pełny zapis wydarzenia pozostaje zachowany w bazie. Serwer scala fakty i wiedzę NPC z poprzednim stanem, aby ograniczyć przypadkową utratę informacji; lista otwartych wątków jest zastępowana aktualnym wynikiem, żeby zamknięte sprawy nie pozostawały stale aktywne. Pamięć jest wskazówką opartą na historii, a nie niezależnym źródłem kanonu: model nie powinien zamieniać podejrzeń, kłamstw ani własnych dopowiedzeń w fakty.
 
 Prompt rozróżnia wiedzę indywidualną NPC i zabrania automatycznego współdzielenia informacji między postaciami. Nie przekazuje pola sekretów z profilu. Temperatura generowania została zmniejszona do 0.55. Parser odrzuca nieprawidłowych mówców/identyfikatory, narrator nie może używać imienia Player Character, a dodatkowa kontrola wyłapuje część oczywistych zdań przypisujących jej działanie. Ta ostatnia kontrola jest heurystyczna i nie stanowi gwarancji wykrycia wszystkich naruszeń semantycznych.
 
