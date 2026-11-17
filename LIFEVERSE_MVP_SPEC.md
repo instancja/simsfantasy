@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.0 — wspólny dymek odpowiedzi AI  
+**Wersja:** 2.1 — poprawa czytelności Story  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -555,3 +555,11 @@ W czasie wykonywania akcji wysłania tury lub ponowienia kontynuacji:
 - Kolejność fragmentów odpowiada kolejności wygenerowanej przez model. NPC mogą rozmawiać ze sobą w ramach tej samej odpowiedzi.
 - Poprzednie rekordy narratora i NPC pozostają kompatybilne i wyświetlają się w dotychczasowym układzie.
 - Zapis strukturalny wspólnej odpowiedzi jest rozwijany do czytelnego kontekstu przed kolejnym wywołaniem modelu.
+
+
+### 5.7 Czytelność narracji i dialogów
+
+- Tekst narracji oraz działań i opisów NPC w dymku AI powinien być czytelny przy dłuższych odpowiedziach: większy rozmiar, wygodna interlinia i wysoki kontrast.
+- Narracja środowiskowa nie używa domyślnie kursywy jako jedynego wyróżnika.
+- Fragmenty dialogowe ujęte w cudzysłowy proste (`"..."`) lub typograficzne (`“...”`) otrzymują odrębny, ciepły kolor akcentowy.
+- Wyróżnienie nie zmienia treści ani nie usuwa cudzysłowów.
