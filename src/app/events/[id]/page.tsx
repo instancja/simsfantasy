@@ -4,6 +4,22 @@ import {AppShell} from "@/components/AppShell";
 import {prisma} from "@/lib/prisma";
 import {addPlayerTurn,completeEvent,retryAiContinuation} from "../actions";
 
+function splitPlayerTurn(content:string){
+ const parts:{kind:"action"|"dialogue";text:string}[]=[];
+ const pattern=/\\*([^*]+)\\*/g;
+ let cursor=0,match:RegExpExecArray|null;
+ while((match=pattern.exec(content))!==null){
+  const before=content.slice(cursor,match.index).trim();
+  if(before)parts.push({kind:"dialogue",text:before});
+  const action=match[1].trim();
+  if(action)parts.push({kind:"action",text:action});
+  cursor=pattern.lastIndex;
+ }
+ const rest=content.slice(cursor).trim();
+ if(rest)parts.push({kind:"dialogue",text:rest});
+ return parts.length?parts:[{kind:"dialogue" as const,text:content}];
+}
+
 export default async function EventDetail({params}:{params:Promise<{id:string}>}){
  const {id}=await params;
  const event=await prisma.storyEvent.findUnique({where:{id},include:{participants:{include:{character:true}},turns:{include:{character:true},orderBy:{sequence:"asc"}},memory:true}});
@@ -20,9 +36,16 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
    const character=t.character??event.participants.find(p=>p.characterId===t.characterId)?.character;
    const isPlayer=t.speakerType==="PLAYER";
    const displayName=character?[character.name,character.surname].filter(Boolean).join(" "):t.speakerName;
-   return <article className={"dialogueTurn "+(isPlayer?"playerDialogue":"")} key={t.id}>
+   if(isPlayer){
+    const parts=splitPlayerTurn(t.content);
+    return <div className="playerTurnGroup" key={t.id}>{parts.map((part,index)=>part.kind==="action"
+     ?<article className="narrationBlock playerActionBlock" key={index}><div className="narrationLabel"><span>✧</span> ACTION</div><p>{part.text}</p></article>
+     :<article className="dialogueTurn playerDialogue" key={index}><div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div><div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>YOUR CHARACTER</span></div><div className="dialogueBubble"><p>{part.text}</p></div></div></article>
+    )}<time className="playerTurnTime">{t.createdAt.toLocaleString("en-US")}</time></div>;
+   }
+   return <article className="dialogueTurn" key={t.id}>
     <div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div>
-    <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>{isPlayer?"YOUR CHARACTER":"CHARACTER"}</span></div><div className="dialogueBubble"><p>{t.content}</p></div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+    <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>CHARACTER</span></div><div className="dialogueBubble"><p>{t.content}</p></div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
    </article>;
   }):<div className="emptyState compactEmpty"><h2>The scene is ready.</h2><p>Your first turn will appear here after you write and save it.</p></div>}</div>
   {event.status==="ACTIVE"?<>
