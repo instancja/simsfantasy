@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 1.6 — działania postaci w dymkach  
+**Wersja:** 1.7 — wyłączna kontrola gracza nad Player Character  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -295,7 +295,7 @@ Zachowanie:
 - Nie oferować wymuszonych wyborów A/B/C.
 - Nie dopisywać wypowiedzi, działań, decyzji, myśli, uczuć ani intencji postaci gracza poza treścią zadeklarowaną przez gracza.
 - Dymki NPC zawierają łącznie wypowiadane słowa i działania danej postaci; narrator opisuje wyłącznie otoczenie i atmosferę.
-- Działania Player Character oznaczone przez gracza gwiazdkami są prezentowane razem z jej dialogiem w jej własnym dymku; działania są kursywą, a gwiazdki ukryte. AI nie dopisuje ani nie powtarza działań lub dialogów Player Character.
+- Działania Player Character oznaczone przez gracza gwiazdkami są prezentowane razem z jej dialogiem w jej własnym dymku; działania są kursywą, a gwiazdki ukryte. AI nie dopisuje ani nie powtarza działań lub dialogów Player Character. Nie generuje również żadnych nowych myśli, emocji, intencji, decyzji, percepcji ani reakcji tej postaci. NPC mogą zwracać się do niej i zadawać pytania, ale AI musi zakończyć kontynuację przed odpowiedzią lub działaniem Player Character.
 - NPC mogą odmówić, skłamać, zignorować lub działać wbrew oczekiwaniom gracza.
 - Nie przeskakiwać czasu bez uzasadnienia.
 - Nie kończyć sztucznie sceny po jednej krótkiej odpowiedzi.
@@ -511,7 +511,7 @@ Kolejność jest propozycją implementacyjną. Stack jest zatwierdzony: Next.js 
 | 1.3 | 2026-11-17 | Zmieniono prezentację historii sceny: narrator jako osobne bloki prozy, dialogi postaci jako dymki z avatarami i subtelnym wyróżnieniem Player Character. | Zmiana UI na podstawie testu i feedbacku właścicielki |
 | 1.4 | 2026-11-17 | Naprawiono wyświetlanie avatarów w dialogach: stały rozmiar koła, przycinanie obrazu i mniejszy rozmiar na urządzeniach mobilnych. | Poprawka po teście właścicielki |
 | 1.5 | 2026-11-17 | Rozdzielono dialog i akcję: NPC mówią wyłącznie w dymkach, narrator opisuje ich zachowania; `*...*` w turze gracza oznacza akcję, tekst poza gwiazdkami — dialog. | Wersja pośrednia, zastąpiona przez 1.6 |
-| 1.6 | 2026-11-17 | Połączono działania i dialogi w dymkach postaci. NPC mają w swoich dymkach dialog i opis własnych działań; narrator opisuje wyłącznie otoczenie. Akcje gracza oznaczone `*...*` są kursywą w jej dymku. | Korekta właścicielki po teście |
+| 1.6 | 2026-11-17 | Połączono działania i dialogi w dymkach postaci. NPC mają w swoich dymkach dialog i opis własnych działań; narrator opisuje wyłącznie otoczenie. Akcje gracza oznaczone `*...*` są kursywą w jej dymku. | Korekta właścicielki po teście |\n| 1.7 | 2026-11-17 | Wzmocniono granicę kontroli postaci: AI generuje wyłącznie środowisko i NPC, nie tworzy wypowiedzi, działań, myśli ani reakcji Player Character. Ostatnia tura gracza jest przekazywana oddzielnie jako niezmienny wkład; profil gracza nie jest przekazywany w zestawie profili NPC. | Problem zgłoszony podczas testu |
 
 ---
 
