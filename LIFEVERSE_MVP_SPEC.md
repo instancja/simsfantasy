@@ -243,7 +243,7 @@ Decyzja właścicielki: jedna historia = jedno wydarzenie / jedna scena. Po zako
 
 Pola:
 - Tytuł sceny — roboczy, wymagane.
-- Grywalna postać — wybór jednej postaci kontrolowanej przez gracza.
+- Postać graczki — jedna stała postać przypisana do profilu graczki; nie wybiera się innej postaci przy każdym wydarzeniu.
 - Pozostali uczestnicy — wybór zero lub więcej postaci NPC.
 - Miejsce — opcjonalny tekst; nie wymaga wcześniejszej bazy lokalizacji.
 - Czas / moment — opcjonalny tekst.
@@ -316,10 +316,11 @@ W pierwszym MVP moduły mogą być widoczne w nawigacji jako przyszłe obszary, 
 
 Minimalny model funkcjonalny:
 - Character — profil postaci.
-- Story — historia/rozgrywka.
-- Scene — scena należąca do historii lub samodzielna scena, zależnie od decyzji strukturalnej.
-- SceneParticipant — powiązanie postaci ze sceną i jej rola.
-- SceneTurn — pojedyncza tura gracza albo odpowiedź narracyjna.
+- Event — pojedyncze wydarzenie fabularne.
+- Memory — zapis zakończonego wydarzenia, które może być przywoływane w przyszłości.
+- EventParticipant — powiązanie postaci z wydarzeniem i jej rola.
+- EventTurn — pojedyncza tura graczki albo odpowiedź narracyjna.
+- NPCInteraction — zapis interakcji NPC poza bezpośrednim udziałem postaci graczki (docelowo; szczegółowy model OPEN).
 - AppSettings — ustawienia lokalne, w tym konfiguracja integracji AI bez przechowywania sekretów w zwykłym tekście.
 
 To lista robocza, a nie zatwierdzony schemat bazy danych. Dokładny model relacyjny należy określić w etapie Data Architecture.
@@ -444,12 +445,12 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 
 ## 10. Otwarte decyzje do zatwierdzenia
 
-1. Czy pola formularza postaci zaproponowane w sekcji 3.4 są wystarczające na pierwszą wersję?
-2. Czy miejsce i czas wydarzenia mają pozostać dowolnymi polami tekstowymi w MVP?
-3. Jak szczegółowo i jak często symulować interakcje NPC w tle?
-4. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
-5. Jaki stack i sposób uruchamiania aplikacji wybrać?
-6. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
+1. Czy miejsce i czas wydarzenia mają pozostać dowolnymi polami tekstowymi w MVP?
+2. Jak szczegółowo i jak często symulować interakcje NPC w tle?
+3. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
+4. Jaki stack i sposób uruchamiania aplikacji wybrać?
+5. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
+6. Szczegóły UX formularza expanded: karty, zakładki czy sekcje rozwijane.
 
 ## 11. Historia zmian
 
