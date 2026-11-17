@@ -1,8 +1,8 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 0.4\
+**Wersja:** 0.5\
 **Data utworzenia:** 17 listopada 2026\
-**Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki MVP doprecyzowany; formularz postaci do akceptacji\
+**Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
 
 > Ten dokument opisuje uzgodniony dotychczas koncept prywatnej aplikacji
@@ -168,9 +168,9 @@ otoczenie i świat.
 
 Musi istnieć osobna warstwa zarządzania postaciami.
 
-**Wymaganie UX:** łatwe dodawanie nowych postaci, najlepiej przez
-przycisk `+ Add Character` i formularz. Nie powinno być konieczne ręczne
-edytowanie wielu plików ani duplikowanie danych.
+**Wymaganie UX:** łatwe dodawanie nowych postaci przez przycisk `+ Add Character` i formularz rozbudowany, podzielony na sekcje (wariant expanded zaakceptowany przez właścicielkę). Nie powinno być konieczne ręczne edytowanie wielu plików ani duplikowanie danych.
+
+Sekcje formularza: informacje podstawowe, wygląd, osobowość, psychologia, historia, motywacje i cele, mocne i słabe strony, relacje, sekrety, komunikacja oraz dodatkowe informacje. Wymagane jest wyłącznie imię; pozostałe pola są opcjonalne. Sekret musi być wyraźnie oznaczony jako prywatny. Relacje pomiędzy konkretnymi postaciami powinny docelowo być zarządzane przez osobny moduł Relationships, a nie jako niesynchronizowane opisy w profilach. Nie narzucać wartości kategorii zależnych od niezatwierdzonego kanonu.
 
 Docelowe pola profilu (szczegółowy formularz do zatwierdzenia): - imię i
 nazwisko, - wiek i status, - przynależność / grupa / dom, jeśli istnieje
@@ -525,6 +525,11 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 rozgrywki       strukturę       wydarzenie zapisywane
                                                 rozgrywki       jako wspomnienie; NPC
                                                                 mogą działać w tle
+  0.5            2026-11-17     Zatwierdzenie   Właścicielka   Wybrano rozbudowany
+                                kierunku        wybrała         formularz postaci
+                                formularza      wariant         podzielony na sekcje;
+                                postaci         expanded        szczegóły UX i typy
+                                                                danych pozostają OPEN
   --------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -542,7 +547,7 @@ Bible, World Engine\
 obrazów\
 **Story:** pojedyncze wydarzenie/scena zapisywane po zakończeniu jako wspomnienie; właścicielka odgrywa jedną stałą postać; NPC mogą autonomicznie wchodzić w interakcje w tle\
 **Autonomia NPC:** wysoka\
-**Dodawanie postaci:** ma być łatwe, przez interfejs i formularz\
+**Dodawanie postaci:** formularz expanded, podzielony na sekcje; wszystkie pola poza imieniem opcjonalne\
 **Dane:** lokalne, trwałe, z możliwością backupu\
 **AI:** wybór technologii nadal otwarty; ChatGPT Free nie oznacza
 automatycznego dostępu do modelu przez lokalną aplikację\
@@ -553,4 +558,4 @@ dashboard.
 
 # Koniec dokumentu
 
-**Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji. Model rozgrywki doprecyzowany zgodnie z decyzjami właścicielki; formularz postaci pozostaje do akceptacji.
+**Dokument przygotowany:** `LIFEVERSE_MVP_SPEC.md` — draft specyfikacji pierwszej działającej wersji. Model rozgrywki oraz kierunek formularza postaci (expanded) zostały doprecyzowane zgodnie z decyzjami właścicielki.
