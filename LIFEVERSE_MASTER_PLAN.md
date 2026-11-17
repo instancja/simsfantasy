@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.3\
+**Wersja:** 1.4\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -438,6 +438,7 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 - [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
 - [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
 - [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
+- [x] Wymagany rytm Story: tura gracza → kontynuacja AI obejmująca adekwatne reakcje wielu NPC i narratora → kolejna tura gracza.
 - [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.
 - [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
 - [x] Bazowa konfiguracja sprzętowa: MSI Katana 17 B13V, Intel Core i9, RTX 4070 Laptop GPU, 16 GB RAM (bez założenia rozbudowy).
@@ -537,6 +538,12 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 foundation      projektu        tur i wspomnień; lista Story,
                                                                zapis tur gracza i finalizacja
                                                                wydarzenia do Memory
+  1.4            2026-11-17     Doprecyzowanie  Właścicielka   Po każdej turze gracza AI
+                                pętli Story     zgłosiła brak   ma kontynuować scenę; jedna
+                                                odpowiedzi AI    odpowiedź może zawierać
+                                                po turach        kilka NPC i narratora,
+                                                gracza           z uporządkowanymi
+                                                               segmentami wypowiedzi
   1.3            2026-11-17     Ochrona        Integralność   Blokada usunięcia postaci
                                 historii        danych          uczestniczących w zapisanych
                                                                wydarzeniach
@@ -554,7 +561,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 **Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
 **Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
 **Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
-**AI:** dostawca/model pozostaje OPEN; obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC.
+**AI:** dostawca/model pozostaje OPEN; obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC. Wymagany przebieg: po turze gracza AI kontynuuje scenę, w razie potrzeby przez kilka NPC i narratora w jednej odpowiedzi.
 
 **Stan implementacji (2026-11-17):**
 - Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
