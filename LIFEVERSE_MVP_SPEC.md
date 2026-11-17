@@ -254,7 +254,7 @@ Akcje:
 - „Cancel” wraca do listy.
 - Nie wolno automatycznie dopisywać lokalizacji, historii ani faktów świata.
 
-**OPEN:** czy w pierwszym MVP graczka wybiera wyłącznie jedną grywalną postać na całą historię, czy może mieć kilka niezależnych historii z różnymi postaciami. Wymóg źródłowy potwierdza jedną kontrolowaną postać w danej rozgrywce, ale nie rozstrzyga liczby równoległych historii.
+**Decyzja właścicielki:** graczka odgrywa tylko jedną stałą postać. Nie ma przełączania się na inne postacie ani tworzenia równoległych rozgrywek prowadzonych z perspektywy innych grywalnych postaci. Wszystkie pozostałe postacie są NPC, także wtedy, gdy prowadzą interakcje między sobą poza udziałem postaci graczki.
 
 ### 3.8 Story — widok wydarzenia
 
@@ -460,6 +460,7 @@ Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dosta
 | 0.2 | 2026-11-17 | Doprecyzowano: jedna historia to jedno wydarzenie/scena zapisywane jako wspomnienie; graczka odgrywa jedną postać, a NPC mogą autonomicznie wchodzić w interakcje w tle. | Draft |
 | 0.3 | 2026-11-17 | Zatwierdzono wariant formularza postaci „expanded”; dodano sekcje podstawowe, wygląd, osobowość, psychologia, historia, motywacje, mocne/słabe strony, relacje, sekrety, komunikacja i notatki. | Kierunek formularza zatwierdzony; typy danych i UX do dopracowania |
 | 0.4 | 2026-11-17 | Ujednolicono model wydarzeń i wspomnień oraz zasadę jednej stałej postaci graczki; usunięto sprzeczne założenia o wyborze grywalnej postaci dla każdej sceny. | Zgodne z decyzjami właścicielki |
+| 0.5 | 2026-11-17 | Audyt repozytorium: doprecyzowano, że istnieje jedna stała postać grywalna, a wszystkie pozostałe są NPC; usunięto sprzeczny punkt OPEN. | Zgodność specyfikacji z zatwierdzonym modelem rozgrywki |
 
 ---
 
