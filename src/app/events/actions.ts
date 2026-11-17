@@ -5,6 +5,22 @@ import {prisma} from "@/lib/prisma";
 import {generateOllamaSegments} from "@/lib/ollama";
 function read(form:FormData,key:string):string|null{const v=form.get(key);return typeof v==="string"&&v.trim()?v.trim():null;}
 
+function expandAiTurnForContext(turn:{speakerType:string;speakerName:string;content:string}):{speakerType:string;speakerName:string;content:string}[]{
+ if(turn.speakerType!=="AI")return [turn];
+ try{
+  const parsed=JSON.parse(turn.content) as {segments?:unknown};
+  if(!Array.isArray(parsed.segments))return [turn];
+  return parsed.segments.flatMap(segment=>{
+   if(!segment||typeof segment!=="object")return [];
+   const item=segment as {speakerType?:unknown;speakerName?:unknown;content?:unknown};
+   if(typeof item.content!=="string"||!item.content.trim())return [];
+   if(item.speakerType==="NARRATOR")return [{speakerType:"NARRATOR",speakerName:"Narrator",content:item.content}];
+   if(item.speakerType==="NPC")return [{speakerType:"NPC",speakerName:typeof item.speakerName==="string"?item.speakerName:"NPC",content:item.content}];
+   return [];
+  });
+ }catch{return [turn];}
+}
+
 function mergeSceneState(previous:string|null,next:{summary:string;establishedFacts:string[];openThreads:string[];npcKnowledge:Record<string,string[]>}){
  let old:{summary?:string;establishedFacts?:string[];openThreads?:string[];npcKnowledge?:Record<string,string[]>}={};
  if(previous){try{old=JSON.parse(previous);}catch{old={};}}
@@ -41,7 +57,7 @@ async function generateAiContinuation(eventId:string){
    title:event.title,premise:event.premise,location:event.location,timeLabel:event.timeLabel,
    playerName:[player.character.name,player.character.surname].filter(Boolean).join(" "),playerCharacterId:player.characterId,
    participants:event.participants.map(p=>({id:p.character.id,name:p.character.name,surname:p.character.surname,appearance:p.character.appearance,personality:p.character.personality,psychology:p.character.psychology,history:p.character.history,motivations:p.character.motivations,strengths:p.character.strengths,communication:p.character.communication})),
-   turns:[...event.turns].reverse().map(t=>({speakerType:t.speakerType,speakerName:t.speakerName,content:t.content})),sceneState:event.sceneState
+   turns:[...event.turns].reverse().flatMap(t=>expandAiTurnForContext({speakerType:t.speakerType,speakerName:t.speakerName,content:t.content})),sceneState:event.sceneState
   });
   await prisma.$transaction(async tx=>{
    const fresh=await tx.storyEvent.findUnique({where:{id:eventId},include:{turns:{orderBy:{sequence:"desc"},take:1}}});
