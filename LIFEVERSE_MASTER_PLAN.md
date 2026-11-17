@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.1\
+**Wersja:** 1.2\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -372,78 +372,33 @@ odtworzenia stanu.
 
 ## 10. Roadmap --- etapy tworzenia
 
-Statusy: - **NOT STARTED** --- nie rozpoczęto. - **IN PROGRESS** --- w
-trakcie. - **BLOCKED** --- zablokowane decyzją lub zależnością. -
-**DONE** --- ukończono i sprawdzono. - **OPEN** --- wymaga decyzji.
+Statusy: **NOT STARTED**, **IN PROGRESS**, **BLOCKED**, **DONE** (sprawdzone lokalnie), **OPEN** (wymaga decyzji).
 
-  -----------------------------------------------------------------------
-  Etap              Zakres            Kryterium         Status
-                                      ukończenia
-  ----------------- ----------------- ----------------- -----------------
-  0. Product       Zatwierdzenie     Specyfikacja     IN PROGRESS
-  specification     wymagań i         MVP przygotowana
-                    ograniczeń        i zaakceptowana
-
-  1. World Bible   Wprowadzenie      Zatwierdzony      NOT STARTED
-                    kanonu świata     dokument świata
-
-  2. Character     Profil postaci i  Można tworzyć i   IN PROGRESS
-  model             formularz         edytować postacie
-                    dodawania
-
-  3. Data          Schemat bazy,     Dane zachowują    IN PROGRESS
-  architecture      zapis i eksport   spójność po
-                                      restarcie
-
-  4. STORY MVP     Turowy roleplay i Testowa scena     NOT STARTED
-                    zasady kontroli   działa zgodnie z
-                    postaci           zasadami
-
-  5. SOCIAL MVP    Feed, posty,      Podstawowe akcje  NOT STARTED
-                    replies, likes,   działają i
-                    reposts, profile  zapisują dane
-
-  6. Messaging     DMs i group chats Wiadomości i      NOT STARTED
-                                      członkostwo grup
-                                      zapisują się
-
-  7. Relationships Model relacji i   Zmiany wynikają z NOT STARTED
-                    konsekwencje      wydarzeń
-
-  8. Shared world  Integracja Story  Jedno wydarzenie  NOT STARTED
-  state             i Social          może aktualizować
-                                      obie warstwy
-
-  9. Notifications Powiadomienia     Powiadomienia są  NOT STARTED
-                    wynikające z      spójne ze
-                    aktywności        zdarzeniami
-
-  10. AI           Wybór i           AI korzysta z     BLOCKED --- wybór
-  integration       integracja        kontekstu i       modelu
-                    silnika AI        zapisuje skutki
-
-  11. UI polish    Dopracowanie Dark Interfejs jest    NOT STARTED
-                    Academia UI       czytelny i spójny
-
-  12. Testing      Testy ciągłości,  Zaliczone         NOT STARTED
-                    danych i          scenariusze
-                    rozgrywki         testowe
-
-  13. Backup &     Kopie zapasowe i  Można odtworzyć   NOT STARTED
-  release           uruchamianie      projekt po awarii
-                    lokalne
-  -----------------------------------------------------------------------
+| Etap | Zakres | Kryterium ukończenia | Status |
+|---|---|---|---|
+| 0. Product specification | Wymagania, zakres MVP i ograniczenia | Zatwierdzony zakres pierwszego pionowego wycinka | IN PROGRESS |
+| 1. World Bible | Wprowadzenie kanonu świata | Zatwierdzony dokument świata | NOT STARTED |
+| 2. Character model | Profil, formularz, lista, edycja i avatar | CRUD postaci sprawdzony lokalnie przez właścicielkę | DONE |
+| 3. Data architecture | Schemat relacyjny, trwały zapis i zależności | Dane postaci, wydarzeń, tur i wspomnień zachowują spójność po restarcie | IN PROGRESS |
+| 4. STORY MVP | Pojedyncze wydarzenie, tury gracza, zapis wspomnienia i późniejsza narracja AI | Pełny przepływ sceny działa; AI nie przejmuje postaci gracza | IN PROGRESS |
+| 5. SOCIAL MVP | Feed, posty, replies, likes, reposts, profile | Podstawowe akcje zapisują się i są spójne ze światem | NOT STARTED |
+| 6. Messaging | DMs i group chats | Wiadomości i członkostwo grup zapisują się | NOT STARTED |
+| 7. Relationships | Model relacji i konsekwencje | Zmiany wynikają z wydarzeń | NOT STARTED |
+| 8. Shared world state | Integracja Story i Social | Wydarzenia mogą aktualizować obie warstwy | NOT STARTED |
+| 9. Notifications | Powiadomienia wynikające z aktywności | Powiadomienia są spójne ze zdarzeniami | NOT STARTED |
+| 10. AI integration | Wymienny adapter narracyjny i wybór dostawcy | AI korzysta z właściwego kontekstu i zapisuje osobne tury NPC/narratora | BLOCKED — wybór dostawcy/modelu |
+| 11. UI polish | Dopracowanie Dark Academia UI | Interfejs jest czytelny i spójny | NOT STARTED |
+| 12. Testing | Testy ciągłości, danych i rozgrywki | Zaliczone scenariusze testowe | NOT STARTED |
+| 13. Backup & release | Kopie zapasowe i lokalne uruchamianie | Można odtworzyć projekt po awarii | NOT STARTED |
 
 ### Proponowana kolejność MVP
 
-Najpierw należy uruchomić minimalny, działający pionowy wycinek: 1.
-utworzenie postaci, 2. rozpoczęcie sceny Story, 3. wykonanie tury
-gracza, 4. odpowiedź AI jako NPC i narrator, 5. zapis sceny i aktualnego
-stanu, 6. utworzenie wpisu Social wynikającego z wydarzenia --- jeśli ma
-to uzasadnienie.
-
-Dopiero potem rozszerzać system o pełny feed, DM-y, grupy, powiadomienia
-i bardziej rozbudowaną autonomię.
+1. Utworzenie postaci i wybór jednej postaci gracza.
+2. Utworzenie pojedynczego wydarzenia i wskazanie uczestników.
+3. Zapis tur wpisywanych przez gracza.
+4. Zakończenie wydarzenia i zachowanie pełnego zapisu jako wspomnienia.
+5. Integracja AI: osobne odpowiedzi narratora i NPC, bez przejmowania kontroli nad postacią gracza.
+6. Dopiero później rozwój Social, autonomii NPC i wspólnego stanu świata.
 
 ## 11. Otwarte decyzje
 
@@ -472,7 +427,7 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 ### STORY
 
-- [ ] Czy graczka może w dowolnej chwili rozpocząć nowe wydarzenie/scenę?
+- [x] Graczka może rozpocząć nowe wydarzenie z modułu Story w dowolnym momencie.
 - [ ] Jak szczegółowy ma być zapis tur?
 - [ ] Jak rozwiązywać przeskoki czasowe?
 - [ ] Czy AI może proponować rozpoczęcie nowej sceny, bez wymuszania
@@ -482,9 +437,11 @@ Poniższe kwestie nie zostały jeszcze rozstrzygnięte:
 
 - [x] Stack: Next.js (App Router) + React + TypeScript + SQLite + Prisma + CSS Modules.
 - [x] Język produktu: angielski; język rozmów projektowych i Master Planu: polski.
-- [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.\n- [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.\n- [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
+- [ ] Wybór silnika AI: lokalny, API lub ręczny przepływ z ChatGPT.
+- [x] Język aplikacji: angielski; dokumentacja i współpraca: polski.
+- [x] Uruchamianie lokalne przez npm / Next.js (`npm run dev`).
 - [x] Bazowa konfiguracja sprzętowa: MSI Katana 17 B13V, Intel Core i9, RTX 4070 Laptop GPU, 16 GB RAM (bez założenia rozbudowy).
-- [ ] Sposób uruchamiania aplikacji.
+- [x] Sposób uruchamiania aplikacji: lokalnie przez `npm run dev` w Next.js.
 - [ ] Format kopii zapasowej i eksportu.
 
 ## 12. Protokół aktualizacji Master Planu
@@ -568,7 +525,11 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
                                 języka UI        wymagała        po angielsku; język
                                                  aplikacji       pracy pozostaje polski
                                                  angielskiej
-  1.0            2026-11-17     Implementacja    Zatwierdzony   Moduł Characters: lista,\n                                modułu           formularz       wyszukiwanie, profil,\n                                Characters       expanded       edycja, usuwanie, zapis\n                                                 i język UI      do SQLite; interfejs EN\n  1.1            2026-11-17     Zakładka        Właścicielka   Osobna zakładka Appearance,
+  1.0            2026-11-17     Implementacja    Zatwierdzony   Moduł Characters: lista,
+                                modułu           formularz       wyszukiwanie, profil,
+                                Characters       expanded       edycja, usuwanie, zapis
+                                                 i język UI      do SQLite; interfejs EN
+  1.1            2026-11-17     Zakładka        Właścicielka   Osobna zakładka Appearance,
                                 Appearance      dodała wymóg    opis wyglądu, lokalny upload
                                 i avatar        avatara         i podgląd; zdjęcie widoczne
                                                                na karcie i profilu
@@ -578,28 +539,23 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
-**Produkt:** LIFEVERSE\
-**Język aplikacji:** angielski (cały interfejs, komunikaty, etykiety, treści systemowe i dokumentacja widoczna wewnątrz aplikacji); język współpracy i dokumentacji projektowej: polski. Zasada globalna dla wszystkich kolejnych modułów.\
-**Użytkowniczka:** jedna prywatna właścicielka / graczka\
-**Platforma:** lokalna aplikacja desktopowa na PC\
-**Świat:** współczesne fantasy, klimat Harry'ego Pottera w realiach
-współczesnych, Dark Academia / Gothic / Old Money\
-**Główne moduły:** Social, Story, Characters, Relationships, World
-Bible, World Engine\
-**Social:** tekstowa sieć inspirowana X; bez Trends i bez wymogu
-obrazów\
-**Story:** pojedyncze wydarzenie/scena zapisywane po zakończeniu jako wspomnienie; właścicielka odgrywa jedną stałą postać; NPC mogą autonomicznie wchodzić w interakcje w tle\
-**Autonomia NPC:** wysoka\
-**Dodawanie postaci:** formularz expanded, podzielony na sekcje; wszystkie pola poza imieniem opcjonalne\
-**Dane:** lokalne, trwałe, z możliwością backupu\
-**AI:** dostawca/model pozostaje otwarty; adapter będzie oddzielony od reszty aplikacji\
-**Priorytet:** spójna, działająca symulacja, nie tylko atrakcyjny
-dashboard.\
-**Stan repozytorium (2026-11-17):** rozpoczęto szkielet Next.js; istnieją
-podstawowe pliki aplikacji, konfiguracja TypeScript i schemat Prisma/SQLite.\
-**Stan implementacji (2026-11-17):** moduł Characters obejmuje listę i wyszukiwanie postaci, formularz expanded (11 sekcji) z osobną zakładką Appearance, opisem wyglądu i lokalnym uploadem avatara, profil, edycję, usuwanie z potwierdzeniem i zapis do SQLite przez Prisma. Jedna postać może być oznaczona jako Player Character; zaznaczenie jej na innej postaci przenosi oznaczenie.\n**Stan rozszerzenia (2026-11-17):** dodano osobną zakładkę Appearance z opisem wyglądu i uploadem lokalnego avatara (JPG, PNG, WEBP, GIF do 5 MB); avatar jest wyświetlany na liście i profilu postaci.
-**Następny krok:** lokalne testy uploadu avatara, zachowania przy edycji i trwałości pliku po restarcie. Etap nie jest DONE przed sprawdzeniem działania.
+**Produkt:** LIFEVERSE  
+**Język aplikacji:** angielski; język współpracy i dokumentacji projektowej: polski.  
+**Właścicielka / graczka:** jedna prywatna użytkowniczka, sterująca jedną stałą postacią.  
+**Platforma:** lokalna aplikacja webowa na PC, Next.js App Router, React, TypeScript, SQLite i Prisma.  
+**Świat:** współczesne fantasy; estetyka Dark Academia / Gothic / Old Money. Kanon świata pozostaje do określenia przez właścicielkę.  
+**Story:** pojedyncze wydarzenie/scena, które po zakończeniu zostaje wspomnieniem. NPC docelowo autonomiczni; AI nie może pisać działań, wypowiedzi ani myśli postaci gracza.  
+**Characters:** formularz expanded, 11 sekcji; osobna zakładka Appearance, opis wyglądu i lokalny avatar.  
+**Dane:** lokalne SQLite; zdjęcia avatarów w `public/uploads/avatars` (wykluczone z Git).  
+**AI:** dostawca/model pozostaje OPEN; obecny Story foundation nie generuje odpowiedzi AI ani fikcyjnych tur NPC.
 
+**Stan implementacji (2026-11-17):**
+- Characters: lista, wyszukiwanie, profil, formularz, edycja, usuwanie i avatar. Właścicielka potwierdziła lokalne działanie formularza i uploadu.
+- Story foundation: dodawanie pojedynczego wydarzenia, automatyczne dołączanie Player Character, wybór NPC, zapis tur gracza, lista aktywnych wydarzeń i archiwum wspomnień.
+- Zakończenie wydarzenia tworzy rekord Memory i zachowuje powiązane wydarzenie oraz pełną historię tur.
+- Odpowiedzi AI narratora/NPC, autonomia w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
+
+**Najbliższy krok:** test lokalny tworzenia wydarzenia, dodawania tur, zakończenia i odczytu wspomnienia po odświeżeniu / restarcie.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
