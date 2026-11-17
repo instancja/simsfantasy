@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 2.2\
+**Wersja:** 2.3\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -610,3 +610,8 @@ Wdrożone zmiany techniczne:
 ### Korekta walidacji narratora (po teście lokalnym)
 
 Pierwszy test zwrócił fałszywy błąd granicy Player Character, ponieważ parser odrzucał każdy segment narratora zawierający imię postaci gracza. Regułę usunięto. Narrator nadal ma opisywać wyłącznie otoczenie zgodnie z promptem; kontrola semantyczna tego wymogu pozostaje ograniczona i będzie rozwijana na podstawie testów.
+
+
+### UX Story — informacja o trwającym generowaniu (2.3)
+
+Po zgłoszeniu długiego oczekiwania na lokalną kontynuację AI dodano stan pending dla wysyłania tury i ponawiania odpowiedzi. Przycisk zmienia etykietę, pokazuje animowany wskaźnik i jest blokowany przed ponownym kliknięciem; formularz wyświetla komunikat o generowaniu oraz orientacyjną informację, że odpowiedź może potrwać 30 sekund lub dłużej. Status korzysta z natywnego stanu formularza React, więc obejmuje cały czas wykonywania server action. Uwzględniono preferencję ograniczenia animacji systemowej.
