@@ -5,6 +5,18 @@ import {prisma} from "@/lib/prisma";
 import {generateOllamaSegments} from "@/lib/ollama";
 function read(form:FormData,key:string):string|null{const v=form.get(key);return typeof v==="string"&&v.trim()?v.trim():null;}
 
+function mergeSceneState(previous:string|null,next:{summary:string;establishedFacts:string[];openThreads:string[];npcKnowledge:Record<string,string[]>}){
+ let old:{summary?:string;establishedFacts?:string[];openThreads?:string[];npcKnowledge?:Record<string,string[]>}={};
+ if(previous){try{old=JSON.parse(previous);}catch{old={};}}
+ const merge=(a:string[]|undefined,b:string[],limit:number)=>[...new Set([...(a??[]),...b])].slice(-limit);
+ const knowledge:Record<string,string[]>={};
+ for(const id of new Set([...Object.keys(old.npcKnowledge??{}),...Object.keys(next.npcKnowledge)])){
+  knowledge[id]=merge(old.npcKnowledge?.[id],next.npcKnowledge[id]??[],12);
+ }
+ return {summary:next.summary||old.summary||"",establishedFacts:merge(old.establishedFacts,next.establishedFacts,16),openThreads:merge(old.openThreads,next.openThreads,10),npcKnowledge:knowledge};
+}
+
+
 export async function createEvent(form:FormData){
  const title=read(form,"title");if(!title)throw new Error("An event title is required.");
  const player=await prisma.character.findFirst({where:{isPlayerCharacter:true}});
@@ -41,7 +53,7 @@ async function generateAiContinuation(eventId:string){
     sequence++;
     await tx.eventTurn.create({data:{eventId,sequence,speakerType:segment.speakerType,characterId:character?.id??null,speakerName:character?[character.name,character.surname].filter(Boolean).join(" "):"Narrator",content:segment.content}});
    }
-   await tx.storyEvent.update({where:{id:eventId},data:{sceneState:JSON.stringify(generation.sceneState),aiStatus:"IDLE",aiError:null}});
+   await tx.storyEvent.update({where:{id:eventId},data:{sceneState:JSON.stringify(mergeSceneState(event.sceneState,generation.sceneState)),aiStatus:"IDLE",aiError:null}});
   });
  }catch(error){
   const message=error instanceof Error?error.message:"Unexpected error while generating the scene.";
