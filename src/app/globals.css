@@ -65,3 +65,13 @@
 .aiDialogueBubble .aiCharacterSegment{font-size:12px;line-height:1.85;white-space:pre-wrap;color:#d8d3c9;margin:0 0 14px}
 .aiDialogueBubble .aiCharacterSegment:last-child,.aiDialogueBubble .aiNarration:last-child{margin-bottom:0}
 .aiDialogueBubble .aiCharacterSegment strong{font-weight:700;color:#e8e4dc}
+
+
+/* Story readability: larger, calmer typography and clearly highlighted spoken dialogue. */
+.aiDialogueBubble{padding:18px 21px;border-radius:4px 13px 13px 13px;}
+.aiDialogueBubble .aiNarration{font-family:'DM Sans',sans-serif;font-size:14px;font-style:normal;font-weight:400;line-height:1.9;letter-spacing:.05px;color:#c9c9c3;margin:0 0 18px;}
+.aiDialogueBubble .aiCharacterSegment{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;line-height:1.9;letter-spacing:.05px;color:#e0ded8;margin:0 0 16px;}
+.aiDialogueBubble .aiCharacterSegment strong{font-size:13px;font-weight:700;color:#f0e6d3;}
+.aiDialogueBubble .aiSpokenDialogue{color:#e8c58f;font-weight:500;}
+.aiDialogueBubble .aiNarration .aiSpokenDialogue{color:#e8c58f;font-style:italic;}
+@media(max-width:600px){.aiDialogueBubble{padding:15px 16px}.aiDialogueBubble .aiNarration,.aiDialogueBubble .aiCharacterSegment{font-size:13px;line-height:1.85}}
