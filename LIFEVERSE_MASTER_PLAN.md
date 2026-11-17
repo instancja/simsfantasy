@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 1.9\
+**Wersja:** 2.0\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -131,14 +131,9 @@ Właścicielka odgrywa jedną, stałą postać. Nie przełącza się między pos
 
 Jedna historia odpowiada jednemu wydarzeniu / jednej scenie. Po zakończeniu wydarzenie zostaje zachowane jako wspomnienie, które może mieć znaczenie dla późniejszych zachowań, relacji i wiedzy postaci.
 
-Właścicielka: - opisuje działania, wypowiedzi, gesty i myśli swojej
-głównej postaci; - pisze wyłącznie z perspektywy postaci, którą
-odgrywa; - nie musi pisać dialogów ani reakcji pozostałych postaci.
+Właścicielka opisuje działania, wypowiedzi, gesty i myśli swojej głównej postaci; w polu tury może oznaczać działania pojedynczymi gwiazdkami (`*...*`), a zwykły tekst traktowany jest jako dialog. Oba rodzaje treści pozostają razem w dymku jej postaci.
 
-AI: - rozwija sytuację w pełną prozę; - odgrywa wszystkie postacie poza
-główną postacią gracza; - tworzy dialogi, zachowania i reakcje NPC; -
-opisuje otoczenie i konsekwencje; - zachowuje ciągłość scen i
-charakterów; - pozostawia graczowi przestrzeń na kolejną turę.
+AI: - rozwija sytuację w pełną prozę; - odgrywa wszystkie postacie poza główną postacią gracza; - łączy dialogi, działania, gesty i reakcje każdego NPC w jego własnym segmencie/dymku z avatarem; - używa narratora wyłącznie do opisu otoczenia i atmosfery, nie działań ani dialogów postaci; - zachowuje ciągłość scen i charakterów; - pozostawia graczowi przestrzeń na kolejną turę.
 
 #### Nienaruszalne zasady kontroli postaci
 
@@ -565,7 +560,8 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 
 | Wersja | Data | Zmiana | Decyzja / źródło | Szczegóły |
 |---|---|---|---|---|
-| 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | NPC: dymki zawierają wyłącznie wypowiadane słowa; narrator opisuje ruchy i zachowania NPC. Tura gracza: tekst w *...* jest akcją prezentowaną jako narracja, zwykły tekst jest dialogiem w dymku. |
+| 1.9 | 2026-11-17 | Rozdzielenie dialogu i akcji w Story | Feedback właścicielki | Wersja pośrednia: NPC w dymkach tylko mówią, narrator opisuje ich działania; graczka używa *...* dla akcji. Zastąpiona decyzją 2.0. |
+| 2.0 | 2026-11-17 | Działania i dialogi razem w dymkach postaci | Korekta właścicielki po teście | NPC: dialogi, ruchy i gesty razem w ich własnych dymkach; narrator opisuje wyłącznie otoczenie. Player Character: akcje oznaczone *...* i dialog są razem w jej dymku; akcje kursywą, bez widocznych gwiazdek. |
 
 ## 13. Bieżący stan projektu --- skrót kontekstu
 
@@ -586,7 +582,7 @@ zatwierdzonej zmianie lub ukończonym etapie należy go zaktualizować.
 - Dodano adapter Ollama, wywołanie po turze gracza, zapisywanie osobnych segmentów narratora/NPC, status generowania/błędu i retry. Funkcjonalność oczekuje na test lokalny.
 - Pełna autonomia NPC w tle i aktualizowanie relacji nie są jeszcze zaimplementowane.
 
-**Najbliższy krok:** test nowej konwencji tur gracza (*działanie* / zwykły tekst jako dialog) i ścisłego rozdzielenia narracji działań NPC od ich dialogów.
+**Najbliższy krok:** test nowej prezentacji: działania i dialogi NPC w ich własnych dymkach, narrator wyłącznie jako opis otoczenia; działania graczki i jej dialog razem w jej dymku.
 ------------------------------------------------------------------------
 
 # Koniec dokumentu
