@@ -12,3 +12,6 @@ coverage/
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+
+# User-uploaded character portraits are local data, not repository assets.
+public/uploads/avatars/*
