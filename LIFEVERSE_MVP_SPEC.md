@@ -1,0 +1,398 @@
+# LIFEVERSE — MVP Specification
+
+**Wersja:** 0.1 — draft do akceptacji  
+**Data:** 17 listopada 2026  
+**Status:** DRAFT · niezatwierdzona specyfikacja funkcjonalna  
+**Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
+
+> Dokument przekłada zatwierdzoną koncepcję LIFEVERSE na wymagania pierwszej działającej wersji. Elementy oznaczone jako **OPEN** wymagają decyzji właścicielki. **PROPOZYCJA** oznacza rozwiązanie robocze, a nie zatwierdzony wymóg. Dokument nie ustanawia kanonu świata ani biografii postaci.
+
+---
+
+## 1. Cel MVP
+
+MVP ma udowodnić, że LIFEVERSE potrafi przechowywać postacie i prowadzić ciągłą, turową scenę fabularną bez utraty kontroli graczki nad jej postacią.
+
+Pierwszy pionowy wycinek obejmuje:
+
+1. Uruchomienie lokalnej aplikacji.
+2. Wyświetlenie dashboardu i nawigacji.
+3. Utworzenie, zapisanie, wyświetlenie i edycję postaci.
+4. Utworzenie historii/sceny i wskazanie uczestników.
+5. Wprowadzenie przez gracza tury własnej postaci.
+6. Otrzymanie odpowiedzi narracyjnej obejmującej otoczenie i NPC — po skonfigurowaniu dostawcy AI.
+7. Zapis tur i wznowienie sceny po ponownym uruchomieniu aplikacji.
+
+MVP nie ma jeszcze symulować pełnego, autonomicznego życia całego świata. Najpierw musi niezawodnie zapisywać i odtwarzać podstawową rozgrywkę.
+
+## 2. Zakres
+
+### 2.1 W zakresie MVP
+
+- Lokalna aplikacja desktopowa uruchamiana na komputerze właścicielki.
+- Dashboard i nawigacja do podstawowych modułów.
+- Baza postaci z formularzem dodawania i edycji.
+- Podstawowe profile postaci.
+- Lista historii/scen.
+- Widok sceny z kontekstem, historią tur i polem na turę gracza.
+- Trwały zapis danych i możliwość wznowienia pracy.
+- Rozdzielenie postaci gracza od postaci kontrolowanych przez AI.
+- Warstwa integracji AI zaprojektowana jako wymienny adapter.
+- Czytelne komunikaty o błędach i stanie integracji AI.
+
+### 2.2 Poza zakresem pierwszego MVP
+
+Poniższe elementy pozostają częścią docelowej wizji, ale nie są warunkiem ukończenia pierwszego pionowego wycinka:
+
+- Pełny feed Social i automatyczna aktywność NPC.
+- Likes, reposts, quote posts, following i profile społecznościowe.
+- DMs, czaty grupowe i powiadomienia.
+- Zaawansowana symulacja autonomicznego życia wszystkich NPC.
+- Automatyczne, numeryczne przeliczanie relacji.
+- Pełna World Bible z edytorem wszystkich kategorii lore.
+- Zaawansowana oś czasu świata i automatyczne przeskoki czasu.
+- Generowanie i przechowywanie obrazów.
+- Wiele kont użytkowników i funkcje multiplayer.
+
+Wyłączenie z MVP nie oznacza rezygnacji z tych funkcji w docelowym LIFEVERSE.
+
+## 3. Nawigacja i ekrany
+
+### 3.1 Główny układ aplikacji
+
+**Cel:** zapewnić stały dostęp do głównych modułów bez imitowania interfejsu telefonu.
+
+Elementy:
+- Stały panel nawigacyjny.
+- Obszar głównej treści.
+- Nagłówek bieżącego modułu.
+- Widoczne stany ładowania, pustej zawartości i błędów.
+
+Pozycje nawigacji:
+- Dashboard
+- Story
+- Characters
+- Social — oznaczone jako „w przygotowaniu”, dopóki moduł nie zostanie wdrożony.
+- Relationships — „w przygotowaniu”.
+- World Bible — „w przygotowaniu”.
+- World State / Timeline — „w przygotowaniu”.
+
+Nieaktywne moduły nie mogą wyglądać jak działające funkcje. Powinny informować, że zostaną dodane w kolejnych etapach.
+
+### 3.2 Dashboard
+
+**Cel:** punkt wejścia do aplikacji i szybki dostęp do bieżącej pracy.
+
+Elementy:
+- Nazwa LIFEVERSE.
+- Skrót do utworzenia nowej postaci.
+- Skrót do rozpoczęcia nowej sceny.
+- Lista ostatnio otwieranych historii/scen.
+- Informacja o stanie integracji AI (skonfigurowana / nieskonfigurowana / błąd).
+- Informacja o lokalnym zapisie danych.
+
+Akcje:
+- Kliknięcie „Characters” otwiera listę postaci.
+- Kliknięcie „New Character” otwiera formularz nowej postaci.
+- Kliknięcie „New Story” rozpoczyna proces tworzenia historii/sceny.
+- Kliknięcie ostatniej sceny otwiera ją w miejscu ostatniej zapisanej tury.
+
+Stan pusty:
+- Jeśli nie ma postaci, dashboard zachęca do utworzenia pierwszej.
+- Jeśli nie ma scen, dashboard proponuje rozpoczęcie pierwszej sceny.
+- Nie tworzyć przykładowych postaci ani fikcyjnych wpisów bez zgody właścicielki.
+
+### 3.3 Characters — lista postaci
+
+**Cel:** przeglądanie i zarządzanie postaciami.
+
+Elementy:
+- Lista lub siatka kart postaci.
+- Imię i nazwisko jako podstawowa etykieta.
+- Opcjonalny krótki opis, jeśli został wprowadzony.
+- Wyszukiwanie po nazwie.
+- Przycisk „+ Add Character”.
+
+Akcje:
+- „Add Character” otwiera pusty formularz.
+- Kliknięcie postaci otwiera jej profil.
+- „Edit” otwiera formularz z istniejącymi danymi.
+- „Delete” nie może usuwać danych bez potwierdzenia.
+
+Zasada: nie wymagać ręcznej edycji plików ani duplikowania informacji pomiędzy modułami.
+
+### 3.4 Characters — formularz dodawania i edycji
+
+**Cel:** umożliwić zapisanie podstawowych informacji o postaci.
+
+Pola pierwszej wersji:
+- Imię — wymagane.
+- Nazwisko — opcjonalne.
+- Wiek — opcjonalny; przechowywany jako liczba lub tekst tylko po ustaleniu sposobu zapisu.
+- Status / rola — opcjonalne.
+- Wygląd — pole tekstowe.
+- Osobowość — pole tekstowe.
+- Historia — pole tekstowe.
+- Motywacje i cele — pole tekstowe.
+- Mocne i słabe strony — pole tekstowe.
+- Sekrety — pole tekstowe z wyraźnym oznaczeniem jako prywatne.
+- Dodatkowe informacje — pole tekstowe.
+
+Przynależność, dom, grupa, lokalizacja i inne pola zależne od kanonu nie mogą być wymagane, ponieważ ich struktura nie została jeszcze określona.
+
+Akcje:
+- „Save” waliduje wymagane pole i zapisuje postać.
+- „Cancel” wraca bez zapisu.
+- Przy niezapisanych zmianach aplikacja pyta, czy je porzucić.
+- Po zapisie profil jest dostępny na liście i może zostać wybrany do sceny.
+
+**OPEN:** ostateczny zestaw pól, sposób zapisu wieku i ewentualne pola wielowartościowe.
+
+### 3.5 Characters — profil postaci
+
+**Cel:** czytelny podgląd danych jednej postaci.
+
+Sekcje:
+- Podstawowe informacje.
+- Wygląd.
+- Osobowość.
+- Historia.
+- Motywacje i cele.
+- Mocne i słabe strony.
+- Sekrety i informacje prywatne.
+
+Akcje:
+- Edytuj postać.
+- Wróć do listy.
+- Rozpocznij scenę z udziałem tej postaci (jeśli dostępny jest kreator scen).
+
+Profil nie może prezentować nieuzupełnionych danych jako faktów.
+
+### 3.6 Story — lista historii i scen
+
+**Cel:** przeglądanie rozpoczętych i nowych rozgrywek.
+
+Elementy:
+- Lista historii/scen.
+- Tytuł roboczy.
+- Ostatnia aktywność.
+- Uczestnicy, jeśli zostali określeni.
+- Stan: aktywna lub zakończona, o ile status zostanie wdrożony.
+
+Akcje:
+- „New Story” / „New Scene” uruchamia kreator.
+- Kliknięcie pozycji otwiera zapisany kontekst i historię tur.
+- Wznowienie sceny nie może resetować wcześniejszej treści.
+
+**OPEN:** czy historia zawiera wiele scen i rozdziałów już w MVP, czy pierwsza wersja traktuje jedną rozgrywkę jako pojedynczą scenę. Minimalna propozycja: pojedyncza scena z możliwością późniejszego rozszerzenia.
+
+### 3.7 Story — tworzenie sceny
+
+**Cel:** rozpoczęcie sceny z wybranymi postaciami i podstawowym kontekstem.
+
+Pola:
+- Tytuł sceny — roboczy, wymagane.
+- Grywalna postać — wybór jednej postaci kontrolowanej przez gracza.
+- Pozostali uczestnicy — wybór zero lub więcej postaci NPC.
+- Miejsce — opcjonalny tekst; nie wymaga wcześniejszej bazy lokalizacji.
+- Czas / moment — opcjonalny tekst.
+- Wprowadzenie sytuacji — opcjonalny tekst od gracza.
+
+Akcje:
+- „Create Scene” zapisuje scenę i otwiera widok rozgrywki.
+- „Cancel” wraca do listy.
+- Nie wolno automatycznie dopisywać lokalizacji, historii ani faktów świata.
+
+**OPEN:** czy w pierwszym MVP graczka wybiera wyłącznie jedną grywalną postać na całą historię, czy może mieć kilka niezależnych historii z różnymi postaciami. Wymóg źródłowy potwierdza jedną kontrolowaną postać w danej rozgrywce, ale nie rozstrzyga liczby równoległych historii.
+
+### 3.8 Story — widok rozgrywki
+
+**Cel:** prowadzenie turowej historii prozą.
+
+Elementy:
+- Tytuł sceny.
+- Kontekst: miejsce, czas i uczestnicy (tylko jeśli określone).
+- Chronologiczna historia tur.
+- Wyraźne rozróżnienie tur gracza i odpowiedzi narracyjnej.
+- Pole tekstowe na działanie, wypowiedź, gest lub myśli postaci gracza.
+- Przycisk wysłania tury.
+- Stan przetwarzania i komunikaty błędów.
+- Dostęp do profili uczestników bez utraty bieżącej sceny.
+
+Przepływ tury:
+1. Graczka wpisuje deklarację swojej postaci.
+2. Aplikacja zapisuje turę gracza.
+3. Aplikacja przekazuje do warstwy narracyjnej niezbędny kontekst sceny, uczestników i wcześniejszy przebieg.
+4. Skonfigurowany dostawca AI generuje odpowiedź jako narrator i NPC.
+5. Odpowiedź zostaje zapisana jako kolejna tura.
+6. Widok przewija się do najnowszej treści i pozwala graczce kontynuować.
+
+Zachowanie:
+- Nie oferować wymuszonych wyborów A/B/C.
+- Nie dopisywać wypowiedzi, działań, decyzji, myśli, uczuć ani intencji postaci gracza poza treścią zadeklarowaną przez gracza.
+- AI może opisywać otoczenie, NPC, ich dialogi i konsekwencje działań.
+- NPC mogą odmówić, skłamać, zignorować lub działać wbrew oczekiwaniom gracza.
+- Nie przeskakiwać czasu bez uzasadnienia.
+- Nie kończyć sztucznie sceny po jednej krótkiej odpowiedzi.
+- Nie ujawniać postaci informacji, których nie mogła poznać.
+- Nie przedstawiać sugestii AI jako zatwierdzonego kanonu.
+
+**Ważne:** aplikacja musi zachować turę gracza nawet wtedy, gdy wywołanie AI zakończy się błędem. Powinna umożliwić ponowienie generowania bez duplikowania tury gracza.
+
+### 3.9 Social, Relationships, World Bible i World State
+
+W pierwszym MVP moduły mogą być widoczne w nawigacji jako przyszłe obszary, ale ich pełna funkcjonalność nie jest wymagana. Nie należy tworzyć atrap, które zapisują fikcyjne dane lub sugerują działanie niezaimplementowanej symulacji.
+
+---
+
+## 4. Zasady danych i zapisu
+
+### 4.1 Minimalne obiekty
+
+Minimalny model funkcjonalny:
+- Character — profil postaci.
+- Story — historia/rozgrywka.
+- Scene — scena należąca do historii lub samodzielna scena, zależnie od decyzji strukturalnej.
+- SceneParticipant — powiązanie postaci ze sceną i jej rola.
+- SceneTurn — pojedyncza tura gracza albo odpowiedź narracyjna.
+- AppSettings — ustawienia lokalne, w tym konfiguracja integracji AI bez przechowywania sekretów w zwykłym tekście.
+
+To lista robocza, a nie zatwierdzony schemat bazy danych. Dokładny model relacyjny należy określić w etapie Data Architecture.
+
+### 4.2 Wymagania trwałości
+
+- Każdy rekord ma stabilny identyfikator.
+- Dane pozostają dostępne po zamknięciu i ponownym uruchomieniu aplikacji.
+- Zapis tury gracza następuje przed wywołaniem AI.
+- Błąd generowania nie usuwa wcześniejszej historii.
+- Edycja profilu postaci nie może przypadkowo usuwać tur scen.
+- Usuwanie postaci powiązanej z historią wymaga obsłużenia zależności; preferowane jest zablokowanie usunięcia lub archiwizacja zamiast kaskadowego kasowania treści.
+
+### 4.3 Prywatność i wiedza postaci
+
+Już w MVP model danych powinien umożliwiać odróżnienie:
+- treści wpisanej przez gracza,
+- treści wygenerowanej przez AI,
+- informacji prywatnych / sekretów,
+- informacji dostępnych uczestnikom sceny.
+
+Nie wolno przekazywać każdej postaci całej bazy świata jako jej wiedzy. Szczegółowy system CharacterKnowledge może zostać wdrożony później, ale architektura nie powinna go blokować.
+
+## 5. Warstwa AI
+
+### 5.1 Status
+
+**BLOCKED / OPEN:** dostawca i model AI nie zostały wybrane. ChatGPT Free nie jest automatycznie API dla lokalnej aplikacji.
+
+### 5.2 Wymagania dla adaptera
+
+Warstwa AI powinna:
+- być odseparowana od logiki ekranów i bazy danych;
+- przyjmować ustrukturyzowany kontekst sceny;
+- otrzymywać wyłącznie informacje potrzebne do danej tury;
+- zwracać tekst odpowiedzi oraz ewentualne metadane techniczne;
+- zgłaszać błędy i timeouty w sposób obsługiwany przez aplikację;
+- pozwalać na wymianę dostawcy bez przebudowy całej aplikacji.
+
+Nie zakładać konkretnego dostawcy, formatu API ani lokalnego modelu przed decyzją właścicielki.
+
+### 5.3 Tryb bez skonfigurowanego AI
+
+Aplikacja powinna uruchamiać się i pozwalać zarządzać postaciami oraz scenami nawet wtedy, gdy AI nie jest skonfigurowane. Wysłanie tury w takim stanie powinno pokazać jasny komunikat, a nie pozorować odpowiedź AI.
+
+Do testów interfejsu można używać jawnie oznaczonego trybu demonstracyjnego z przykładową odpowiedzią techniczną, ale nie może on być mylony z prawdziwą symulacją ani zapisywany jako kanoniczna treść świata.
+
+## 6. UX i kierunek wizualny
+
+Wymagania:
+- Desktop-first.
+- Dark Academia, Gothic, Old Money jako kierunek estetyczny.
+- Czytelność ważniejsza niż ozdobniki.
+- Ciemna, stonowana paleta i wyraźna hierarchia typograficzna.
+- Czytelne formularze, przyciski i stany błędów.
+- Brak wymogu zdjęć i grafik.
+- Interfejs nie powinien imitować ekranu smartfona.
+
+Konkretne kolory, fonty, ikony i komponenty UI pozostają decyzją projektową do późniejszego dopracowania; nie są kanonem świata.
+
+## 7. Wymagania jakościowe i ograniczenia sprzętowe
+
+- Docelowe środowisko: laptop MSI Katana 17 B13V, Intel Core i9 (wariant nieustalony), NVIDIA RTX 4070 Laptop GPU, 16 GB RAM.
+- Aplikacja powinna działać bez uruchomionego lokalnego modelu AI.
+- Nie zakładać jednoczesnego działania wielu modeli ani ciężkich procesów symulacji.
+- Długie historie powinny być ładowane w sposób kontrolowany; nie trzeba renderować całego archiwum tur naraz.
+- Operacje zapisu nie mogą blokować interfejsu na czas generowania odpowiedzi.
+- Błędy integracji AI nie mogą uszkadzać lokalnych danych.
+
+Nie ustalono jeszcze konkretnego stacku, bazy ani systemu pakowania aplikacji.
+
+## 8. Kryteria akceptacji MVP
+
+MVP można uznać za funkcjonalnie gotowe, gdy wszystkie poniższe scenariusze przechodzą testy:
+
+1. Aplikacja uruchamia się lokalnie bez skonfigurowanego AI.
+2. Można utworzyć postać z wymaganym imieniem.
+3. Utworzona postać pojawia się na liście i ma własny profil.
+4. Można edytować profil i po restarcie zobaczyć zmiany.
+5. Można utworzyć scenę i przypisać jej grywalną postać oraz NPC.
+6. Można otworzyć scenę i zobaczyć jej kontekst.
+7. Można wpisać i zapisać turę gracza.
+8. Jeśli AI jest skonfigurowane, odpowiedź AI pojawia się jako osobna tura i nie przejmuje kontroli nad postacią gracza.
+9. Jeśli AI nie jest skonfigurowane lub zwróci błąd, aplikacja pokazuje komunikat, zachowuje turę gracza i pozwala ponowić próbę.
+10. Po restarcie aplikacji historia sceny i wszystkie zapisane tury są dostępne.
+11. Żaden element interfejsu nie tworzy niezatwierdzonego lore ani fikcyjnych danych jako faktów.
+12. Moduły poza zakresem są jednoznacznie oznaczone jako niedostępne / planowane.
+
+## 9. Kolejność implementacji
+
+### MVP-0 — fundament aplikacji
+- Ustalenie stacku i sposobu uruchamiania.
+- Utworzenie szkieletu aplikacji i nawigacji.
+- Lokalna konfiguracja i obsługa błędów.
+
+### MVP-1 — postacie
+- Model Character.
+- Lista postaci.
+- Formularz dodawania i edycji.
+- Profil postaci.
+- Trwały zapis.
+
+### MVP-2 — sceny i tury
+- Model Story / Scene / SceneParticipant / SceneTurn.
+- Lista scen.
+- Kreator sceny.
+- Widok rozgrywki i zapis tur.
+- Wznowienie sceny.
+
+### MVP-3 — integracja narracyjna
+- Interfejs adaptera AI.
+- Obsługa braku konfiguracji, błędów i ponawiania.
+- Testy zasady kontroli postaci gracza.
+- Testy ciągłości kontekstu.
+
+### MVP-4 — stabilizacja
+- Testy pełnego przepływu.
+- Obsługa kopii zapasowej / eksportu w zakresie ustalonym dla pierwszego wydania.
+- Poprawki UX i wydajności.
+
+Kolejność jest propozycją implementacyjną. Wybór konkretnego stacku i dostawcy AI pozostaje otwarty.
+
+## 10. Otwarte decyzje do zatwierdzenia
+
+1. Czy w MVP jedna historia może zawierać wiele scen, czy na początek historia = jedna scena?
+2. Czy użytkowniczka może prowadzić kilka równoległych historii z różnymi grywalnymi postaciami?
+3. Czy pola formularza postaci zaproponowane w sekcji 3.4 są wystarczające na pierwszą wersję?
+4. Czy miejsce i czas sceny mają pozostać dowolnymi polami tekstowymi w MVP?
+5. Jaki dostawca AI / model ma obsługiwać narrację i jaki budżet prywatności oraz kosztów jest akceptowalny?
+6. Jaki stack i sposób uruchamiania aplikacji wybrać?
+7. Czy backup/eksport ma być częścią pierwszego MVP, czy osobnym etapem bezpośrednio po nim?
+
+## 11. Historia zmian
+
+| Wersja | Data | Zmiana | Status |
+|---|---|---|---|
+| 0.1 | 2026-11-17 | Pierwszy draft zakresu MVP, ekranów, przepływów i kryteriów akceptacji na podstawie Master Planu. | Do akceptacji |
+
+---
+
+**Zasada zatwierdzania:** ta specyfikacja jest projektem roboczym. Propozycje nie stają się wymaganiami, dopóki właścicielka ich wyraźnie nie zaakceptuje.
