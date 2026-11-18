@@ -740,3 +740,10 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Dopasowanie korzysta wyłącznie z istniejącej mapy jednoznacznych nazw i aliasów; nierozpoznane lub niejednoznaczne wartości nadal są odrzucane.
 - Diagnostyka wskazała 11 odrzuceń z powodu nierozpoznanej tożsamości i zero odrzuceń przez ochronę Player Character. Zabezpieczenie PC pozostaje bez zmian.
 - Poprawiono interpolację imienia Player Character w promptcie. Bez migracji bazy danych; wymaga testu lokalnego.
+
+
+### 5.25 Diagnostyka pól identyfikacji NPC
+
+- Gdy model zwraca segmenty NPC, których nie można przypisać do uczestnika, komunikat błędu zawiera do 6 próbek pól identyfikacyjnych: `speakerType`, `type`, `speaker`, `characterId`, `speakerName`, `characterName`, `name`.
+- Nie zapisuje treści dialogów ani nie zmienia reguł dopasowania. Dane pozwolą ustalić, jak Qwen faktycznie oznacza mówców.
+- Ochrona Player Character pozostaje bez zmian. Bez migracji bazy danych; wymagany kolejny test lokalny.
