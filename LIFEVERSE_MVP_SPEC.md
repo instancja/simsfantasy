@@ -718,3 +718,11 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Wymagany test lokalny na przykładzie z `&#x20;`, `&#x4B;`, znacznikami `**` i powtórzonym imieniem NPC.
 
 **Status:** wdrożone na `main`; wymaga testu lokalnego.
+
+
+### 5.22 Ochrona przed powtarzaniem poprzedniej odpowiedzi
+
+- `previousResponseAnchor` jest kontekstem wyłącznie do zachowania ciągłości, a nie tekstem do ponownego wykorzystania.
+- Prompt zabrania powtarzania zdań i odtwarzania dialogów z poprzedniej odpowiedzi, także po niewielkiej parafrazie.
+- Filtr powtórzeń nadal usuwa zdania już użyte. Jeśli model zwróci wyłącznie powtórzenia, system odrzuca kontynuację i pozostawia turę gracza do ponowienia.
+- Status: oczekuje na test lokalny.
