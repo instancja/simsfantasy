@@ -820,3 +820,12 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Prompt został przepisany jako template literal, który poprawnie obsługuje podziały linii i interpolację nazwy Player Character.
 - Nie zmieniono treści zasad narracji, ochrony Player Character, walidacji NPC ani formatu odpowiedzi modelu.
 - Nie wymaga migracji bazy danych. Status: poprawka na `main`; wymaga lokalnego `npm run dev`.
+
+
+### Obsługa błędnej wartości `characterId` zwracanej przez model (18 listopada 2026)
+
+- Diagnostyka wykazała 11 fragmentów NPC odrzuconych z powodu nierozpoznanej tożsamości; filtr ochrony Player Character nie odrzucił żadnego fragmentu.
+- Parser nadal preferuje dokładne wewnętrzne ID postaci. Jeśli model omyłkowo umieści nazwę postaci w polu `characterId`, parser próbuje teraz rozpoznać ją przez istniejącą, jednoznaczną mapę nazw i aliasów.
+- Nieznane ani niejednoznaczne nazwy nadal są odrzucane. Nie osłabiono ochrony Player Character ani walidacji treści NPC.
+- Przywrócono też interpolację rzeczywistego imienia Player Character w template literal promptu.
+- Bez migracji bazy danych. Status: zmiana na `main`; wymaga lokalnego testu.
