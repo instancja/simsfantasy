@@ -5,6 +5,8 @@ import {prisma} from "@/lib/prisma";
 import {addPlayerTurn,completeEvent,retryAiContinuation} from "../actions";
 import {PendingSubmitButton,PendingStatus} from "@/components/PendingSubmitButton";
 
+function formatStoryDate(date:Date){return date.toLocaleString("en-US",{timeZone:"Europe/Warsaw"});}
+
 function splitPlayerTurn(content:string){
  const parts:{kind:"action"|"dialogue";text:string}[]=[];
  const pattern=/\\*([^*]+)\\*/g;
@@ -56,10 +58,10 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     const segments=readAiSegments(t.content);
     return <article className="dialogueTurn aiDialogue" key={t.id}>
      <div className="dialogueAvatar aiDialogueAvatar">✧</div>
-     <div className="dialogueContent"><div className="dialogueMeta"><strong>Narrator</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content,segment.speakerName)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>Narrator</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content,segment.speakerName)}</span></p>)}</div><time>{formatStoryDate(t.createdAt)}</time></div>
     </article>;
    }
-   if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{t.createdAt.toLocaleString("en-US")}</time></article>;
+   if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{formatStoryDate(t.createdAt)}</time></article>;
    const character=t.character??event.participants.find(p=>p.characterId===t.characterId)?.character;
    const isPlayer=t.speakerType==="PLAYER";
    const displayName=character?[character.name,character.surname].filter(Boolean).join(" "):t.speakerName;
@@ -67,12 +69,12 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     const parts=splitPlayerTurn(t.content);
     return <article className="dialogueTurn playerDialogue" key={t.id}>
      <div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div>
-     <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>YOUR CHARACTER</span></div><div className="dialogueBubble"><p>{parts.map((part,index)=>part.kind==="action"?<em className="inlineCharacterAction" key={index}>{part.text}</em>:<span key={index}>{part.text}</span>)}</p></div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>YOUR CHARACTER</span></div><div className="dialogueBubble"><p>{parts.map((part,index)=>part.kind==="action"?<em className="inlineCharacterAction" key={index}>{part.text}</em>:<span key={index}>{part.text}</span>)}</p></div><time>{formatStoryDate(t.createdAt)}</time></div>
     </article>;
    }
    return <article className="dialogueTurn" key={t.id}>
     <div className="dialogueAvatar">{character?.avatarUrl?<img src={character.avatarUrl} alt={displayName}/>:<span>{displayName?.[0]?.toUpperCase()??"?"}</span>}</div>
-    <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>CHARACTER</span></div><div className="dialogueBubble"><p>{t.content}</p></div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+    <div className="dialogueContent"><div className="dialogueMeta"><strong>{displayName}</strong><span>CHARACTER</span></div><div className="dialogueBubble"><p>{t.content}</p></div><time>{formatStoryDate(t.createdAt)}</time></div>
    </article>;
   }):<div className="emptyState compactEmpty"><h2>The scene is ready.</h2><p>Your first turn will appear here after you write and save it.</p></div>}</div>
   {event.status==="ACTIVE"?<>
@@ -84,6 +86,6 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     {player?<form action={addPlayerTurn.bind(null,event.id)}><PendingStatus message="Your turn is saved first. The local model is now generating the scene continuation; this may take 30 seconds or longer."/><label className="field"><span>{[player.name,player.surname].filter(Boolean).join(" ")}'s action</span><textarea name="content" rows={6} required placeholder="What does your character do or say?"/></label><div className="formActions"><PendingSubmitButton label="Save Turn →" pendingLabel="Saving & generating…" /></div></form>:<p className="muted">No Player Character is currently selected. Select one in Characters to continue.</p>}
    </section>
    <section className="formSection completeEvent"><div className="formSectionHeading"><span>✧</span><div><h2>End Event & Save Memory</h2><p>Completing this event preserves its full turn history as a memory. You can add an optional note for future reference.</p></div></div><form action={completeEvent.bind(null,event.id)}><label className="field"><span>Memory Note (optional)</span><textarea name="summary" rows={3} placeholder="Add a note about what this event means or what should be remembered..."/></label><div className="formActions"><button className="dangerButton" type="submit" disabled={event.aiStatus==="GENERATING"}>Complete Event & Save Memory</button></div></form></section>
-  </>:<section className="memoryNote"><p className="eyebrow">PRESERVED MEMORY</p><h2>{event.memory?.title??event.title}</h2><p>{event.memory?.summary||"The event has been preserved with its complete turn history."}</p><small>Completed {event.completedAt?.toLocaleString("en-US")}</small></section>}
+  </>:<section className="memoryNote"><p className="eyebrow">PRESERVED MEMORY</p><h2>{event.memory?.title??event.title}</h2><p>{event.memory?.summary||"The event has been preserved with its complete turn history."}</p><small>Completed {event.completedAt?formatStoryDate(event.completedAt):undefined}</small></section>}
  </AppShell>;
 }
