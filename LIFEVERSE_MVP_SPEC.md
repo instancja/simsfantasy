@@ -726,3 +726,9 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Prompt zabrania powtarzania zdań i odtwarzania dialogów z poprzedniej odpowiedzi, także po niewielkiej parafrazie.
 - Filtr powtórzeń nadal usuwa zdania już użyte. Jeśli model zwróci wyłącznie powtórzenia, system odrzuca kontynuację i pozostawia turę gracza do ponowienia.
 - Status: oczekuje na test lokalny.
+
+
+### 5.23 Poprawka składni promptu systemowego Ollama
+
+- Wielowierszowy prompt systemowy jest zapisany jako template literal TypeScript, aby poprawnie obsługiwać nowe linie i interpolację nazwy Player Character.
+- Nie zmienia to reguł generowania ani formatu JSON. Wymaga lokalnego testu kompilacji i generowania.
