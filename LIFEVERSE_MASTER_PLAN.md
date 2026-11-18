@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.3\
+**Wersja:** 3.4\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -732,3 +732,12 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Brak migracji bazy danych. Następny test powinien zebrać nowy komunikat diagnostyczny, jeśli błąd się powtórzy.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu.
+
+
+### Diagnostyka odpowiedzi bez JSON z Ollama (18 listopada 2026)
+
+- Jeśli odpowiedź modelu nie zawiera obiektu JSON, komunikat diagnostyczny pokazuje długość i bezpieczny, skrócony podgląd surowego pola `message.content`.
+- Diagnostyka dołącza `done_reason`, liczbę wygenerowanych tokenów, liczbę tokenów promptu i długość pola `thinking`, jeśli Ollama je zwróci.
+- Rozdziela przypadek pustej treści od odpowiedzi zawierającej tekst bez obiektu JSON.
+- Nie zapisuje surowej odpowiedzi do historii ani nie zmienia tury gracza.
+- Nadal wymagany jest test lokalny; dopiero podgląd odpowiedzi pozwoli rozstrzygnąć, czy problemem jest tryb thinking, ucięcie generacji, niezgodność schematu czy inny format odpowiedzi.
