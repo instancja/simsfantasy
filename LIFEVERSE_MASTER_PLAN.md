@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.2\
+**Wersja:** 3.3\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -718,5 +718,17 @@ Po błędzie parsowania odpowiedzi modelu (`Expected ',' or ']' after array elem
 - Parser przechwytuje również błąd drugiej próby odczytu JSON i zwraca czytelny komunikat zamiast surowego wyjątku.
 - Zmiana korzysta z funkcji formatu JSON Schema w API Ollama. Kompatybilność z lokalną wersją Ollama i modelem Qwen wymaga testu.
 - Brak zmian schematu bazy i brak potrzeby migracji.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu.
+
+
+### STORY — diagnostyka niepoprawnego JSON z Ollama (18 listopada 2026)
+
+Po ponownym błędzie parsowania mimo przekazania JSON Schema:
+
+- Włączono tryb myślenia `low` dla modelu Qwen, zamiast całkowicie wyłączać `think`; zgodność i wpływ na wynik wymagają testu na lokalnej instalacji.
+- Parser pokazuje teraz pozycję błędu oraz krótki, ograniczony fragment odpowiedzi w pobliżu błędnego miejsca. Ułatwia to rozpoznanie nieescapowanego cudzysłowu, ucięcia lub tekstu poza JSON-em bez ujawniania całej odpowiedzi.
+- Nadal używany jest schemat JSON Schema, temperatura 0.35 i limit 1800 tokenów.
+- Brak migracji bazy danych. Następny test powinien zebrać nowy komunikat diagnostyczny, jeśli błąd się powtórzy.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu.
