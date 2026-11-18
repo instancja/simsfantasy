@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.9 — diagnostyka niepoprawnego JSON z Ollama  
+**Wersja:** 3.0 — diagnostyka odpowiedzi bez JSON z Ollama  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -665,3 +665,12 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Nie wymaga migracji bazy danych. Wymagany lokalny test i analiza komunikatu diagnostycznego.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu.
+
+
+### 5.16 Diagnostyka odpowiedzi Ollama bez obiektu JSON (18 listopada 2026)
+
+- Gdy `message.content` nie zawiera kompletnego obiektu JSON, komunikat pokazuje długość odpowiedzi i skrócony podgląd jej początku.
+- Komunikat dołącza metadane `done_reason`, `eval_count`, `prompt_eval_count` i długość `message.thinking`, o ile są dostępne.
+- Brak pola `message.content` jest odróżniany od treści niebędącej JSON-em.
+- Diagnostyka nie zapisuje niepoprawnej odpowiedzi AI do historii i nie usuwa zapisanej tury gracza.
+- Test lokalny wymagany; nie uznawać problemu za rozwiązany przed analizą nowego komunikatu.
