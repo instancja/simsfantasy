@@ -788,3 +788,10 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Test lokalny wymagany, w tym sprawdzenie odpowiedzi z encjami HTML, Markdown i powtórzonym prefiksem NPC.
 
 **Status:** wdrożone na `main`; oczekuje na test lokalny właścicielki.
+
+
+### Poprawka błędu kompilacji normalizacji NPC (18 listopada 2026)
+
+- Usunięto przypadkowo doklejony, uszkodzony fragment starej implementacji z `src/lib/ollama.ts`, który powodował błąd składni TypeScript podczas kompilacji.
+- Zachowano jedną poprawną definicję `normalizeNpcText` oraz jedną definicję `boundedList`; logika walidacji NPC i ochrona Player Character nie zostały zmienione.
+- **Status:** poprawka zapisana na `main`; wymaga lokalnego `npm run dev` i testu sceny.
