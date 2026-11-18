@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.5\
+**Wersja:** 3.6\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -749,3 +749,11 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - W adapterze Ollama ustawiono `think:false`, aby wymusić generowanie treści odpowiedzi zamiast zużywania budżetu na osobny kanał rozumowania.
 - Zwiększono `num_ctx` z 8192 do 12288, aby zapewnić więcej miejsca na prompt i ustrukturyzowaną odpowiedź; limit `num_predict` pozostaje 1800.
 - Wymagany test na lokalnym `qwen3.5:4b`. Jeśli model lub wersja Ollama ignoruje `think:false`, należy sprawdzić zgodność ustawienia i rozważyć uproszczenie schematu zamiast bez końca zwiększać tokeny.
+
+
+### Wielokrotne dekodowanie encji HTML (18 listopada 2026)
+
+- Weryfikacja pokazała, że dekoder encji istniał już w generatorze i widoku historii, ale wykonywał tylko jedno przejście.
+- Oba dekodery wykonują teraz do czterech przejść, kończąc wcześniej, jeśli tekst przestaje się zmieniać. Obsługuje to wielokrotnie zakodowane sekwencje, takie jak `&amp;#x54;`.
+- Zmiana obejmuje nowy tekst po parsowaniu oraz wyświetlanie zapisanych segmentów. Nie zmienia formatu bazy ani nie wymaga migracji.
+- Wymagany test lokalny; sprawdzić stare i nowe wpisy oraz upewnić się, że zwykłe znaki `&` pozostają poprawne.
