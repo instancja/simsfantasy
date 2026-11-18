@@ -6,6 +6,7 @@ type Generation={segments:Segment[];sceneState:SceneState};
 type CharacterContext={id:string;name:string;surname:string|null;appearance:string|null;personality:string|null;psychology:string|null;history:string|null;motivations:string|null;strengths:string|null;communication:string|null};
 type TurnContext={speakerType:string;speakerName:string;content:string};
 function clean(value:string){return value.replace(/<think>[\s\S]*?<\/think>/gi,"").replace(/<\|[^|]+\|>/g,"").trim();}
+function decodeHtmlEntities(value:string){const named:Record<string,string>={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ","#39":"'"};return value.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{if(decimal||hex){const code=Number.parseInt(decimal??hex,decimal?10:16);return Number.isFinite(code)&&code>=0&&code<=0x10ffff?String.fromCodePoint(code):match;}return named[String(name).toLowerCase()]??match;});}
 function boundedList(value:unknown,maxItems:number,maxLength:number):string[]{if(!Array.isArray(value))return [];return value.filter((v):v is string=>typeof v==="string"&&!!v.trim()).slice(0,maxItems).map(v=>v.trim().slice(0,maxLength));}
 function parseState(value:unknown,allowed:Set<string>):SceneState{
  if(!value||typeof value!=="object")throw new Error("The local model did not return the required scene memory. Please retry.");
@@ -43,7 +44,7 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   const s=item as {speakerType?:unknown;type?:unknown;speaker?:unknown;characterId?:unknown;character_id?:unknown;speakerName?:unknown;characterName?:unknown;name?:unknown;content?:unknown;text?:unknown;message?:unknown};
   const rawContent=s.content??s.text??s.message;
   if(typeof rawContent!=="string"||!rawContent.trim())continue;
-  const c=clean(rawContent).slice(0,7000);if(!c)continue;
+  const c=decodeHtmlEntities(clean(rawContent)).slice(0,7000);if(!c)continue;
   const kind=String(s.speakerType??s.type??s.speaker??"").trim().toUpperCase();
   if(kind==="NARRATOR"||kind==="NARRATION"){
    const safeText=c.split(/(?<=[.!?])\s+/).filter(sentence=>!narratorSentenceHasCharacter(sentence)).join(" ").trim();
@@ -57,8 +58,14 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   if(!characterId&&(kind==="NPC"||kind==="CHARACTER")&&npcs.size===1)characterId=[...npcs.keys()][0];
   if(!characterId){if(kind==="NPC"||kind==="CHARACTER"||rawName)skippedNpc++;else skippedUnknown++;continue;}
   const otherNpcPatterns=[...npcAliasesById.entries()].filter(([id])=>id!==characterId).map(([,pattern])=>pattern);
-  const safeNpcText=c.split(/(?<=[.!?])\s+/).filter(sentence=>{const prose=removeQuotedDialogue(sentence);return !playerAsActor.test(prose)&&!playerPossessive.test(prose)&&!playerActionInNpcProse(sentence)&&!otherNpcPatterns.some(pattern=>pattern.test(prose));}).join(" ").trim();
+  const sentences=c.split(/(?<=[.!?])\s+/).filter(Boolean);
+  const environmentLead=/^(?:(?:the|a|an)\s+)?(?:quiet|silence|air|light|shadow|shadows|dust|scent|smell|sound|sounds|library|room|corridor|floor|floorboards|shelves|books|book|window|door|wind|rain|weather|ceiling|wall|stone|wood|lamp|lamps|mechanism|clock|paper|darkness|gloom|daylight|sunlight|beam|glow|hum|rustle|echo|cold|warmth)\b/i;
+  const environmentSentences:string[]=[];const npcSentences:string[]=[];
+  for(const sentence of sentences){const prose=removeQuotedDialogue(sentence);const isEnvironment=environmentLead.test(prose)&&!narratorHumanReference.test(prose)&&!narratorNamePattern.test(prose);if(isEnvironment){environmentSentences.push(sentence);continue;}if(playerAsActor.test(prose)||playerPossessive.test(prose)||playerActionInNpcProse(sentence)||otherNpcPatterns.some(pattern=>pattern.test(prose)))continue;npcSentences.push(sentence);}
+  if(environmentSentences.length)result.push({speakerType:"NARRATOR",content:environmentSentences.join(" ").trim()});
+  const safeNpcText=npcSentences.join(" ").trim();
   if(!safeNpcText){skippedNpc++;continue;}
+  result.push({speakerType:"NPC",characterId,content:safeNpcText});
   result.push({speakerType:"NPC",characterId,content:safeNpcText});
  }
  const priorSentences=new Set(previousResponse.flatMap(turn=>turn.content.split(/(?<=[.!?])\s+/)).map(sentence=>sentence.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim()).filter(Boolean));
