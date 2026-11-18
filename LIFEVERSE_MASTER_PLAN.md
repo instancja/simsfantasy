@@ -837,3 +837,12 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Dodano do komunikatu błędu ograniczoną próbkę pól identyfikacyjnych zwracanych przez model (`speakerType`, `type`, `speaker`, `characterId`, `character_id`-pośrednio, `speakerName`, `characterName`, `name`; maksymalnie 6 próbek). Treść dialogu nie jest logowana.
 - Celem jest ustalenie rzeczywistego formatu odpowiedzi Qwen przed zmianą mapowania postaci. Nie osłabiono walidacji tożsamości ani ochrony Player Character.
 - Bez migracji bazy danych. Status: diagnostyka na `main`; wymaga ponownego testu lokalnego.
+
+
+### Ograniczenie powtórzeń wewnątrz jednej odpowiedzi AI (18 listopada 2026)
+
+- Filtr powtórzeń obejmuje teraz zarówno bezpośrednio poprzednią odpowiedź AI, jak i wcześniejsze zdania w aktualnie generowanej odpowiedzi.
+- Kolejne segmenty Narratora/NPC nie mogą ponownie wprowadzić identycznego zdania; pierwsze wystąpienie pozostaje, następne jest usuwane.
+- Prompt dodatkowo zabrania powtarzania tych samych gestów, opisów mimiki, szczegółów fizycznych i kwestii w obrębie jednej odpowiedzi.
+- Jest to filtr dokładnych zdań, nie semantyczny detektor parafraz. Nie zmienia ochrony Player Character, identyfikacji NPC ani formatu danych. Bez migracji bazy.
+- Status: wdrożone na `main`; wymaga lokalnego testu.
