@@ -756,3 +756,12 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Prompt dodatkowo zabrania powtarzania tych samych gestów, opisów mimiki, szczegółów fizycznych i kwestii w obrębie jednej odpowiedzi.
 - Jest to filtr dokładnych zdań, nie semantyczny detektor parafraz. Nie zmienia ochrony Player Character, identyfikacji NPC ani formatu danych. Bez migracji bazy.
 - Status: wdrożone na `main`; wymaga lokalnego testu.
+
+
+### Wymagane identyfikatory NPC w schemacie odpowiedzi (18 listopada 2026)
+
+- Diagnostyka wykazała, że Qwen zwracał segmenty `speakerType: NPC`, ale pozostawiał puste wszystkie pola identyfikujące mówcę (`characterId`, `speakerName`, `characterName`, `name`).
+- Instrukcja promptu wymaga teraz kopiowania dokładnego, case-sensitive ID z `npcParticipants[].id` dla każdego segmentu NPC. Jeśli model nie potrafi przypisać beatu do konkretnej postaci, ma go pominąć.
+- Schemat JSON wymaga `characterId` we wszystkich segmentach. Dla Narratora wartością jest pusty string; dla NPC dokładne ID uczestnika. Parser Narratora ignoruje to pole.
+- Nie wprowadzono automatycznego przypisywania anonimowych segmentów do losowego NPC. Ochrona Player Character pozostaje bez zmian.
+- Bez migracji bazy danych. Status: wdrożone na `main`; wymaga lokalnego testu z wieloma NPC.
