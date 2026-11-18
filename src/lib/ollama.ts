@@ -58,7 +58,7 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   if(kind==="NPC"||kind==="CHARACTER"||rawId||rawName)rawNpcCandidates++;
   let characterId=npcs.has(rawId)?rawId:undefined;
   // Some local models put the character name in characterId instead of the required internal ID.
-  if(!characterId&&rawId){const idAsName=rawId.trim().replace(/\\s*[:：]\\s*$/,"").toLocaleLowerCase();characterId=byName.get(idAsName);}
+  if(!characterId&&rawId){const idAsName=rawId.trim().replace(/\s*[:：]\s*$/,"").toLocaleLowerCase();characterId=byName.get(idAsName);}
   if(!characterId&&rawName)characterId=byName.get(rawName);
   if(!characterId&&(kind==="NPC"||kind==="CHARACTER")&&npcs.size===1)characterId=[...npcs.keys()][0];
   if(!characterId){if(kind==="NPC"||kind==="CHARACTER"||rawName){skippedNpc++;skippedIdentity++;}else skippedUnknown++;continue;}
