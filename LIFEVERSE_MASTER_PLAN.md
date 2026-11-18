@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.7\
+**Wersja:** 3.8\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -766,3 +766,14 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Komunikat o odrzuceniu wszystkich segmentów rozdziela nierozpoznaną tożsamość, naruszenie granicy PC, pusty segment po filtracji i nieznane fragmenty.
 - Zabezpieczenia granicy Player Character pozostają aktywne; zmiana nie rozszerza automatycznego przypisywania fragmentów do NPC.
 - Wymagany test lokalny i analiza nowych liczników przed dalszym strojeniem walidatora.
+
+
+### STORY — diagnostyka kontynuacji zawierającej wyłącznie Narratora (18 listopada 2026)
+
+- Parser zlicza surowe segmenty Narratora i kandydatów na segmenty NPC, zaakceptowane segmenty NPC oraz fragmenty odrzucone przez istniejące filtry.
+- Jeśli wydarzenie ma uczestniczących NPC, ale po walidacji i usuwaniu powtórzeń pozostaje wyłącznie Narrator, odpowiedź nie jest zapisywana jako poprawna kontynuacja.
+- Komunikat rozróżnia sytuację, w której model nie zwrócił żadnego kandydata NPC, od sytuacji, w której kandydaci zostali odrzuceni przez resolver tożsamości, ochronę Player Character, pustą treść lub filtr powtórzeń.
+- Zabezpieczenia granicy Player Character pozostają bez zmian. Tura gracza pozostaje zapisana i można ponowić wyłącznie generowanie AI.
+- Nie zmieniono schematu bazy danych; migracja nie jest wymagana.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
