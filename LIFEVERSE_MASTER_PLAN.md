@@ -795,3 +795,11 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Usunięto przypadkowo doklejony, uszkodzony fragment starej implementacji z `src/lib/ollama.ts`, który powodował błąd składni TypeScript podczas kompilacji.
 - Zachowano jedną poprawną definicję `normalizeNpcText` oraz jedną definicję `boundedList`; logika walidacji NPC i ochrona Player Character nie zostały zmienione.
 - **Status:** poprawka zapisana na `main`; wymaga lokalnego `npm run dev` i testu sceny.
+
+
+### Wzmocnienie ochrony przed powtarzaniem poprzedniej odpowiedzi (18 listopada 2026)
+
+- Diagnostyka testu wykazała, że model zwrócił pięć poprawnych segmentów NPC, ale wszystkie zawierały zdania identyczne z poprzednią odpowiedzią i zostały prawidłowo odfiltrowane.
+- Wzmocniono instrukcję dla modelu: poprzednia odpowiedź jest wyłącznie zapisem zdarzeń już zakończonych; nie wolno powtarzać jej zdań ani odtwarzać dialogów z drobnymi zmianami. Kontynuacja ma rozpocząć się po ostatnim beatcie.
+- Filtr powtórzeń i blokada kontynuacji narrator-only pozostają aktywne; nie osłabiono ochrony Player Character.
+- **Status:** zmiana na `main`; oczekuje na lokalny test. Bez migracji bazy danych.
