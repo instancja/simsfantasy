@@ -22,7 +22,7 @@ function splitPlayerTurn(content:string){
 
 function decodeHtmlEntities(value:string){
  const named:Record<string,string>={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ","#39":"'"};
- return value.replace(/&(?:#(\\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{
+ return value.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{
   if(decimal||hex){const code=Number.parseInt(decimal??hex,decimal?10:16);return Number.isFinite(code)&&code>=0&&code<=0x10ffff?String.fromCodePoint(code):match;}
   return named[String(name).toLowerCase()]??match;
  });
