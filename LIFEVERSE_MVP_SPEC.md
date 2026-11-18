@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 3.1 — wyłączenie thinking dla generowania sceny  
+**Wersja:** 3.2 — wielokrotne dekodowanie encji HTML  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -682,3 +682,11 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Dla generowania sceny adapter ustawia `think:false`, aby odpowiedź modelu trafiała do pola content i mogła spełnić wymagany schemat JSON.
 - `num_ctx` zwiększono do 12288; `num_predict` pozostaje 1800.
 - Zmiana wymaga testu lokalnego na docelowym modelu i wersji Ollama; nie oznaczać generowania jako naprawionego przed potwierdzeniem poprawnej odpowiedzi JSON.
+
+
+### 5.18 Wielokrotne dekodowanie encji HTML (18 listopada 2026)
+
+- Dekodery w `src/lib/ollama.ts` i `src/app/events/[id]/page.tsx` wykonują maksymalnie cztery przejścia dekodowania encji HTML, z wczesnym zakończeniem przy braku zmian.
+- Rozwiązanie obsługuje wielokrotne kodowanie encji numerycznych i nazwanych, bez nieograniczonego dekodowania rekurencyjnego.
+- Dotyczy parsowania nowych odpowiedzi i renderowania wcześniej zapisanej historii; bez migracji bazy danych.
+- Status: wymaga lokalnego testu na starym wpisie zawierającym `&#x20;` oraz nowej odpowiedzi NPC.
