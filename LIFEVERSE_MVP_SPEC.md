@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 3.0 — diagnostyka odpowiedzi bez JSON z Ollama  
+**Wersja:** 3.1 — wyłączenie thinking dla generowania sceny  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -674,3 +674,11 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Brak pola `message.content` jest odróżniany od treści niebędącej JSON-em.
 - Diagnostyka nie zapisuje niepoprawnej odpowiedzi AI do historii i nie usuwa zapisanej tury gracza.
 - Test lokalny wymagany; nie uznawać problemu za rozwiązany przed analizą nowego komunikatu.
+
+
+### 5.17 Budżet generowania i kanał thinking (18 listopada 2026)
+
+- Diagnostyka potwierdziła pusty `message.content` przy `done_reason=length`, 1156 wygenerowanych tokenach oraz 5025 znakach w polu `message.thinking`.
+- Dla generowania sceny adapter ustawia `think:false`, aby odpowiedź modelu trafiała do pola content i mogła spełnić wymagany schemat JSON.
+- `num_ctx` zwiększono do 12288; `num_predict` pozostaje 1800.
+- Zmiana wymaga testu lokalnego na docelowym modelu i wersji Ollama; nie oznaczać generowania jako naprawionego przed potwierdzeniem poprawnej odpowiedzi JSON.
