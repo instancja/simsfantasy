@@ -22,9 +22,8 @@ function splitPlayerTurn(content:string){
 
 function decodeHtmlEntities(value:string){const named:Record<string,string>={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ","#39":"'"};let decoded=value;for(let pass=0;pass<4;pass++){const next=decoded.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{if(decimal||hex){const code=Number.parseInt(decimal??hex,decimal?10:16);return Number.isFinite(code)&&code>=0&&code<=0x10ffff?String.fromCodePoint(code):match;}return named[String(name).toLowerCase()]??match;});if(next===decoded)break;decoded=next;}return decoded;}
 function renderQuotedDialogue(content:string,speakerName?:string){
- content=decodeHtmlEntities(content).replace(/\\*\\*/g,"").replace(/__/g,"");
- if(speakerName){const escaped=speakerName.trim().replace(/[.*+?^${}()|[\\]\\\\]/g,"\\\\function renderQuotedDialogue(content:string){
- content=decodeHtmlEntities(content);");if(escaped){content=content.replace(new RegExp("^"+escaped+"\\\\s*:\\\\s*","i"),"");content=content.replace(new RegExp("^"+escaped+"\\\\s+(?=(?:sets|set|stands|stood|begins|began|starts|started|continues|continued|says|said|replies|replied|asks|asked|whispers|whispered|murmurs|murmured|states|stated|turns|turned|looks|looked|picks|picked|places|placed|writes|wrote|shifts|shifted|leans|leaned|nods|nodded|smiles|smiled|laughs|laughed|pauses|paused)\\\\b)","i"),"");}}
+ content=decodeHtmlEntities(content).replaceAll("**","").replaceAll("__","");
+ if(speakerName){const name=speakerName.trim();if(name&&content.slice(0,name.length).toLocaleLowerCase()===name.toLocaleLowerCase()){const rest=content.slice(name.length);if(/^\s*:\s*/.test(rest)){content=rest.replace(/^\s*:\s*/,"");}else if(/^\s+(?:sets|set|stands|stood|begins|began|starts|started|continues|continued|says|said|replies|replied|asks|asked|whispers|whispered|murmurs|murmured|states|stated|turns|turned|looks|looked|picks|picked|places|placed|writes|wrote|shifts|shifted|leans|leaned|nods|nodded|smiles|smiled|laughs|laughed|pauses|paused)\b/i.test(rest)){content=rest.trimStart();}}}
  const parts:React.ReactNode[]=[];
  const pattern=/(“[^”]*”|\u0022[^\u0022]*\u0022)/g;
  let cursor=0,match:RegExpExecArray|null,index=0;
