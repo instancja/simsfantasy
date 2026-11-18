@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.8 — wymuszanie poprawnego JSON z Ollama  
+**Wersja:** 2.9 — diagnostyka niepoprawnego JSON z Ollama  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -653,5 +653,15 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Błąd nieudanego parsowania jest przechwytywany i zwracany jako czytelny komunikat. Tura gracza pozostaje zapisana i może być ponowiona.
 - Wymagana weryfikacja zgodności API JSON Schema z lokalną wersją Ollama oraz modelem Qwen.
 - Nie wymaga migracji bazy danych.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu.
+
+
+### 5.15 Diagnostyka niepoprawnego JSON z Ollama (18 listopada 2026)
+
+- Tryb myślenia modelu ustawiono na `low`; wymaga to testu zgodności z lokalnym modelem Qwen.
+- W przypadku błędnego JSON parser zwraca pozycję błędu i krótki fragment odpowiedzi w pobliżu tej pozycji, zamiast wyłącznie ogólnego komunikatu.
+- Zachowano JSON Schema, temperaturę 0.35 i limit 1800 tokenów.
+- Nie wymaga migracji bazy danych. Wymagany lokalny test i analiza komunikatu diagnostycznego.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu.
