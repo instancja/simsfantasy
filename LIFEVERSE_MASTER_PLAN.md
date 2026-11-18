@@ -803,3 +803,12 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Wzmocniono instrukcję dla modelu: poprzednia odpowiedź jest wyłącznie zapisem zdarzeń już zakończonych; nie wolno powtarzać jej zdań ani odtwarzać dialogów z drobnymi zmianami. Kontynuacja ma rozpocząć się po ostatnim beatcie.
 - Filtr powtórzeń i blokada kontynuacji narrator-only pozostają aktywne; nie osłabiono ochrony Player Character.
 - **Status:** zmiana na `main`; oczekuje na lokalny test. Bez migracji bazy danych.
+
+
+### Stabilne formatowanie dat w widoku wydarzenia (18 listopada 2026)
+
+- Daty tur historii i zakończenia wydarzenia są formatowane z jawną strefą czasową `Europe/Warsaw`, zamiast zależeć od domyślnej strefy środowiska serwera lub przeglądarki.
+- Eliminuje to różnice SSR/hydration wynikające z formatowania tej samej daty w różnych strefach czasowych.
+- Nie rozwiązuje atrybutów dopisywanych do DOM przez rozszerzenia przeglądarki (np. `bis_skin_checked`, `cz-shortcut-listen`); ich źródło należy wyłączyć po stronie przeglądarki.
+- Nie wymaga migracji bazy danych.
+- Status: wdrożone na `main`; wymaga lokalnego testu.
