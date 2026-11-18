@@ -829,3 +829,11 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Nieznane ani niejednoznaczne nazwy nadal są odrzucane. Nie osłabiono ochrony Player Character ani walidacji treści NPC.
 - Przywrócono też interpolację rzeczywistego imienia Player Character w template literal promptu.
 - Bez migracji bazy danych. Status: zmiana na `main`; wymaga lokalnego testu.
+
+
+### Diagnostyka nierozpoznanej tożsamości NPC (18 listopada 2026)
+
+- Kolejny test wykazał 4 segmenty NPC odrzucone z powodu nierozpoznanej tożsamości; ochrona Player Character nie odrzuciła żadnego.
+- Dodano do komunikatu błędu ograniczoną próbkę pól identyfikacyjnych zwracanych przez model (`speakerType`, `type`, `speaker`, `characterId`, `character_id`-pośrednio, `speakerName`, `characterName`, `name`; maksymalnie 6 próbek). Treść dialogu nie jest logowana.
+- Celem jest ustalenie rzeczywistego formatu odpowiedzi Qwen przed zmianą mapowania postaci. Nie osłabiono walidacji tożsamości ani ochrony Player Character.
+- Bez migracji bazy danych. Status: diagnostyka na `main`; wymaga ponownego testu lokalnego.
