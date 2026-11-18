@@ -21,8 +21,10 @@ function splitPlayerTurn(content:string){
 }
 
 function decodeHtmlEntities(value:string){const named:Record<string,string>={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ","#39":"'"};let decoded=value;for(let pass=0;pass<4;pass++){const next=decoded.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{if(decimal||hex){const code=Number.parseInt(decimal??hex,decimal?10:16);return Number.isFinite(code)&&code>=0&&code<=0x10ffff?String.fromCodePoint(code):match;}return named[String(name).toLowerCase()]??match;});if(next===decoded)break;decoded=next;}return decoded;}
-function renderQuotedDialogue(content:string){
- content=decodeHtmlEntities(content);
+function renderQuotedDialogue(content:string,speakerName?:string){
+ content=decodeHtmlEntities(content).replace(/\\*\\*/g,"").replace(/__/g,"");
+ if(speakerName){const escaped=speakerName.trim().replace(/[.*+?^${}()|[\\]\\\\]/g,"\\\\function renderQuotedDialogue(content:string){
+ content=decodeHtmlEntities(content);");if(escaped){content=content.replace(new RegExp("^"+escaped+"\\\\s*:\\\\s*","i"),"");content=content.replace(new RegExp("^"+escaped+"\\\\s+(?=(?:sets|set|stands|stood|begins|began|starts|started|continues|continued|says|said|replies|replied|asks|asked|whispers|whispered|murmurs|murmured|states|stated|turns|turned|looks|looked|picks|picked|places|placed|writes|wrote|shifts|shifted|leans|leaned|nods|nodded|smiles|smiled|laughs|laughed|pauses|paused)\\\\b)","i"),"");}}
  const parts:React.ReactNode[]=[];
  const pattern=/(“[^”]*”|\u0022[^\u0022]*\u0022)/g;
  let cursor=0,match:RegExpExecArray|null,index=0;
@@ -36,7 +38,7 @@ function renderQuotedDialogue(content:string){
 }
 
 function readAiSegments(content:string):{speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}[]{
- try{const value=JSON.parse(content) as {segments?:unknown};if(!Array.isArray(value.segments))return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];return value.segments.filter((item):item is {speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}=>!!item&&typeof item==="object"&&((item as {speakerType?:unknown}).speakerType==="NARRATOR"||(item as {speakerType?:unknown}).speakerType==="NPC")&&typeof (item as {content?:unknown}).content==="string").map(item=>({speakerType:item.speakerType,speakerName:typeof item.speakerName==="string"?item.speakerName:item.speakerType==="NARRATOR"?"":"NPC",content:item.content}));}catch{return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];}
+ try{const value=JSON.parse(content) as {segments?:unknown};if(!Array.isArray(value.segments))return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];return value.segments.filter((item):item is {speakerType:"NARRATOR"|"NPC";speakerName:string;content:string}=>!!item&&typeof item==="object"&&((item as {speakerType?:unknown}).speakerType==="NARRATOR"||(item as {speakerType?:unknown}).speakerType==="NPC")&&typeof (item as {content?:unknown}).content==="string").map(item=>({speakerType:item.speakerType,speakerName:typeof item.speakerName==="string"?decodeHtmlEntities(item.speakerName):item.speakerType==="NARRATOR"?"":"NPC",content:item.content}));}catch{return [{speakerType:"NARRATOR",speakerName:"Aethelgard Academy",content}];}
 }
 
 export default async function EventDetail({params}:{params:Promise<{id:string}>}){
@@ -55,7 +57,7 @@ export default async function EventDetail({params}:{params:Promise<{id:string}>}
     const segments=readAiSegments(t.content);
     return <article className="dialogueTurn aiDialogue" key={t.id}>
      <div className="dialogueAvatar aiDialogueAvatar">✧</div>
-     <div className="dialogueContent"><div className="dialogueMeta"><strong>Narrator</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
+     <div className="dialogueContent"><div className="dialogueMeta"><strong>Narrator</strong><span>AI</span></div><div className="dialogueBubble aiDialogueBubble">{segments.map((segment,index)=>segment.speakerType==="NARRATOR"?<p className="aiNarration" key={index}>{renderQuotedDialogue(segment.content)}</p>:<p className="aiCharacterSegment" key={index}><strong>{segment.speakerName}: </strong><span>{renderQuotedDialogue(segment.content,segment.speakerName)}</span></p>)}</div><time>{t.createdAt.toLocaleString("en-US")}</time></div>
     </article>;
    }
    if(t.speakerType==="NARRATOR")return <article className="narrationBlock" key={t.id}><div className="narrationLabel"><span>✧</span> NARRATOR</div><p>{t.content}</p><time>{t.createdAt.toLocaleString("en-US")}</time></article>;
