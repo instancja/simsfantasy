@@ -20,7 +20,15 @@ function splitPlayerTurn(content:string){
  return parts.length?parts:[{kind:"dialogue" as const,text:content}];
 }
 
+function decodeHtmlEntities(value:string){
+ const named:Record<string,string>={amp:"&",lt:"<",gt:">",quot:'"',apos:"'",nbsp:" ","#39":"'"};
+ return value.replace(/&(?:#(\\d+)|#x([0-9a-f]+)|([a-z]+|#39));/gi,(match,decimal,hex,name)=>{
+  if(decimal||hex){const code=Number.parseInt(decimal??hex,decimal?10:16);return Number.isFinite(code)&&code>=0&&code<=0x10ffff?String.fromCodePoint(code):match;}
+  return named[String(name).toLowerCase()]??match;
+ });
+}
 function renderQuotedDialogue(content:string){
+ content=decodeHtmlEntities(content);
  const parts:React.ReactNode[]=[];
  const pattern=/(“[^”]*”|\u0022[^\u0022]*\u0022)/g;
  let cursor=0,match:RegExpExecArray|null,index=0;
