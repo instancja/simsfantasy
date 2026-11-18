@@ -747,3 +747,12 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Gdy model zwraca segmenty NPC, których nie można przypisać do uczestnika, komunikat błędu zawiera do 6 próbek pól identyfikacyjnych: `speakerType`, `type`, `speaker`, `characterId`, `speakerName`, `characterName`, `name`.
 - Nie zapisuje treści dialogów ani nie zmienia reguł dopasowania. Dane pozwolą ustalić, jak Qwen faktycznie oznacza mówców.
 - Ochrona Player Character pozostaje bez zmian. Bez migracji bazy danych; wymagany kolejny test lokalny.
+
+
+### Ograniczenie powtórzeń wewnątrz jednej odpowiedzi AI (18 listopada 2026)
+
+- Filtr powtórzeń obejmuje teraz zarówno bezpośrednio poprzednią odpowiedź AI, jak i wcześniejsze zdania w aktualnie generowanej odpowiedzi.
+- Kolejne segmenty Narratora/NPC nie mogą ponownie wprowadzić identycznego zdania; pierwsze wystąpienie pozostaje, następne jest usuwane.
+- Prompt dodatkowo zabrania powtarzania tych samych gestów, opisów mimiki, szczegółów fizycznych i kwestii w obrębie jednej odpowiedzi.
+- Jest to filtr dokładnych zdań, nie semantyczny detektor parafraz. Nie zmienia ochrony Player Character, identyfikacji NPC ani formatu danych. Bez migracji bazy.
+- Status: wdrożone na `main`; wymaga lokalnego testu.
