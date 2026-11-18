@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 3.4 — diagnostyka odpowiedzi narrator-only  
+**Wersja:** 3.5 — normalizacja tekstu NPC  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -707,3 +707,14 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - `raw NPC candidates = 0` oznacza, że model nie zwrócił rozpoznanego kandydata NPC. Kandydaci większej liczby niż zero przy braku zaakceptowanego segmentu wskazują na filtrację lub problem przypisania tożsamości.
 - Filtry ochrony Player Character nie zostały osłabione. Zapisana tura gracza pozostaje bezpieczna i można ponowić generowanie AI.
 - Nie wymaga migracji bazy danych. Status: wymaga lokalnego testu na scenie z co najmniej jednym NPC.
+
+
+### 5.21 Normalizacja treści segmentów NPC (18 listopada 2026)
+
+- Nowe odpowiedzi NPC są dekodowane z encji HTML i oczyszczane ze znaczników Markdown pogrubienia przed zapisem wspólnego dymku AI.
+- Powtórzona nazwa przypisanego mówcy na początku segmentu jest usuwana, gdy występuje jako etykieta `Name:` lub jako prefiks przed typowym czasownikiem opisującym działanie.
+- Widok historii stosuje analogiczne czyszczenie także do starszych zapisów; nie zmienia struktury JSON ani danych w bazie.
+- Czyszczenie nie ingeruje w treść dialogu w dalszej części segmentu, nie zmienia filtrów ochrony Player Character i nie naprawia automatycznie brakujących cudzysłowów.
+- Wymagany test lokalny na przykładzie z `&#x20;`, `&#x4B;`, znacznikami `**` i powtórzonym imieniem NPC.
+
+**Status:** wdrożone na `main`; wymaga testu lokalnego.
