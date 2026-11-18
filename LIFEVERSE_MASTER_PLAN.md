@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.8\
+**Wersja:** 3.9\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -777,3 +777,14 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Nie zmieniono schematu bazy danych; migracja nie jest wymagana.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
+
+
+### Normalizacja tekstu NPC w odpowiedzi AI (18 listopada 2026)
+
+- Po walidacji segmentu NPC adapter dekoduje encje HTML i usuwa znaczniki Markdown pogrubienia, które model czasem emituje wewnątrz JSON-u.
+- Jeśli treść segmentu zaczyna się od ponownego podania imienia przypisanego NPC, powtórzony prefiks jest usuwany. Nie usuwa się imienia występującego później w zdaniu ani nazw innych postaci.
+- Widok historii wykonuje analogiczne czyszczenie przy renderowaniu, aby uporządkować również wcześniej zapisane odpowiedzi; nazwa mówcy jest dekodowana przed wyświetleniem.
+- Zmiana nie modyfikuje granicy Player Character, kolejności segmentów, dialogów ani stanu NPC. Nie wymaga migracji bazy danych.
+- Test lokalny wymagany, w tym sprawdzenie odpowiedzi z encjami HTML, Markdown i powtórzonym prefiksem NPC.
+
+**Status:** wdrożone na `main`; oczekuje na test lokalny właścicielki.
