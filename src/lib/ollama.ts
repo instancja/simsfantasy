@@ -38,7 +38,7 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
  for(const [id,name] of npcs){const aliases=name.trim().split(/\s+/).filter(Boolean);npcAliasesById.set(id,new RegExp("\\b(?:"+aliases.map(escapeRegex).join("|")+")\\b","i"));}
  const playerActionInNpcProse=(sentence:string)=>{const prose=removeQuotedDialogue(sentence);return playerReferencePattern.test(prose)||(/\b(?:her|hers|you|your)\b/i.test(prose)&&/\b(?:watches?|watched|follows?|followed|sees?|saw|hears?|heard|notices?|noticed|observes?|observed|waits? for|waited for|takes?|took|reaches?|reached|moves?|moved|walks?|walked|turns?|turned|looks?|looked|stands?|stood|sits?|sat|holds?|held|hands?|handed|gives?|gave|passes?|passed)\b/i.test(prose));};
  const byName=new Map<string,string>();const ambiguousNames=new Set<string>();for(const [id,name] of npcs){const aliases=[name.trim(),name.trim().split(/\s+/)[0],name.trim().split(/\s+/).slice(-1)[0]].filter(Boolean).map(x=>x.toLocaleLowerCase());for(const alias of aliases){if(byName.has(alias)&&byName.get(alias)!==id){byName.delete(alias);ambiguousNames.add(alias);}else if(!ambiguousNames.has(alias))byName.set(alias,id);}}
- let skippedNarrator=0,skippedNpc=0,skippedUnknown=0,skippedIdentity=0,skippedPlayerBoundary=0,skippedEmptyNpc=0;
+ let skippedNarrator=0,skippedNpc=0,skippedUnknown=0,skippedIdentity=0,skippedPlayerBoundary=0,skippedEmptyNpc=0,rawNpcCandidates=0,rawNarratorSegments=0,acceptedNpcSegments=0;
  for(const item of (value as {segments:unknown[]}).segments){
   if(!item||typeof item!=="object")continue;
   const s=item as {speakerType?:unknown;type?:unknown;speaker?:unknown;characterId?:unknown;character_id?:unknown;speakerName?:unknown;characterName?:unknown;name?:unknown;content?:unknown;text?:unknown;message?:unknown};
@@ -47,12 +47,14 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   const c=decodeHtmlEntities(clean(rawContent)).slice(0,7000);if(!c)continue;
   const kind=String(s.speakerType??s.type??s.speaker??"").trim().toUpperCase();
   if(kind==="NARRATOR"||kind==="NARRATION"){
+   rawNarratorSegments++;
    const safeText=c.split(/(?<=[.!?])\s+/).filter(sentence=>!narratorSentenceHasCharacter(sentence)).join(" ").trim();
    if(safeText)result.push({speakerType:"NARRATOR",content:safeText});else skippedNarrator++;
    continue;
   }
   const rawId=String(s.characterId??s.character_id??"");
   const speakerValue=String(s.speaker??"").trim();const rawName=String(s.speakerName??s.characterName??s.name??(speakerValue&&!["NPC","CHARACTER","NARRATOR","NARRATION"].includes(speakerValue.toUpperCase())?speakerValue:"")).trim().replace(/\s*[:：]\s*$/,"").toLocaleLowerCase();
+  if(kind==="NPC"||kind==="CHARACTER"||rawId||rawName)rawNpcCandidates++;
   let characterId=npcs.has(rawId)?rawId:undefined;
   if(!characterId&&rawName)characterId=byName.get(rawName);
   if(!characterId&&(kind==="NPC"||kind==="CHARACTER")&&npcs.size===1)characterId=[...npcs.keys()][0];
@@ -65,11 +67,13 @@ function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResp
   if(environmentSentences.length)result.push({speakerType:"NARRATOR",content:environmentSentences.join(" ").trim()});
   const safeNpcText=npcSentences.join(" ").trim();
   if(!safeNpcText){skippedNpc++;skippedEmptyNpc++;continue;}
-  result.push({speakerType:"NPC",characterId,content:safeNpcText});
+  result.push({speakerType:"NPC",characterId,content:safeNpcText});acceptedNpcSegments++;
  }
  const priorSentences=new Set(previousResponse.flatMap(turn=>turn.content.split(/(?<=[.!?])\s+/)).map(sentence=>sentence.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim()).filter(Boolean));
  const withoutRepeats=result.map(segment=>({...segment,content:segment.content.split(/(?<=[.!?])\s+/).filter(sentence=>!priorSentences.has(sentence.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim())).join(" ").trim()})).filter(segment=>segment.content);
  result.splice(0,result.length,...withoutRepeats);
+ const finalNpcSegments=result.filter(segment=>segment.speakerType==="NPC").length;
+ if(npcs.size>0&&finalNpcSegments===0)throw new Error("The model returned a narrator-only continuation; at least one NPC segment is required when NPCs are participating. Diagnostics: raw NPC candidates="+rawNpcCandidates+", accepted before repeat filtering="+acceptedNpcSegments+", removed as repeats="+Math.max(0,acceptedNpcSegments-finalNpcSegments)+", narrator segments="+rawNarratorSegments+", rejected NPC fragments="+skippedNpc+" [unresolved identity: "+skippedIdentity+", Player Character boundary: "+skippedPlayerBoundary+", empty after filtering: "+skippedEmptyNpc+"], unknown fragments="+skippedUnknown+". The player turn is safe; retry AI generation.");
  if(!result.length)throw new Error("The local model returned no new valid scene content (narrator fragments mentioning characters: "+skippedNarrator+"; NPC fragments rejected: "+skippedNpc+" [unresolved identity: "+skippedIdentity+", Player Character boundary: "+skippedPlayerBoundary+", empty after filtering: "+skippedEmptyNpc+"]; unknown fragments: "+skippedUnknown+"). Please retry.");
  const allowed=new Set(npcs.keys());
  return {segments:result.slice(0,10),sceneState:parseState((value as {sceneState?:unknown}).sceneState,allowed)};
