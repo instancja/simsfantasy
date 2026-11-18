@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.6 — ciągłość sceny i walidacja segmentów  
+**Wersja:** 2.7 — normalizacja treści AI i własność segmentów  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -631,5 +631,16 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Parser usuwa zdania powtórzone dosłownie z bezpośrednio poprzedniej odpowiedzi oraz wybrane naruszenia granicy Player Character i własności segmentów.
 - Filtry są heurystyczne i nie wykrywają wszystkich parafraz ani zależności semantycznych. Mogą odrzucić poprawny fragment; nie stanowią gwarancji, że model nigdy nie naruszy granicy PC.
 - Zmiana nie wymaga migracji bazy danych i zachowuje pojedynczy wspólny rekord AI.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
+
+
+### 5.13 Normalizacja odpowiedzi AI i własność segmentów (18 listopada 2026)
+
+- Typowe zdania o otoczeniu, które model umieści w segmencie NPC, są heurystycznie przenoszone do narracji środowiskowej.
+- Segment NPC nadal podlega filtrom, które odrzucają wybrane opisy Player Character i działania innych NPC.
+- Parser dekoduje podstawowe nazwane i numeryczne encje HTML przed walidacją. Widok historii dekoduje je również przy renderowaniu, co obejmuje starsze zapisy.
+- Nie jest to pełny klasyfikator semantyczny: nietypowe opisy otoczenia mogą pozostać błędnie przypisane, a poprawne zdania mogą zostać odrzucone. Test lokalny jest wymagany.
+- Nie wprowadzono migracji bazy danych ani zmian w formacie wspólnego rekordu AI.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
