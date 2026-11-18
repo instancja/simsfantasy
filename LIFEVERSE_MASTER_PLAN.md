@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.4\
+**Wersja:** 3.5\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -741,3 +741,11 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Rozdziela przypadek pustej treści od odpowiedzi zawierającej tekst bez obiektu JSON.
 - Nie zapisuje surowej odpowiedzi do historii ani nie zmienia tury gracza.
 - Nadal wymagany jest test lokalny; dopiero podgląd odpowiedzi pozwoli rozstrzygnąć, czy problemem jest tryb thinking, ucięcie generacji, niezgodność schematu czy inny format odpowiedzi.
+
+
+### Qwen: wyłączenie kanału thinking dla generowania sceny (18 listopada 2026)
+
+- Diagnostyka lokalna wykazała `done_reason=length`, `message.content` o długości 0, niepusty kanał `thinking` oraz wyczerpanie limitu generowania przed rozpoczęciem właściwej odpowiedzi JSON.
+- W adapterze Ollama ustawiono `think:false`, aby wymusić generowanie treści odpowiedzi zamiast zużywania budżetu na osobny kanał rozumowania.
+- Zwiększono `num_ctx` z 8192 do 12288, aby zapewnić więcej miejsca na prompt i ustrukturyzowaną odpowiedź; limit `num_predict` pozostaje 1800.
+- Wymagany test na lokalnym `qwen3.5:4b`. Jeśli model lub wersja Ollama ignoruje `think:false`, należy sprawdzić zgodność ustawienia i rozważyć uproszczenie schematu zamiast bez końca zwiększać tokeny.
