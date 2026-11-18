@@ -732,3 +732,11 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 
 - Wielowierszowy prompt systemowy jest zapisany jako template literal TypeScript, aby poprawnie obsługiwać nowe linie i interpolację nazwy Player Character.
 - Nie zmienia to reguł generowania ani formatu JSON. Wymaga lokalnego testu kompilacji i generowania.
+
+
+### 5.24 Odporne przypisywanie tożsamości segmentów NPC
+
+- Parser preferuje dokładne ID postaci, ale obsługuje też przypadek, w którym model zwróci nazwę NPC w polu `characterId`.
+- Dopasowanie korzysta wyłącznie z istniejącej mapy jednoznacznych nazw i aliasów; nierozpoznane lub niejednoznaczne wartości nadal są odrzucane.
+- Diagnostyka wskazała 11 odrzuceń z powodu nierozpoznanej tożsamości i zero odrzuceń przez ochronę Player Character. Zabezpieczenie PC pozostaje bez zmian.
+- Poprawiono interpolację imienia Player Character w promptcie. Bez migracji bazy danych; wymaga testu lokalnego.
