@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.1\
+**Wersja:** 3.2\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -707,3 +707,16 @@ Po teście, w którym fragment opisu otoczenia został przypisany Lucienowi, a e
 - Zmiana nie wymaga migracji bazy danych. Nie oznacza zakończenia testów narracji ani autonomii NPC.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
+
+
+### STORY — wymuszanie poprawnego JSON z Ollama (18 listopada 2026)
+
+Po błędzie parsowania odpowiedzi modelu (`Expected ',' or ']' after array element`) dodano:
+
+- Zamiast ogólnego `format: "json"` żądanie Ollama przekazuje ścisły schemat JSON dla `segments` i `sceneState`, z dozwolonymi typami segmentów oraz wymaganymi polami pamięci.
+- Obniżono temperaturę generowania do 0.35 i ustawiono limit `num_predict: 1800`, aby ograniczyć niestabilność formatu i ryzyko ucięcia odpowiedzi.
+- Parser przechwytuje również błąd drugiej próby odczytu JSON i zwraca czytelny komunikat zamiast surowego wyjątku.
+- Zmiana korzysta z funkcji formatu JSON Schema w API Ollama. Kompatybilność z lokalną wersją Ollama i modelem Qwen wymaga testu.
+- Brak zmian schematu bazy i brak potrzeby migracji.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu.
