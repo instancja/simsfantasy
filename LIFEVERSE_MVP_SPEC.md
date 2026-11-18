@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 3.3 — rozpoznawanie speaker aliasów NPC  
+**Wersja:** 3.4 — diagnostyka odpowiedzi narrator-only  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -698,3 +698,12 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Końcowy dwukropek jest usuwany z nazwy przed dopasowaniem pełnego imienia, imienia lub nazwiska.
 - Diagnostyka rozdziela liczbę odrzuceń z powodu nierozpoznanej tożsamości, granicy PC, pustej treści po filtracji i nieznanego typu.
 - Filtry PC pozostają bez zmian co do rygoru. Nie uznawać poprawki za zakończoną przed lokalnym testem.
+
+
+### 5.20 Diagnostyka odpowiedzi zawierającej wyłącznie Narratora (18 listopada 2026)
+
+- Jeśli w wydarzeniu uczestniczą NPC, odpowiedź zawierająca po walidacji wyłącznie segment Narratora jest traktowana jako nieudana kontynuacja, a nie jako poprawna odpowiedź AI.
+- Komunikat podaje liczbę surowych kandydatów NPC, segmentów zaakceptowanych przed usuwaniem powtórzeń, segmentów usuniętych jako powtórzenia, segmentów Narratora i odrzuceń według kategorii.
+- `raw NPC candidates = 0` oznacza, że model nie zwrócił rozpoznanego kandydata NPC. Kandydaci większej liczby niż zero przy braku zaakceptowanego segmentu wskazują na filtrację lub problem przypisania tożsamości.
+- Filtry ochrony Player Character nie zostały osłabione. Zapisana tura gracza pozostaje bezpieczna i można ponowić generowanie AI.
+- Nie wymaga migracji bazy danych. Status: wymaga lokalnego testu na scenie z co najmniej jednym NPC.
