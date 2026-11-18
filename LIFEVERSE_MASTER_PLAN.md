@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.6\
+**Wersja:** 3.7\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -757,3 +757,12 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Oba dekodery wykonują teraz do czterech przejść, kończąc wcześniej, jeśli tekst przestaje się zmieniać. Obsługuje to wielokrotnie zakodowane sekwencje, takie jak `&amp;#x54;`.
 - Zmiana obejmuje nowy tekst po parsowaniu oraz wyświetlanie zapisanych segmentów. Nie zmienia formatu bazy ani nie wymaga migracji.
 - Wymagany test lokalny; sprawdzić stare i nowe wpisy oraz upewnić się, że zwykłe znaki `&` pozostają poprawne.
+
+
+### Rozpoznawanie tożsamości NPC i szczegółowa diagnostyka walidacji (18 listopada 2026)
+
+- Resolver tożsamości NPC uwzględnia teraz pole `speaker` również wtedy, gdy `speakerType` ma wartość `NPC`, jeśli `speaker` zawiera nazwę postaci zamiast etykiety typu.
+- Usuwany jest końcowy dwukropek z nazwy mówcy przed dopasowaniem aliasu.
+- Komunikat o odrzuceniu wszystkich segmentów rozdziela nierozpoznaną tożsamość, naruszenie granicy PC, pusty segment po filtracji i nieznane fragmenty.
+- Zabezpieczenia granicy Player Character pozostają aktywne; zmiana nie rozszerza automatycznego przypisywania fragmentów do NPC.
+- Wymagany test lokalny i analiza nowych liczników przed dalszym strojeniem walidatora.
