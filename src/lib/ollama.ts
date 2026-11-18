@@ -19,7 +19,7 @@ function parseState(value:unknown,allowed:Set<string>):SceneState{
 }
 function parse(raw:string,npcs:Map<string,string>,playerName:string,previousResponse:TurnContext[]=[]):Generation{
  const text=clean(raw).replace(/^\x60{3}(?:json)?\s*/i,"").replace(/\s*\x60{3}$/i,"");let value:unknown;
- try{value=JSON.parse(text);}catch{const a=text.indexOf("{"),b=text.lastIndexOf("}");if(a<0||b<=a)throw new Error("The local model returned malformed JSON. The response was not saved; please retry.");try{value=JSON.parse(text.slice(a,b+1));}catch{throw new Error("The local model returned malformed JSON. The response was not saved; please retry.");}}
+ try{value=JSON.parse(text);}catch(firstError){const a=text.indexOf("{"),b=text.lastIndexOf("}");if(a<0||b<=a)throw new Error("The local model returned malformed JSON (no complete JSON object found). The response was not saved; please retry.");const candidate=text.slice(a,b+1);try{value=JSON.parse(candidate);}catch(secondError){const message=secondError instanceof Error?secondError.message:"Unknown JSON parse error";const position=Number(message.match(/position\\s+(\\d+)/i)?.[1]??-1);const excerpt=position>=0?candidate.slice(Math.max(0,position-70),Math.min(candidate.length,position+70)):candidate.slice(0,140);throw new Error("The local model returned malformed JSON: "+message+". Nearby output: "+JSON.stringify(excerpt)+". The response was not saved; please retry.");}}
  if(!value||typeof value!=="object"||!Array.isArray((value as {segments?:unknown}).segments))throw new Error("The local model returned an unexpected response format. Please retry.");
  const result:Segment[]=[];
  const firstName=playerName.trim().split(/\s+/)[0];
