@@ -812,3 +812,11 @@ Po ponownym błędzie parsowania mimo przekazania JSON Schema:
 - Nie rozwiązuje atrybutów dopisywanych do DOM przez rozszerzenia przeglądarki (np. `bis_skin_checked`, `cz-shortcut-listen`); ich źródło należy wyłączyć po stronie przeglądarki.
 - Nie wymaga migracji bazy danych.
 - Status: wdrożone na `main`; wymaga lokalnego testu.
+
+
+### Naprawa błędu składni promptu Ollama (18 listopada 2026)
+
+- Błąd kompilacji lokalny wskazał na wielowierszowy prompt systemowy zapisany jako zwykły cudzysłowowy string TypeScript.
+- Prompt został przepisany jako template literal, który poprawnie obsługuje podziały linii i interpolację nazwy Player Character.
+- Nie zmieniono treści zasad narracji, ochrony Player Character, walidacji NPC ani formatu odpowiedzi modelu.
+- Nie wymaga migracji bazy danych. Status: poprawka na `main`; wymaga lokalnego `npm run dev`.
