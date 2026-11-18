@@ -1,6 +1,6 @@
 # LIFEVERSE --- Master Project Plan
 
-**Wersja:** 3.0\
+**Wersja:** 3.1\
 **Data utworzenia:** 17 listopada 2026\
 **Status projektu:** Koncepcja zatwierdzona częściowo · model rozgrywki i kierunek formularza postaci doprecyzowane\
 **Typ dokumentu:** Główne źródło prawdy dla projektu
@@ -695,3 +695,15 @@ Test lokalny wykazał powtarzanie poprzedniej sceny, dopisywanie działań Playe
 - Nie zmieniono schematu bazy ani formatu zapisu wspólnego dymka; migracja nie jest wymagana.
 
 **Status:** zmiana na `main`; wymaga testu lokalnego. Nie oznaczać ciągłości ani granicy PC jako ukończonych przed testem właścicielki.
+
+
+### STORY — normalizacja treści AI i korekta własności segmentów (18 listopada 2026)
+
+Po teście, w którym fragment opisu otoczenia został przypisany Lucienowi, a encje HTML pojawiły się w widocznym tekście, wprowadzono:
+
+- Parser rozpoznaje część typowych zdań opisujących otoczenie wewnątrz segmentu NPC i przenosi je do segmentu Narratora, zamiast podpisywać je imieniem NPC.
+- Zachowano dotychczasowe filtry Player Character oraz blokadę przypisywania działań innego NPC do bieżącego segmentu. Klasyfikacja otoczenia jest heurystyczna i wymaga testu; nie jest pełną analizą semantyczną.
+- Dodano dekodowanie encji HTML w treści AI przed walidacją i podczas renderowania historii, aby naprawić także wcześniej zapisane fragmenty zawierające np. `&#x54;` i `&#x20;`.
+- Zmiana nie wymaga migracji bazy danych. Nie oznacza zakończenia testów narracji ani autonomii NPC.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
