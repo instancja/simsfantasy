@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 2.7 — normalizacja treści AI i własność segmentów  
+**Wersja:** 2.8 — wymuszanie poprawnego JSON z Ollama  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -644,3 +644,14 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Nie wprowadzono migracji bazy danych ani zmian w formacie wspólnego rekordu AI.
 
 **Status:** wdrożone na `main`; wymaga lokalnego testu właścicielki.
+
+
+### 5.14 Poprawność struktury JSON odpowiedzi Ollama (18 listopada 2026)
+
+- Żądanie generowania przekazuje schemat JSON Schema zamiast samego trybu `json`; schemat ogranicza strukturę `segments` i `sceneState` oraz typy segmentów.
+- Temperatura wynosi 0.35, a limit generowania 1800 tokenów, aby ograniczyć błędy struktury i ucięcie odpowiedzi.
+- Błąd nieudanego parsowania jest przechwytywany i zwracany jako czytelny komunikat. Tura gracza pozostaje zapisana i może być ponowiona.
+- Wymagana weryfikacja zgodności API JSON Schema z lokalną wersją Ollama oraz modelem Qwen.
+- Nie wymaga migracji bazy danych.
+
+**Status:** wdrożone na `main`; wymaga lokalnego testu.
