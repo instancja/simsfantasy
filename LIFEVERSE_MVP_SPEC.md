@@ -1,6 +1,6 @@
 # LIFEVERSE — MVP Specification
 
-**Wersja:** 3.2 — wielokrotne dekodowanie encji HTML  
+**Wersja:** 3.3 — rozpoznawanie speaker aliasów NPC  
 **Data:** 17 listopada 2026  
 **Status:** Specyfikacja robocza; formularz expanded i stack technologiczny zatwierdzone  
 **Dokument nadrzędny:** `LIFEVERSE_MASTER_PLAN.md`
@@ -690,3 +690,11 @@ Parser nie przerywa już całej odpowiedzi z powodu pojedynczego niepoprawnego s
 - Rozwiązanie obsługuje wielokrotne kodowanie encji numerycznych i nazwanych, bez nieograniczonego dekodowania rekurencyjnego.
 - Dotyczy parsowania nowych odpowiedzi i renderowania wcześniej zapisanej historii; bez migracji bazy danych.
 - Status: wymaga lokalnego testu na starym wpisie zawierającym `&#x20;` oraz nowej odpowiedzi NPC.
+
+
+### 5.19 Rozpoznawanie tożsamości NPC i diagnostyka (18 listopada 2026)
+
+- Parser sprawdza nazwę mówcy w polu `speaker`, gdy `speakerType` jest `NPC`/`CHARACTER`, pod warunkiem że wartość pola nie jest etykietą typu.
+- Końcowy dwukropek jest usuwany z nazwy przed dopasowaniem pełnego imienia, imienia lub nazwiska.
+- Diagnostyka rozdziela liczbę odrzuceń z powodu nierozpoznanej tożsamości, granicy PC, pustej treści po filtracji i nieznanego typu.
+- Filtry PC pozostają bez zmian co do rygoru. Nie uznawać poprawki za zakończoną przed lokalnym testem.
